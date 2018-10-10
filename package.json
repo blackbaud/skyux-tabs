@@ -1,6 +1,6 @@
 {
-  "name": "@skyux/sample",
-  "version": "3.0.0-alpha.x",
+  "name": "@skyux/tabs",
+  "version": "3.0.0-alpha.0",
   "description": "SKY UX Sample",
   "main": "bundles/bundle.umd.js",
   "module": "index.ts",
@@ -19,12 +19,12 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/blackbaud/skyux-sample.git"
+    "url": "git+https://github.com/blackbaud/skyux-tabs.git"
   },
   "bugs": {
-    "url": "https://github.com/blackbaud/skyux-sample/issues"
+    "url": "https://github.com/blackbaud/skyux-tabs/issues"
   },
-  "homepage": "https://github.com/blackbaud/skyux-sample#readme",
+  "homepage": "https://github.com/blackbaud/skyux-tabs#readme",
   "peerDependencies": {
     "@angular/common": "^4.3.6",
     "@angular/core": "^4.3.6",
