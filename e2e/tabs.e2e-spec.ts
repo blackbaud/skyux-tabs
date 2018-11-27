@@ -5,7 +5,8 @@ import {
 
 import {
   element,
-  by
+  by,
+  browser
 } from 'protractor';
 
 describe('Tabs', () => {
@@ -17,6 +18,16 @@ describe('Tabs', () => {
     });
   });
 
+  it('should match previous tabset screenshot when selected tab is hovered', (done) => {
+    SkyHostBrowser.get('visual/tabs');
+    SkyHostBrowser.setWindowBreakpoint('lg');
+    const tabElem = element(by.css('#screenshot-tabset sky-tab-button .sky-btn-tab-selected'));
+    browser.actions().mouseMove(tabElem).perform();
+    expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
+      screenshotName: 'tabset-hover'
+    });
+  });
+
   it('should match previous tabset screenshot (screen: xs)', (done) => {
     SkyHostBrowser.get('visual/tabs');
     SkyHostBrowser.setWindowBreakpoint('xs');
@@ -24,6 +35,18 @@ describe('Tabs', () => {
       screenshotName: 'tabset-xs'
     });
   });
+
+  it('should match previous tabset screenshot when tab is hovered (screen: xs)',
+    (done) => {
+      SkyHostBrowser.get('visual/tabs');
+      SkyHostBrowser.setWindowBreakpoint('xs');
+      const tabElem = element(by.css('#screenshot-tabset button.sky-dropdown-button-type-tab'));
+      browser.actions().mouseMove(tabElem).perform();
+      expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
+        screenshotName: 'tabset-xs-hover'
+      });
+      SkyHostBrowser.moveCursorOffScreen();
+    });
 
   it('should match the tabset screenshot with wizard styling', (done) => {
     SkyHostBrowser.get('visual/tabs');
