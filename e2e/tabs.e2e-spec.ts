@@ -26,6 +26,7 @@ describe('Tabs', () => {
     expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
       screenshotName: 'tabset-hover'
     });
+    SkyHostBrowser.moveCursorOffScreen();
   });
 
   it('should match previous tabset screenshot (screen: xs)', (done) => {
