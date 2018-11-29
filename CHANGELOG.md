@@ -1,6 +1,6 @@
 # 3.0.0-rc.3 (2018-11-28)
 
-- Fixed section forms scrolling as one rather than two separate sections. [#4](https://github.com/blackbaud/skyux-tabs/pull/4)
+- Fixed sectioned form component to keep tabs stationary when users scroll through content and keep content stationary when users scroll through tabs. [#4](https://github.com/blackbaud/skyux-tabs/pull/4)
 
 # 3.0.0-rc.2 (2018-11-09)
 
