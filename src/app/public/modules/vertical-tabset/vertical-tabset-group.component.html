@@ -1,7 +1,10 @@
 <div class="sky-vertical-tabset-group">
   <div
     class="sky-vertical-tabset-group-header sky-padding-even-default"
-    [ngClass]="{'sky-vertical-tabset-group-header-sub-open sky-emphasized': subMenuOpen()}"
+    [ngClass]="{
+      'sky-vertical-tabset-group-header-sub-open sky-emphasized': subMenuOpen(),
+      'sky-vertical-tabset-disabled': disabled
+    }"
     (click)="toggleMenuOpen()"
     (keyup.enter)="toggleMenuOpen()"
     [tabIndex]="-1"
