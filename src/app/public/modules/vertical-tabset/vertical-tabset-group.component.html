@@ -3,6 +3,7 @@
     class="sky-vertical-tabset-group-header sky-padding-even-default"
     [ngClass]="{
       'sky-vertical-tabset-group-header-sub-open sky-emphasized': subMenuOpen(),
+      'sky-deemphasized': disabled,
       'sky-vertical-tabset-disabled': disabled
     }"
     (click)="toggleMenuOpen()"

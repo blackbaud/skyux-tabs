@@ -11,7 +11,7 @@
   display: flex;
   justify-content: space-between;
 
-  &:not(.sky-emphasized) {
+  &:not(.sky-emphasized):not(.sky-deemphasized) {
     font-weight: 400;
     color: $sky-text-color-deemphasized;
   }
@@ -22,19 +22,6 @@
 
   &:focus {
     @include sky-focus-outline;
-  }
-}
-
-:host[ng-reflect-disabled="true"] .sky-vertical-tabset-group-header {
-  cursor: not-allowed;
-  font-style: italic;
-
-  &:hover {
-    color: $sky-text-color-deemphasized;
-  }
-
-  ::ng-deep button {
-    cursor: not-allowed;
   }
 }
 
@@ -49,13 +36,7 @@
 
 .sky-vertical-tabset-disabled {
   cursor: not-allowed;
-  font-style: italic;
-  opacity: 0.8;
   pointer-events: none;
-
-  &:hover {
-    color: $sky-text-color-deemphasized;
-  }
 }
 
 
