@@ -11,15 +11,6 @@
   display: flex;
   justify-content: space-between;
 
-  &:not(.sky-emphasized):not(.sky-deemphasized) {
-    font-weight: 400;
-    color: $sky-text-color-deemphasized;
-  }
-
-  &:hover {
-    color: $sky-text-color-default;
-  }
-
   &:focus {
     @include sky-focus-outline;
   }
@@ -37,6 +28,7 @@
 .sky-vertical-tabset-disabled {
   cursor: not-allowed;
   pointer-events: none;
+  font-style: normal;
 }
 
 
