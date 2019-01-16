@@ -38,6 +38,20 @@ describe('Sectioned Form', () => {
     });
   });
 
+  it('should match previous sectioned form screenshot after clicking first tab when name is required', (done) => {
+    SkyHostBrowser.get('visual/sectioned-form');
+    SkyHostBrowser.setWindowBreakpoint('lg');
+
+    let tabs = element.all(by.css('sky-vertical-tab'));
+
+    // click first tab
+    tabs.get(0).click();
+    element(by.css('#name-checkbox-container .sky-switch-control')).click();
+    expect('#screenshot-sectioned-form').toMatchBaselineScreenshot(done, {
+      screenshotName: 'sectioned-form-first-required'
+    });
+  });
+
   it('should match previous sectioned form screenshot after clicking second tab', (done) => {
     SkyHostBrowser.get('visual/sectioned-form');
     SkyHostBrowser.setWindowBreakpoint('lg');
