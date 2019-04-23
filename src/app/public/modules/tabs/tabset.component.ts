@@ -150,8 +150,11 @@ export class SkyTabsetComponent
       this.updateDisplayMode(currentOverflow);
     });
 
-    this.adapterService.detectOverflow();
-    this.updateDisplayMode(this.adapterService.currentOverflow);
+    setTimeout(() => {
+      this.adapterService.detectOverflow();
+      this.updateDisplayMode(this.adapterService.currentOverflow);
+      this.changeRef.markForCheck();
+    }, 0);
   }
 
   public ngOnDestroy() {
@@ -160,6 +163,6 @@ export class SkyTabsetComponent
 
   private updateDisplayMode(currentOverflow: boolean) {
     this.tabDisplayMode = currentOverflow ? 'dropdown' : 'tabs';
-    this.changeRef.detectChanges();
+    this.changeRef.markForCheck();
   }
 }
