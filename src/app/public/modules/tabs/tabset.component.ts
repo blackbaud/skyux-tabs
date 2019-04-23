@@ -150,11 +150,8 @@ export class SkyTabsetComponent
       this.updateDisplayMode(currentOverflow);
     });
 
-    setTimeout(() => {
-      this.adapterService.detectOverflow();
-      this.updateDisplayMode(this.adapterService.currentOverflow);
-      this.changeRef.detectChanges();
-    }, 0);
+    this.adapterService.detectOverflow();
+    this.updateDisplayMode(this.adapterService.currentOverflow);
   }
 
   public ngOnDestroy() {
