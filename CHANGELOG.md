@@ -1,6 +1,6 @@
 # 3.0.2 (2019-04-24)
 
-- Fixed tabset component to avoid throwing ViewDestroyedErrors when inside a modal. [#21](https://github.com/blackbaud/skyux-tabs/pull/21)
+- Fixed tabset component to prevent throwing `ViewDestroyedError`s in modals. [#21](https://github.com/blackbaud/skyux-tabs/pull/21)
 
 # 3.0.1 (2019-04-04)
 
