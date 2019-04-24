@@ -1,26 +1,39 @@
 import {
   NgModule
 } from '@angular/core';
+
 import {
   CommonModule
 } from '@angular/common';
+
 import {
   BrowserAnimationsModule
 } from '@angular/platform-browser/animations';
+
+import {
+  SkyMediaQueryModule
+} from '@skyux/core';
 
 import {
   SkyIconModule
 } from '@skyux/indicators/modules/icon';
 
 import {
+  SkyTabsResourcesModule
+} from '../shared';
+
+import {
   SkyVerticalTabsetComponent
 } from './vertical-tabset.component';
+
 import {
   SkyVerticalTabComponent
 } from './vertical-tab.component';
+
 import {
   SkyVerticalTabsetGroupComponent
 } from './vertical-tabset-group.component';
+
 import {
   SkyChevronModule
 } from '@skyux/indicators/modules/chevron';
@@ -35,7 +48,9 @@ import {
     CommonModule,
     BrowserAnimationsModule,
     SkyChevronModule,
-    SkyIconModule
+    SkyIconModule,
+    SkyMediaQueryModule,
+    SkyTabsResourcesModule
   ],
   exports: [
     SkyVerticalTabsetComponent,
