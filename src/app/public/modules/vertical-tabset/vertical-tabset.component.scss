@@ -1,7 +1,7 @@
 @import "~@skyux/theme/scss/mixins";
 @import "~@skyux/theme/scss/_compat/mixins";
 
-@include sky-host-media-container-xs-min() {
+@include sky-host-responsive-container-xs-min() {
   .sky-vertical-tabset {
     display: block;
     height: auto;
@@ -12,7 +12,7 @@
   }
 }
 
-@include sky-host-media-container-sm-min() {
+@include sky-host-responsive-container-sm-min() {
   .sky-vertical-tabset {
     display: flex;
     height: 100%;
