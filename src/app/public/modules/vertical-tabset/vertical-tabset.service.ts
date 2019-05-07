@@ -41,7 +41,7 @@ export class SkyVerticalTabsetService {
         // switching to mobile
         this.switchingMobile.next(true);
 
-        if (!this.tabsVisible()) {
+        if (!this._tabsVisible) {
           this.hidingTabs.next(true);
         }
 
