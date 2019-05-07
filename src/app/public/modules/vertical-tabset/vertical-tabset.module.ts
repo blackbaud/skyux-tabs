@@ -15,8 +15,9 @@ import {
 } from '@skyux/core';
 
 import {
+  SkyChevronModule,
   SkyIconModule
-} from '@skyux/indicators/modules/icon';
+} from '@skyux/indicators';
 
 import {
   SkyTabsResourcesModule
@@ -33,10 +34,6 @@ import {
 import {
   SkyVerticalTabsetGroupComponent
 } from './vertical-tabset-group.component';
-
-import {
-  SkyChevronModule
-} from '@skyux/indicators/modules/chevron';
 
 @NgModule({
   declarations: [
