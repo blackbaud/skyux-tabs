@@ -66,14 +66,14 @@ export class SkyTabsetComponent
   public active: number | string;
 
   @Input()
-  public set urlParam(value: string) {
+  public set queryParam(value: string) {
     // Remove all non-alphanumeric characters.
     const sanitized = value.toLowerCase().replace(/[\W]/g, '');
-    this._urlParam = `${sanitized}-active-tab`;
+    this._queryParam = `${sanitized}-active-tab`;
   }
 
-  public get urlParam(): string {
-    return this._urlParam || '';
+  public get queryParam(): string {
+    return this._queryParam || '';
   }
 
   @Output()
@@ -93,7 +93,7 @@ export class SkyTabsetComponent
   private ngUnsubscribe = new Subject<void>();
 
   private _tabStyle: string;
-  private _urlParam: string;
+  private _queryParam: string;
 
   constructor(
     private tabsetService: SkyTabsetService,
@@ -128,17 +128,13 @@ export class SkyTabsetComponent
   }
 
   public selectTab(tab: SkyTabComponent): void {
-    if (tab.disabled) {
-      return;
-    }
-
-    if (!this.urlParam) {
+    if (!this.queryParam) {
       this.tabsetService.activateTab(tab);
       return;
     }
 
     const queryParams: any = {};
-    queryParams[this.urlParam] = `${tab.routerLink}`;
+    queryParams[this.queryParam] = `${tab.routerLink}`;
 
     this.router.navigate([], {
       queryParams,
@@ -221,7 +217,7 @@ export class SkyTabsetComponent
       .distinctUntilChanged()
       .takeUntil(this.ngUnsubscribe)
       .subscribe((params) => {
-        const activeTabsetParam = params[this.urlParam];
+        const activeTabsetParam = params[this.queryParam];
 
         if (!activeTabsetParam) {
           this.tabsetService.activateTabIndex(this.active);

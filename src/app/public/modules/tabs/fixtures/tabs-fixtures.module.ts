@@ -38,9 +38,14 @@ import {
   TabsetActiveTestComponent
 } from './tabset-active.component.fixture';
 
+import {
+  SkyTabsetQueryParamsFixtureComponent
+} from './tabset-query-params.component.fixture';
+
 @NgModule({
   declarations: [
     TabsetTestComponent,
+    SkyTabsetQueryParamsFixtureComponent,
     SkyWizardTestFormComponent,
     TabsetActiveTestComponent
   ],
@@ -54,6 +59,7 @@ import {
   ],
   exports: [
     TabsetTestComponent,
+    SkyTabsetQueryParamsFixtureComponent,
     SkyWizardTestFormComponent,
     TabsetActiveTestComponent
   ],

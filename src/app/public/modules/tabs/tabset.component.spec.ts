@@ -1,4 +1,8 @@
 import {
+  Location
+} from '@angular/common';
+
+import {
   ComponentFixture,
   TestBed,
   fakeAsync,
@@ -7,23 +11,53 @@ import {
 } from '@angular/core/testing';
 
 import {
+  DebugElement
+} from '@angular/core';
+
+import {
+  By
+} from '@angular/platform-browser';
+
+import {
+  Router
+} from '@angular/router';
+
+import {
   expect,
   SkyAppTestUtility
 } from '@skyux-sdk/testing';
 
-import { SkyTabsetComponent } from './tabset.component';
-import { SkyTabsetAdapterService } from './tabset-adapter.service';
-import { SkyTabsetService } from './tabset.service';
-import { SkyTabsFixturesModule } from './fixtures/tabs-fixtures.module';
-import { TabsetTestComponent } from './fixtures/tabset.component.fixture';
-import { TabsetActiveTestComponent } from './fixtures/tabset-active.component.fixture';
-import { MockTabsetAdapterService } from './fixtures/tabset-adapter.service.mock';
+import {
+  SkyTabsetAdapterService
+} from './tabset-adapter.service';
 
 import {
-  DebugElement
-} from '@angular/core';
+  SkyTabsetComponent
+} from './tabset.component';
 
-import { By } from '@angular/platform-browser';
+import {
+  SkyTabsetService
+} from './tabset.service';
+
+import {
+  SkyTabsFixturesModule
+} from './fixtures/tabs-fixtures.module';
+
+import {
+  TabsetTestComponent
+} from './fixtures/tabset.component.fixture';
+
+import {
+  TabsetActiveTestComponent
+} from './fixtures/tabset-active.component.fixture';
+
+import {
+  MockTabsetAdapterService
+} from './fixtures/tabset-adapter.service.mock';
+
+import {
+  SkyTabsetQueryParamsFixtureComponent
+} from './fixtures/tabset-query-params.component.fixture';
 
 describe('Tabset component', () => {
   beforeEach(() => {
@@ -850,5 +884,52 @@ describe('Tabset component', () => {
       validateTabSelected(fixture.nativeElement, 1);
     }
     ));
+  });
+
+  describe('query params', () => {
+    let fixture: ComponentFixture<SkyTabsetQueryParamsFixtureComponent>;
+    let router: Router;
+    let location: Location;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(SkyTabsetQueryParamsFixtureComponent);
+      router = TestBed.get(Router);
+      location = TestBed.get(Location);
+    });
+
+    it('should activate a tab based on a query param', fakeAsync(() => {
+      fixture.detectChanges();
+      tick();
+
+      expect(fixture.componentInstance.activeIndex).toEqual(0);
+
+      router.navigate([], {
+        queryParams: {
+          'foobar-active-tab': 'designguidelines'
+        }
+      });
+
+      fixture.detectChanges();
+      tick();
+
+      expect(location.path()).toEqual('/?foobar-active-tab=designguidelines');
+      expect(fixture.componentInstance.activeIndex).toEqual(1);
+    }));
+
+    it('should set a query param when a tab is selected', fakeAsync(() => {
+      fixture.detectChanges();
+      tick();
+
+      expect(fixture.componentInstance.activeIndex).toEqual(0);
+
+      const buttonElement = fixture.nativeElement.querySelectorAll('.sky-btn-tab')[1];
+
+      buttonElement.click();
+      fixture.detectChanges();
+      tick();
+
+      expect(location.path()).toEqual('/?foobar-active-tab=designguidelines');
+      expect(fixture.componentInstance.activeIndex).toEqual(1);
+    }));
   });
 });
