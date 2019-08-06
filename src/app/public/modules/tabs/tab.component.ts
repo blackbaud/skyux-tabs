@@ -39,6 +39,11 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
     return this.close.observers.length > 0;
   }
 
+  public get routerLink(): string {
+    const sanitized = this.tabHeading.toLowerCase().replace(/[\W]/g, '');
+    return sanitized;
+  }
+
   @Output()
   public close = new EventEmitter<any>();
 

@@ -14,7 +14,18 @@ import {
   OnChanges
 } from '@angular/core';
 
+import {
+  ActivatedRoute,
+  Router
+} from '@angular/router';
+
+import {
+  Subject
+} from 'rxjs/Subject';
+
 import 'rxjs/add/operator/distinctUntilChanged';
+
+import 'rxjs/add/operator/takeUntil';
 
 import {
   SkyTabComponent
@@ -54,6 +65,16 @@ export class SkyTabsetComponent
   @Input()
   public active: number | string;
 
+  @Input()
+  public set urlParam(value: string) {
+    const sanitized = value.toLowerCase().replace(/[\W]/g, '');
+    this._urlParam = `${sanitized}-active-tab`;
+  }
+
+  public get urlParam(): string {
+    return this._urlParam || '';
+  }
+
   @Output()
   public newTab = new EventEmitter<any>();
 
@@ -68,15 +89,19 @@ export class SkyTabsetComponent
   @ContentChildren(SkyTabComponent)
   public tabs: QueryList<SkyTabComponent>;
 
+  private ngUnsubscribe = new Subject<void>();
+
   private _tabStyle: string;
+  private _urlParam: string;
 
   constructor(
     private tabsetService: SkyTabsetService,
     private adapterService: SkyTabsetAdapterService,
     private elRef: ElementRef,
-    private changeRef: ChangeDetectorRef
-  ) {
-  }
+    private changeRef: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) { }
 
   public getTabButtonId(tab: SkyTabComponent): string {
     if (this.tabDisplayMode === 'tabs') {
@@ -101,8 +126,24 @@ export class SkyTabsetComponent
     this.adapterService.detectOverflow();
   }
 
-  public selectTab(newTab: SkyTabComponent) {
-    this.tabsetService.activateTab(newTab);
+  public selectTab(tab: SkyTabComponent) {
+    if (tab.disabled) {
+      return;
+    }
+
+    if (!this.urlParam) {
+      this.tabsetService.activateTab(tab);
+      return;
+    }
+
+    const queryParams: any = {};
+    queryParams[this.urlParam] = `${tab.routerLink}`;
+
+    this.router.navigate([], {
+      queryParams,
+      queryParamsHandling: 'merge',
+      relativeTo: this.activatedRoute
+    });
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -141,6 +182,12 @@ export class SkyTabsetComponent
           }
         });
     });
+
+    // Wait for the tab components `active` state to be resolved before
+    // listening to changes to URL params.
+    setTimeout(() => {
+      this.watchQueryParamChanges();
+    });
   }
 
   public ngAfterViewInit() {
@@ -158,11 +205,41 @@ export class SkyTabsetComponent
   }
 
   public ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
     this.tabsetService.destroy();
   }
 
   private updateDisplayMode(currentOverflow: boolean) {
     this.tabDisplayMode = currentOverflow ? 'dropdown' : 'tabs';
     this.changeRef.markForCheck();
+  }
+
+  private watchQueryParamChanges(): void {
+    this.activatedRoute.queryParams
+      .distinctUntilChanged()
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe((params) => {
+        const activeTabsetParam = params[this.urlParam];
+
+        if (!activeTabsetParam) {
+          this.tabsetService.activateTabIndex(this.active);
+          return;
+        }
+
+        this.activateTabByUrlParam(activeTabsetParam);
+      });
+  }
+
+  private activateTabByUrlParam(routerLink: string): void {
+    let index: number;
+
+    this.tabs.forEach((tabComponent, i) => {
+      if (tabComponent.routerLink === routerLink) {
+        index = i;
+      }
+    });
+
+    this.tabsetService.activateTabIndex(index);
   }
 }
