@@ -40,6 +40,7 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
   }
 
   public get routerLink(): string {
+    // Remove all non-alphanumeric characters.
     const sanitized = this.tabHeading.toLowerCase().replace(/[\W]/g, '');
     return sanitized;
   }

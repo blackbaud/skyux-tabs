@@ -67,6 +67,7 @@ export class SkyTabsetComponent
 
   @Input()
   public set urlParam(value: string) {
+    // Remove all non-alphanumeric characters.
     const sanitized = value.toLowerCase().replace(/[\W]/g, '');
     this._urlParam = `${sanitized}-active-tab`;
   }
@@ -126,7 +127,7 @@ export class SkyTabsetComponent
     this.adapterService.detectOverflow();
   }
 
-  public selectTab(tab: SkyTabComponent) {
+  public selectTab(tab: SkyTabComponent): void {
     if (tab.disabled) {
       return;
     }
@@ -183,8 +184,8 @@ export class SkyTabsetComponent
         });
     });
 
-    // Wait for the tab components `active` state to be resolved before
-    // listening to changes to URL params.
+    // Wait for the tab components' `active` state to be resolved before
+    // listening to changes to the URL params.
     setTimeout(() => {
       this.watchQueryParamChanges();
     });
