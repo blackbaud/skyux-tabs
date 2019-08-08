@@ -1,5 +1,5 @@
 <sky-tabset
-  queryParam="foobar"
+  [queryParam]="queryParam"
   (activeChange)="onActiveChange($event)"
 >
   <sky-tab
@@ -9,6 +9,7 @@
   <sky-tab
     tabHeading="Design & Guidelines"
     [disabled]="secondTabDisabled"
+    [queryParamValue]="queryParamValue"
   >
   </sky-tab>
   <sky-tab

@@ -903,6 +903,8 @@ describe('Tabset component', () => {
 
       expect(fixture.componentInstance.activeIndex).toEqual(0);
 
+      fixture.componentInstance.queryParam = 'foobar';
+
       router.navigate([], {
         queryParams: {
           'foobar-active-tab': 'designguidelines'
@@ -917,18 +919,39 @@ describe('Tabset component', () => {
     }));
 
     it('should set a query param when a tab is selected', fakeAsync(() => {
+      fixture.componentInstance.queryParam = 'foobar';
+
       fixture.detectChanges();
       tick();
 
       expect(fixture.componentInstance.activeIndex).toEqual(0);
 
       const buttonElement = fixture.nativeElement.querySelectorAll('.sky-btn-tab')[1];
-
       buttonElement.click();
+
       fixture.detectChanges();
       tick();
 
       expect(location.path()).toEqual('/?foobar-active-tab=designguidelines');
+      expect(fixture.componentInstance.activeIndex).toEqual(1);
+    }));
+
+    it('should allow custom query param value for each tab', fakeAsync(() => {
+      fixture.componentInstance.queryParam = 'foobar';
+      fixture.componentInstance.queryParamValue = 'baz';
+
+      fixture.detectChanges();
+      tick();
+
+      expect(fixture.componentInstance.activeIndex).toEqual(0);
+
+      const buttonElement = fixture.nativeElement.querySelectorAll('.sky-btn-tab')[1];
+      buttonElement.click();
+
+      fixture.detectChanges();
+      tick();
+
+      expect(location.path()).toEqual('/?foobar-active-tab=baz');
       expect(fixture.componentInstance.activeIndex).toEqual(1);
     }));
   });

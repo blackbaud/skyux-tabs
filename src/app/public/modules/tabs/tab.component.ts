@@ -35,18 +35,23 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
   @Input()
   public active: boolean;
 
+  @Input()
+  public set queryParamValue(value: string) {
+    this._queryParamValue = this.sanitizeKey(value);
+  }
+
+  public get queryParamValue(): string {
+    return this._queryParamValue || this.sanitizeKey(this.tabHeading);
+  }
+
   public get allowClose(): boolean {
     return this.close.observers.length > 0;
   }
 
-  public get routerLink(): string {
-    // Remove all non-alphanumeric characters.
-    const sanitized = this.tabHeading.toLowerCase().replace(/[\W]/g, '');
-    return sanitized;
-  }
-
   @Output()
   public close = new EventEmitter<any>();
+
+  private _queryParamValue: string;
 
   constructor(private tabsetService: SkyTabsetService, private ref: ChangeDetectorRef) {}
 
@@ -88,6 +93,14 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
         && activeChange.previousValue !== activeChange.currentValue
         && this.active;
     }
+  }
+
+  private sanitizeKey(value: string): string {
+    if (!value) {
+      return;
+    }
+
+    return value.toLowerCase().replace(/[\W]/g, '');
   }
 
 }

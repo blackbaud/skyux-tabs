@@ -10,6 +10,10 @@ export class SkyTabsetQueryParamsFixtureComponent {
 
   public activeIndex: number;
 
+  public queryParam: string;
+
+  public queryParamValue: string;
+
   public secondTabDisabled = false;
 
   public onActiveChange(index: number): void {
