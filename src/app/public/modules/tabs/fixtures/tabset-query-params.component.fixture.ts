@@ -9,6 +9,7 @@ import {
 export class SkyTabsetQueryParamsFixtureComponent {
 
   public activeIndex: number;
+
   public secondTabDisabled = false;
 
   public onActiveChange(index: number): void {

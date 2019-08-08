@@ -27,20 +27,20 @@ import {
 } from '../tabs.module';
 
 import {
-  TabsetTestComponent
-} from './tabset.component.fixture';
-
-import {
-  SkyWizardTestFormComponent
-} from './tabset-wizard.component.fixture';
-
-import {
   TabsetActiveTestComponent
 } from './tabset-active.component.fixture';
 
 import {
   SkyTabsetQueryParamsFixtureComponent
 } from './tabset-query-params.component.fixture';
+
+import {
+  SkyWizardTestFormComponent
+} from './tabset-wizard.component.fixture';
+
+import {
+  TabsetTestComponent
+} from './tabset.component.fixture';
 
 @NgModule({
   declarations: [

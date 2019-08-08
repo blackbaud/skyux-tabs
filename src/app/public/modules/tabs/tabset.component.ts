@@ -93,6 +93,7 @@ export class SkyTabsetComponent
   private ngUnsubscribe = new Subject<void>();
 
   private _tabStyle: string;
+
   private _queryParam: string;
 
   constructor(
@@ -218,13 +219,9 @@ export class SkyTabsetComponent
       .takeUntil(this.ngUnsubscribe)
       .subscribe((params) => {
         const activeTabsetParam = params[this.queryParam];
-
-        if (!activeTabsetParam) {
-          this.tabsetService.activateTabIndex(this.active);
-          return;
+        if (activeTabsetParam) {
+          this.activateTabByUrlParam(activeTabsetParam);
         }
-
-        this.activateTabByUrlParam(activeTabsetParam);
       });
   }
 
