@@ -100,7 +100,18 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
       return;
     }
 
-    return value.toLowerCase().replace(/[\W]/g, '');
+    const sanitized = value.toLowerCase()
+
+      // Remove special characters.
+      .replace(/[\_\~\`\@\!\#\$\%\^\&\*\(\)\[\]\{\}\;\:\'\/\\\<\>\,\.\?\=\+\|"]/g, '')
+
+      // Replace space characters with a dash.
+      .replace(/\s/g, '-')
+
+      // Remove any double-dashes.
+      .replace(/--/g, '-');
+
+    return sanitized;
   }
 
 }

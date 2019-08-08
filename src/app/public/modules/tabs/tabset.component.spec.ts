@@ -907,14 +907,14 @@ describe('Tabset component', () => {
 
       router.navigate([], {
         queryParams: {
-          'foobar-active-tab': 'designguidelines'
+          'foobar-active-tab': 'design-guidelines'
         }
       });
 
       fixture.detectChanges();
       tick();
 
-      expect(location.path()).toEqual('/?foobar-active-tab=designguidelines');
+      expect(location.path()).toEqual('/?foobar-active-tab=design-guidelines');
       expect(fixture.componentInstance.activeIndex).toEqual(1);
     }));
 
@@ -932,7 +932,7 @@ describe('Tabset component', () => {
       fixture.detectChanges();
       tick();
 
-      expect(location.path()).toEqual('/?foobar-active-tab=designguidelines');
+      expect(location.path()).toEqual('/?foobar-active-tab=design-guidelines');
       expect(fixture.componentInstance.activeIndex).toEqual(1);
     }));
 
@@ -953,6 +953,41 @@ describe('Tabset component', () => {
 
       expect(location.path()).toEqual('/?foobar-active-tab=baz');
       expect(fixture.componentInstance.activeIndex).toEqual(1);
+    }));
+
+    it('should handle special characters in query param value', fakeAsync(() => {
+      fixture.componentInstance.queryParam = 'foobar';
+      fixture.componentInstance.queryParamValue = '!@#$%a ^&*()_-+b ={}[]\\|/:-c;"\'<>,.?~ d`';
+
+      fixture.detectChanges();
+      tick();
+
+      expect(fixture.componentInstance.activeIndex).toEqual(0);
+
+      const buttonElement = fixture.nativeElement.querySelectorAll('.sky-btn-tab')[1];
+      buttonElement.click();
+
+      fixture.detectChanges();
+      tick();
+
+      expect(location.path()).toEqual('/?foobar-active-tab=a-b-c-d');
+      expect(fixture.componentInstance.activeIndex).toEqual(1);
+
+      // Make sure non-English special characters still work!
+      fixture.componentInstance.queryParamValue = '片仮名';
+
+      fixture.detectChanges();
+      tick();
+
+      buttonElement.click();
+
+      fixture.detectChanges();
+      tick();
+
+      // Angular's Location returns a URI encoded result.
+      expect(location.path()).toEqual(
+        `/?foobar-active-tab=${encodeURIComponent('片仮名')}`
+      );
     }));
   });
 });
