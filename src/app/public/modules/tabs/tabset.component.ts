@@ -134,7 +134,6 @@ export class SkyTabsetComponent
 
   public selectTab(tab: SkyTabComponent): void {
     if (!this.queryParam || !tab.queryParamValue) {
-
       this.tabsetService.activateTab(tab);
       return;
     }
