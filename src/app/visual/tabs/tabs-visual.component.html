@@ -29,7 +29,12 @@
     <sky-tab tabHeading="Permanent tab" [tabHeaderCount]="9">
       This tab cannot be closed
     </sky-tab>
-    <sky-tab [tabHeading]="'Tab 3'" (close)="closeTab()" [tabHeaderCount]="144">
+    <sky-tab
+      tabHeading="Tab 3"
+      queryParamValue="foobar"
+      [tabHeaderCount]="144"
+      (close)="closeTab()"
+    >
       Tab 3 Content
     </sky-tab>
   </sky-tabset>
@@ -38,7 +43,6 @@
     <sky-tabset
       tabStyle="wizard"
       [active]="0"
-
       #wizardDemo>
       <sky-tab
         tabHeading="Step 1"
