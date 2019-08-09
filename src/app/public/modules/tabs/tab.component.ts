@@ -35,13 +35,17 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
   @Input()
   public active: boolean;
 
+  /**
+   * A lower-case string to represent this tab in the URL permalink.
+   * Set to `undefined` to automatically generate a name from the `tabHeading` property.
+   */
   @Input()
-  public set queryParamValue(value: string) {
-    this._queryParamValue = this.sanitizeKey(value);
+  public set permalinkValue(value: string) {
+    this._permalinkValue = this.sanitizeName(value);
   }
 
-  public get queryParamValue(): string {
-    return this._queryParamValue || this.sanitizeKey(this.tabHeading);
+  public get permalinkValue(): string {
+    return this._permalinkValue || this.sanitizeName(this.tabHeading);
   }
 
   public get allowClose(): boolean {
@@ -51,7 +55,7 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
   @Output()
   public close = new EventEmitter<any>();
 
-  private _queryParamValue: string;
+  private _permalinkValue: string;
 
   constructor(private tabsetService: SkyTabsetService, private ref: ChangeDetectorRef) {}
 
@@ -95,7 +99,7 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
     }
   }
 
-  private sanitizeKey(value: string): string {
+  private sanitizeName(value: string): string {
     if (!value) {
       return;
     }

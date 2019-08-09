@@ -56,8 +56,8 @@ import {
 } from './fixtures/tabset-adapter.service.mock';
 
 import {
-  SkyTabsetQueryParamsFixtureComponent
-} from './fixtures/tabset-query-params.component.fixture';
+  SkyTabsetPermalinksFixtureComponent
+} from './fixtures/tabset-permalinks.component.fixture';
 
 describe('Tabset component', () => {
   beforeEach(() => {
@@ -886,13 +886,13 @@ describe('Tabset component', () => {
     ));
   });
 
-  describe('query params', () => {
-    let fixture: ComponentFixture<SkyTabsetQueryParamsFixtureComponent>;
+  describe('Permalinks', () => {
+    let fixture: ComponentFixture<SkyTabsetPermalinksFixtureComponent>;
     let router: Router;
     let location: Location;
 
     beforeEach(() => {
-      fixture = TestBed.createComponent(SkyTabsetQueryParamsFixtureComponent);
+      fixture = TestBed.createComponent(SkyTabsetPermalinksFixtureComponent);
       router = TestBed.get(Router);
       location = TestBed.get(Location);
     });
@@ -903,7 +903,7 @@ describe('Tabset component', () => {
 
       expect(fixture.componentInstance.activeIndex).toEqual(0);
 
-      fixture.componentInstance.queryParam = 'foobar';
+      fixture.componentInstance.permalinkId = 'foobar';
 
       router.navigate([], {
         queryParams: {
@@ -919,7 +919,7 @@ describe('Tabset component', () => {
     }));
 
     it('should set a query param when a tab is selected', fakeAsync(() => {
-      fixture.componentInstance.queryParam = 'foobar';
+      fixture.componentInstance.permalinkId = 'foobar';
 
       fixture.detectChanges();
       tick();
@@ -937,8 +937,8 @@ describe('Tabset component', () => {
     }));
 
     it('should allow custom query param value for each tab', fakeAsync(() => {
-      fixture.componentInstance.queryParam = 'foobar';
-      fixture.componentInstance.queryParamValue = 'baz';
+      fixture.componentInstance.permalinkId = 'foobar';
+      fixture.componentInstance.permalinkValue = 'baz';
 
       fixture.detectChanges();
       tick();
@@ -956,8 +956,8 @@ describe('Tabset component', () => {
     }));
 
     it('should handle special characters in query param value', fakeAsync(() => {
-      fixture.componentInstance.queryParam = 'foobar';
-      fixture.componentInstance.queryParamValue = '!@#$%a ^&*()_-+b ={}[]\\|/:-c;"\'<>,.?~ d`';
+      fixture.componentInstance.permalinkId = 'foobar';
+      fixture.componentInstance.permalinkValue = '!@#$%a ^&*()_-+b ={}[]\\|/:-c;"\'<>,.?~ d`';
 
       fixture.detectChanges();
       tick();
@@ -974,7 +974,7 @@ describe('Tabset component', () => {
       expect(fixture.componentInstance.activeIndex).toEqual(1);
 
       // Make sure non-English special characters still work!
-      fixture.componentInstance.queryParamValue = '片仮名';
+      fixture.componentInstance.permalinkValue = '片仮名';
 
       fixture.detectChanges();
       tick();

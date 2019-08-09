@@ -3,16 +3,16 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-tabset-query-params-test',
-  templateUrl: './tabset-query-params.component.fixture.html'
+  selector: 'app-tabset-permalinks-test',
+  templateUrl: './tabset-permalinks.component.fixture.html'
 })
-export class SkyTabsetQueryParamsFixtureComponent {
+export class SkyTabsetPermalinksFixtureComponent {
 
   public activeIndex: number;
 
-  public queryParam: string;
+  public permalinkId: string;
 
-  public queryParamValue: string;
+  public permalinkValue: string;
 
   public secondTabDisabled = false;
 

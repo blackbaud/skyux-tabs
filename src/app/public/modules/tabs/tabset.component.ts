@@ -66,18 +66,18 @@ export class SkyTabsetComponent
   public active: number | string;
 
   @Input()
-  public set queryParam(value: string) {
+  public set permalinkId(value: string) {
     if (!value) {
       return;
     }
 
     // Remove all non-alphanumeric characters.
     const sanitized = value.toLowerCase().replace(/[\W]/g, '');
-    this._queryParam = `${sanitized}-active-tab`;
+    this._permalinkId = `${sanitized}-active-tab`;
   }
 
-  public get queryParam(): string {
-    return this._queryParam || '';
+  public get permalinkId(): string {
+    return this._permalinkId || '';
   }
 
   @Output()
@@ -96,9 +96,9 @@ export class SkyTabsetComponent
 
   private ngUnsubscribe = new Subject<void>();
 
-  private _tabStyle: string;
+  private _permalinkId: string;
 
-  private _queryParam: string;
+  private _tabStyle: string;
 
   constructor(
     private tabsetService: SkyTabsetService,
@@ -133,13 +133,13 @@ export class SkyTabsetComponent
   }
 
   public selectTab(tab: SkyTabComponent): void {
-    if (!this.queryParam || !tab.queryParamValue) {
+    if (!this.permalinkId || !tab.permalinkValue) {
       this.tabsetService.activateTab(tab);
       return;
     }
 
     const queryParams: any = {};
-    queryParams[this.queryParam] = `${tab.queryParamValue}`;
+    queryParams[this.permalinkId] = `${tab.permalinkValue}`;
 
     this.router.navigate([], {
       queryParams,
@@ -222,18 +222,18 @@ export class SkyTabsetComponent
       .distinctUntilChanged()
       .takeUntil(this.ngUnsubscribe)
       .subscribe((params) => {
-        const paramValue = params[this.queryParam];
-        if (paramValue) {
-          this.activateTabByQueryParam(paramValue);
+        const permalinkValue = params[this.permalinkId];
+        if (permalinkValue) {
+          this.activateTabByPermalinkValue(permalinkValue);
         }
       });
   }
 
-  private activateTabByQueryParam(value: string): void {
+  private activateTabByPermalinkValue(value: string): void {
     let index: number;
 
     this.tabs.forEach((tabComponent, i) => {
-      if (tabComponent.queryParamValue === value) {
+      if (tabComponent.permalinkValue === value) {
         index = i;
       }
     });
