@@ -9,12 +9,11 @@
   ::ng-deep {
     .sky-btn-tab {
       margin: 0;
-      display: flex;
       border-radius: 0;
       width: 100%;
 
       > .sky-btn-tab-close {
-        flex: 0 0 auto;
+        float: right;
       }
     }
   }
