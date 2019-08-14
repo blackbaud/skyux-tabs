@@ -542,7 +542,7 @@ describe('Tabset component', () => {
       fixture.detectChanges();
       tick();
 
-      let dropdownTabButtons = el.querySelectorAll('.sky-tab-dropdown-item-btn');
+      let dropdownTabButtons = el.querySelectorAll('.sky-tab-dropdown-item .sky-btn-tab');
       expect(dropdownTabButtons[1]).toHaveText('Tab 2');
 
       dropdownTabButtons[1].click();
@@ -576,7 +576,7 @@ describe('Tabset component', () => {
         fixture.detectChanges();
         tick();
 
-        let dropdownTabButtons = el.querySelectorAll('.sky-tab-dropdown-item-btn');
+        let dropdownTabButtons = el.querySelectorAll('.sky-tab-dropdown-item .sky-btn-tab');
 
         dropdownTabButtons[0].click();
         tick();
@@ -589,7 +589,7 @@ describe('Tabset component', () => {
         tick();
 
         expect(dropdownTabButtons[1]).toHaveText('Tab 2');
-        expect(dropdownTabButtons[1]).toHaveCssClass('sky-btn-disabled');
+        expect(dropdownTabButtons[1]).toHaveCssClass('sky-btn-tab-disabled');
 
         dropdownTabButtons[1].click();
         tick();
@@ -614,7 +614,7 @@ describe('Tabset component', () => {
         let tabEl = el.querySelector('.sky-dropdown-button-type-tab');
 
         tabEl.click();
-        el.querySelectorAll('.sky-tab-dropdown-item-close')[0].click();
+        el.querySelectorAll('.sky-btn-tab-close')[0].click();
 
         fixture.detectChanges();
 
@@ -861,7 +861,6 @@ describe('Tabset component', () => {
 
         expect(tab.getAttribute('aria-labelledby')).toBe(dropBtn.getAttribute('id'));
         expect(dropBtn.getAttribute('aria-controls')).toBe(tab.getAttribute('id'));
-        expect(dropBtn).toHaveCssClass('sky-tab-dropdown-item-btn');
         expect(tabBtn.tagName.toLowerCase()).toBe('sky-tab-button');
       });
     }));

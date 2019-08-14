@@ -33,7 +33,7 @@
       [disabled]="disabled"
       [attr.aria-label]="'skyux_tab_close' | skyLibResources"
       *ngIf="allowClose"
-      (click)="doCloseClick();$event.stopPropagation()"
+      (click)="doCloseClick($event)"
   >
     <sky-icon icon="remove"></sky-icon>
   </button>

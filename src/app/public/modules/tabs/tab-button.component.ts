@@ -117,8 +117,13 @@ export class SkyTabButtonComponent {
     }
   }
 
-  public doCloseClick() {
+  public doCloseClick(event: any) {
     this.closeClick.emit(undefined);
+
+    // Prevent the click event from bubbling up to the anchor tag;
+    // otherwise it will trigger a page refresh.
+    event.stopPropagation();
+    event.preventDefault();
   }
 
   public keyDownFunction(event: any) {
