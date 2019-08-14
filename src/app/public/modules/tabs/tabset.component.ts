@@ -15,8 +15,7 @@ import {
 } from '@angular/core';
 
 import {
-  ActivatedRoute,
-  Router
+  ActivatedRoute
 } from '@angular/router';
 
 import {
@@ -105,8 +104,7 @@ export class SkyTabsetComponent
     private adapterService: SkyTabsetAdapterService,
     private elRef: ElementRef,
     private changeRef: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
+    private activatedRoute: ActivatedRoute
   ) { }
 
   public getTabButtonId(tab: SkyTabComponent): string {
@@ -133,19 +131,11 @@ export class SkyTabsetComponent
   }
 
   public selectTab(tab: SkyTabComponent): void {
-    if (!this.permalinkId || !tab.permalinkValue) {
-      this.tabsetService.activateTab(tab);
+    if (this.permalinkId && tab.permalinkValue) {
       return;
     }
 
-    const queryParams: any = {};
-    queryParams[this.permalinkId] = `${tab.permalinkValue}`;
-
-    this.router.navigate([], {
-      queryParams,
-      queryParamsHandling: 'merge',
-      relativeTo: this.activatedRoute
-    });
+    this.tabsetService.activateTab(tab);
   }
 
   public ngOnChanges(changes: SimpleChanges) {

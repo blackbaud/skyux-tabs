@@ -3,12 +3,17 @@ import {
   EventEmitter,
   Input,
   Output,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  Optional
 } from '@angular/core';
 
 import {
   SkyTabsetAdapterService
 } from './tabset-adapter.service';
+
+import {
+  SkyTabsetComponent
+} from './tabset.component';
 
 @Component({
   selector: 'sky-tab-button',
@@ -59,11 +64,40 @@ export class SkyTabButtonComponent {
     return this._tabHeaderCount;
   }
 
+  @Input()
+  public permalinkValue: string;
+
   @Output()
   public tabClick = new EventEmitter<any>();
 
   @Output()
   public closeClick = new EventEmitter<any>();
+
+  public get queryParams(): {[_: string]: string} {
+    if (!this.hasPermalink) {
+      return;
+    }
+
+    const params: {[_: string]: string} = {};
+    params[this.tabsetComponent.permalinkId] = this.permalinkValue;
+
+    return params;
+  }
+
+  public get routerLink(): string[] {
+    if (!this.hasPermalink) {
+      return;
+    }
+
+    return [];
+  }
+
+  private get hasPermalink(): boolean {
+    return !!(
+      this.tabsetComponent.permalinkId &&
+      this.permalinkValue
+    );
+  }
 
   private _allowClose: boolean;
 
@@ -73,8 +107,9 @@ export class SkyTabButtonComponent {
 
   constructor(
     private adapterService: SkyTabsetAdapterService,
-    private ref: ChangeDetectorRef
-  ) {}
+    private ref: ChangeDetectorRef,
+    @Optional() private tabsetComponent: SkyTabsetComponent
+  ) { }
 
   public doTabClick() {
     if (!this.disabled) {

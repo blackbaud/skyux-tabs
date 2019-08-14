@@ -10,6 +10,10 @@
       'sky-tab-btn-closeable': allowClose
     }"
     [tabindex]="disabled ? '-1' : '0'"
+    [routerLink]="routerLink"
+    [queryParams]="queryParams"
+    queryParamsHandling="merge"
+    preserveFragment
     (click)="doTabClick()"
     (keydown)="keyDownFunction($event)"
 >
