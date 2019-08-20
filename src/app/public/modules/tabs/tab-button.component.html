@@ -17,12 +17,15 @@
     (click)="doTabClick()"
     (keydown)="keyDownFunction($event)"
 >
-  {{tabHeading}}
   <span
-    class="sky-tab-header-count"
-    *ngIf="tabHeaderCount || tabHeaderCount === 0"
+    class="sky-tab-heading"
   >
-    {{tabHeaderCount}}
+    {{tabHeading}}
+    <span *ngIf="tabHeaderCount || tabHeaderCount === 0"
+      class="sky-tab-header-count"
+    >
+      {{tabHeaderCount}}
+    </span>
   </span>
   <button
       type="button"

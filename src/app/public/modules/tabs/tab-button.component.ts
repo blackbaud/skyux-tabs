@@ -1,10 +1,10 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
-  Output,
-  ChangeDetectorRef,
-  Optional
+  Optional,
+  Output
 } from '@angular/core';
 
 import {
