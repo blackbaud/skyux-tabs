@@ -1,5 +1,7 @@
 <a
     class="sky-btn-tab sky-margin-inline-compact"
+    preserveFragment
+    queryParamsHandling="merge"
     role="tab"
     [attr.aria-disabled]="disabled"
     [attr.aria-selected]="active"
@@ -9,11 +11,9 @@
       'sky-btn-tab-disabled': disabled,
       'sky-tab-btn-closeable': allowClose
     }"
-    [tabindex]="disabled ? '-1' : '0'"
-    [routerLink]="routerLink"
     [queryParams]="queryParams"
-    queryParamsHandling="merge"
-    preserveFragment
+    [routerLink]="routerLink"
+    [tabindex]="disabled ? '-1' : '0'"
     (click)="doTabClick()"
     (keydown)="keyDownFunction($event)"
 >
