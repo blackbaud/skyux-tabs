@@ -24,12 +24,13 @@
   "peerDependencies": {
     "@angular/common": ">=4.3.6",
     "@angular/core": ">=4.3.6",
+    "@angular/router": ">=4.3.6",
     "@skyux/core": "^3.5.1",
     "@skyux/i18n": "^3.5.0",
     "@skyux/forms": "^3.0.0",
     "@skyux/indicators": "^3.0.0",
     "@skyux/modals": "^3.0.0",
-    "@skyux/popovers": "^3.0.0"
+    "@skyux/popovers": "^3.2.0"
   },
   "dependencies": {},
   "devDependencies": {
@@ -60,7 +61,7 @@
     "@skyux/indicators": "3.1.0",
     "@skyux/modals": "3.0.7",
     "@skyux/omnibar-interop": "3.1.0",
-    "@skyux/popovers": "3.1.1",
+    "@skyux/popovers": "3.2.0",
     "@skyux/router": "3.1.1",
     "@skyux/tabs": "3.1.0",
     "@skyux/theme": "3.7.0",
