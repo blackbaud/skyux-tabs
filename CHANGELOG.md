@@ -1,3 +1,7 @@
+# 3.2.1 (2019-10-25)
+
+- Fixed tabset component to fallback to the active index if `permalinkValue` is undefined. [#37](https://github.com/blackbaud/skyux-tabs/pull/37)
+
 # 3.2.0 (2019-08-28)
 
 - Added query parameters to the URL to reflect active tab states in the tabset component. [#31](https://github.com/blackbaud/skyux-tabs/pull/31)
