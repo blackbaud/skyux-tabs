@@ -24,14 +24,12 @@ export class SkyTabsetAdapterService {
     if (this.el && this.tabsEl) {
       let elWidth = this.el.offsetWidth;
       let tabsElWidth = this.tabsEl.offsetWidth + this.bntsEl.offsetWidth;
-      if (tabsElWidth < elWidth) {
-        if (this.currentOverflow) {
-          this.currentOverflow = false;
-          this.overflowChange.emit(false);
-        }
-      } else if (!this.currentOverflow) {
-        this.currentOverflow = true;
-        this.overflowChange.emit(true);
+
+      const currentOverflow = (tabsElWidth > elWidth);
+
+      if (this.currentOverflow !== currentOverflow) {
+        this.currentOverflow = currentOverflow;
+        this.overflowChange.emit(currentOverflow);
       }
     }
   }

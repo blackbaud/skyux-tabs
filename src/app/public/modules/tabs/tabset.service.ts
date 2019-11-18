@@ -22,8 +22,7 @@ export class SkyTabsetService implements OnDestroy {
   public activeIndex: BehaviorSubject<any> = new BehaviorSubject(0);
 
   public ngOnDestroy(): void {
-    this.tabs.complete();
-    this.activeIndex.complete();
+    this.destroy();
   }
 
   public activateTab(tab: SkyTabComponent) {
