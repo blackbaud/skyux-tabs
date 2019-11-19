@@ -44,10 +44,10 @@ export class SkyTabsetAdapterService {
    */
   private getTabsOffsetLeft(): number {
     const tabsetRect = this.el.getBoundingClientRect();
-    const firstTabOrDropdownRect = this.el
-      .querySelector('span:first-child')
-      .getBoundingClientRect();
 
-    return firstTabOrDropdownRect.left - tabsetRect.left;
+    // The dropdown element is the first "tab" and always exists in the DOM, even when hidden.
+    const firstTabRect = this.el.querySelector('.sky-tabset-dropdown').getBoundingClientRect();
+
+    return firstTabRect.left - tabsetRect.left;
   }
 }
