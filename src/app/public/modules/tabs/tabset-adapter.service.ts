@@ -12,25 +12,42 @@ export class SkyTabsetAdapterService {
 
   private bntsEl: HTMLElement;
 
+  private tabsOffsetLeft: number;
+
   public init(elRef: ElementRef) {
-    this.el = elRef.nativeElement.querySelector('.sky-tabset');
-    this.tabsEl = elRef.nativeElement.querySelector('.sky-tabset-tabs');
-    this.bntsEl = elRef.nativeElement.querySelector('.sky-tabset-btns');
+    const nativeElement = elRef.nativeElement;
+    this.el = nativeElement.querySelector('.sky-tabset');
+    this.tabsEl = nativeElement.querySelector('.sky-tabset-tabs');
+    this.bntsEl = nativeElement.querySelector('.sky-tabset-btns');
+
+    this.tabsOffsetLeft = this.getTabsOffsetLeft();
 
     this.detectOverflow();
   }
 
-  public detectOverflow() {
+  public detectOverflow(): void {
     if (this.el && this.tabsEl) {
       let elWidth = this.el.offsetWidth;
-      let tabsElWidth = this.tabsEl.offsetWidth + this.bntsEl.offsetWidth;
+      let tabsElWidth = this.tabsEl.offsetWidth + this.bntsEl.offsetWidth + this.tabsOffsetLeft;
 
-      const currentOverflow = (tabsElWidth > elWidth);
+      const areTabsOverflowing = (tabsElWidth > elWidth);
 
-      if (this.currentOverflow !== currentOverflow) {
-        this.currentOverflow = currentOverflow;
-        this.overflowChange.emit(currentOverflow);
+      if (this.currentOverflow !== areTabsOverflowing) {
+        this.currentOverflow = areTabsOverflowing;
+        this.overflowChange.emit(this.currentOverflow);
       }
     }
+  }
+
+  /**
+   * Returns the number of pixels to the left of the first tab.
+   */
+  private getTabsOffsetLeft(): number {
+    const tabsetRect = this.el.getBoundingClientRect();
+    const firstTabOrDropdownRect = this.el
+      .querySelector('span:first-child')
+      .getBoundingClientRect();
+
+    return firstTabOrDropdownRect.left - tabsetRect.left;
   }
 }
