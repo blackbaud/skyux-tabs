@@ -1,3 +1,9 @@
+# 3.2.2 (2019-11-21)
+
+- Fixed the tabset component to correctly select the previously active tab when using the browser's "back" button. [#44](https://github.com/blackbaud/skyux-tabs/pull/44)
+- Fixed the tabset component to not automatically collapse when embedded inside another tabset component. [#44](https://github.com/blackbaud/skyux-tabs/pull/44)
+- Fixed the tabset component to clear the URL router fragment when selecting a different tab. [#44](https://github.com/blackbaud/skyux-tabs/pull/44)
+
 # 3.2.1 (2019-10-25)
 
 - Fixed the tabset component to fall back to the active index if `permalinkValue` is undefined. [#37](https://github.com/blackbaud/skyux-tabs/pull/37)
