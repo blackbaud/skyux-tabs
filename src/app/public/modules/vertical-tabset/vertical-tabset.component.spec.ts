@@ -533,7 +533,7 @@ describe('Vertical tabset component - with ngFor', () => {
     // Next active tab should be selected.
     const tabContent = getVisibleTabContent(fixture)[0];
     expect(fixture.componentInstance.activeIndex).toEqual(1);
-    expect(tabContent.innerText).toEqual('Tab 2 content');
+    expect(tabContent.textContent.trim()).toBe('Tab 2 content');
   });
 });
 
