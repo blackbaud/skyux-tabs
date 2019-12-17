@@ -4,8 +4,53 @@
   pageTitle="Tabs"
 >
   <sky-docs-demo-page-summary>
-    Sample description.
+    Tabs are containers for dividing large amounts of content on a page.
   </sky-docs-demo-page-summary>
+
+  <sky-docs-demo>
+    <sky-docs-demo-control-panel
+      (selectionChange)="onDemoSelectionChange($event)"
+    >
+      <sky-docs-demo-control-panel-section>
+        <sky-docs-demo-control-panel-checkbox
+          label="Include counts"
+          propertyName="includeCounts"
+          [checked]="false"
+        >
+        </sky-docs-demo-control-panel-checkbox>
+      </sky-docs-demo-control-panel-section>
+
+      <sky-docs-demo-control-panel-section>
+        <sky-docs-demo-control-panel-checkbox
+          label="Include add and close"
+          propertyName="includeAddAndClose"
+          [checked]="false"
+        >
+        </sky-docs-demo-control-panel-checkbox>
+      </sky-docs-demo-control-panel-section>
+    </sky-docs-demo-control-panel>
+
+    <sky-tabset *ngIf="!demoSettings.includeAddAndClose">
+      <sky-tab *ngFor="let tab of tabArray; let i = index"
+        [tabHeaderCount]="demoSettings.showCounts ? tab.tabHeaderCount : null"
+        [tabHeading]="tab.tabHeading"
+      >
+        {{ tab.tabContent }}
+      </sky-tab>
+    </sky-tabset>
+
+    <sky-tabset *ngIf="demoSettings.includeAddAndClose"
+      (newTab)="onNewTabClick()"
+    >
+      <sky-tab *ngFor="let tab of tabArray; let i = index"
+        [tabHeaderCount]="demoSettings.showCounts ? tab.tabHeaderCount : null"
+        [tabHeading]="tab.tabHeading"
+        (close)="onCloseClick(i)"
+      >
+        {{ tab.tabContent }}
+      </sky-tab>
+    </sky-tabset>
+  </sky-docs-demo>
 
   <sky-docs-design-guidelines>
     See documentation for how to setup design guidelines.
