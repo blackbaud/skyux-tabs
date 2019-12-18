@@ -1,3 +1,4 @@
+// tslint:disable:member-ordering
 import {
   ChangeDetectionStrategy,
   Component
@@ -14,28 +15,7 @@ import {
 })
 export class TabsDocsComponent {
 
-  private tabCounter: number = 2;
-
-  private _includeCounts: boolean = false;
-
   public demoSettings: any = {};
-
-  public tabArray = [
-    {
-      tabHeading: 'Tab 1',
-      tabContent: 'Content for Tab 1',
-      tabHeaderCount: 5
-    },
-    {
-      tabHeading: 'Tab 2',
-      tabContent: 'Content for Tab 2',
-      tabHeaderCount: 3
-    }
-  ];
-
-  public foo(change: any): void {
-    console.log(change);
-  }
 
   public set includeCounts(value: boolean) {
     this._includeCounts = value;
@@ -44,6 +24,23 @@ export class TabsDocsComponent {
   public get includeCounts(): boolean {
     return this._includeCounts;
   }
+
+  public tabArray = [
+    {
+      tabHeading: 'Tab 1',
+      tabContent: 'Content for Tab 1',
+      tabHeaderCount: 99
+    },
+    {
+      tabHeading: 'Tab 2',
+      tabContent: 'Content for Tab 2',
+      tabHeaderCount: 99
+    }
+  ];
+
+  private tabCounter: number = 2;
+
+  private _includeCounts: boolean = false;
 
   public onDemoSelectionChange(change: SkyDocsDemoControlPanelChange): void {
     if (change.includeCounts === true) {
