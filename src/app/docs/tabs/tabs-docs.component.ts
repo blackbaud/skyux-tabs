@@ -35,10 +35,15 @@ export class TabsDocsComponent {
       tabHeading: 'Tab 2',
       tabContent: 'Content for Tab 2',
       tabHeaderCount: 99
+    },
+    {
+      tabHeading: 'Tab 3',
+      tabContent: 'Content for Tab 3',
+      tabHeaderCount: 99
     }
   ];
 
-  private tabCounter: number = 2;
+  private tabCounter: number = 3;
 
   private _includeCounts: boolean = false;
 
