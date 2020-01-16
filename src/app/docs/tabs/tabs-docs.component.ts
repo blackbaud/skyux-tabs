@@ -17,13 +17,7 @@ export class TabsDocsComponent {
 
   public demoSettings: any = {};
 
-  public set includeCounts(value: boolean) {
-    this._includeCounts = value;
-  }
-
-  public get includeCounts(): boolean {
-    return this._includeCounts;
-  }
+  public includeCounts: boolean;
 
   public tabArray = [
     {
@@ -44,8 +38,6 @@ export class TabsDocsComponent {
   ];
 
   private tabCounter: number = 3;
-
-  private _includeCounts: boolean = false;
 
   public onDemoSelectionChange(change: SkyDocsDemoControlPanelChange): void {
     if (change.includeCounts === true) {
