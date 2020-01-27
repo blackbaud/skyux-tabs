@@ -89,7 +89,7 @@
         </p>
 
         <sky-docs-design-guideline-thumbnail
-          caption="Do use tabs to show difference slices of the same data."
+          caption="Do use tabs to show different slices of the same data."
           captionType="success"
           imageSource="~/assets/img/guidelines/tabs/tabs-usage-1.png"
         >
@@ -99,7 +99,7 @@
           
         <sky-docs-design-guideline>
             <p>
-                Use tabs when users need to complete different tasks on a page and each task includs a significant amount of data.
+                Use tabs when users need to complete different tasks on a page and each task includes a significant amount of data.
             </p>
 
         <sky-docs-design-guideline-thumbnail
@@ -115,7 +115,7 @@
         headingStyle="danger"
         >
         <p>
-          Don't use tabs when a page already has a set of tabs. Change the workflow instead of using multiple sets of tabs. 
+          Don't use tabs within another tab. Change the workflow instead of nesting multiple sets of tabs. 
         </p>
 
         <sky-docs-design-guideline-thumbnail
@@ -136,7 +136,7 @@
         
         <sky-docs-design-guideline>
         <p>
-            Don't use tabs when they are likely to overflow the available horizontal space. The collapsed behavior of tabs will accommodate cases where users add many tabs themselves, but it is not intended as the default experience with a tab set. Use <a href="https://developer.blackbaud.com/skyux/components/vertical-tabs">vertical tabs</a> instead.
+            Don't use tabs when they are likely to overflow the available horizontal space. The collapsed behavior of tabs will accommodate small screen resolutions or cases where users add many tabs themselves, but it is not intended as the default experience with a tabset. Use <a href="https://developer.blackbaud.com/skyux/components/vertical-tabs">vertical tabs</a> instead.
         </p>
 
         <sky-docs-design-guideline-thumbnail
@@ -172,7 +172,7 @@
         heading="Count"
       >
         <p>
-          When a tab displays a list, you can include the record count in the tab if seeing that number will meaningfully impact the user's behavior.
+          When a tab displays a list, you can include the record count in the tab if that number will meaningfully impact user behavior.
         </p>
         <sky-docs-design-guideline-thumbnail
           imageSource="~/assets/img/guidelines/tabs/tabs-options-1.png"
@@ -187,7 +187,7 @@
           If users need to work with a subset of tabs in a large tabset, let them add and close tabs to display only the relevant tabs.
         </p>
         <p>
-            If a new tab includs multiple options on what to display, use <a href="https://developer.blackbaud.com/skyux/components/actions-button">action buttons</a> in the tab view to let users make selections.
+            If a new tab includes multiple options on what to display, use <a href="https://developer.blackbaud.com/skyux/components/action-button">action buttons</a> in the tab view to let users make selections.
         </p>
         <sky-docs-design-guideline-thumbnail
           imageSource="~/assets/img/guidelines/tabs/tabs-options-2.png"
@@ -205,7 +205,7 @@
         heading="Overflowing tabs"
       >
         <p>
-          If the tab set includes too many tabs to fit in the tab bar's available horizontal space, the tabs collapse into a dropdown.
+          If the tabset includes too many tabs to fit in the tab bar's available horizontal space, the tabs collapse into a dropdown.
         </p>
         <sky-docs-design-guideline-thumbnail
           imageSource="~/assets/img/guidelines/tabs/tabs-behavior-1.png"
@@ -282,15 +282,10 @@
     >
     
         <div class="sky-text-block">
-            If tabs are the main navigation on a page, display the tab header in the page title. Use the following format: <b>&lt;Page title&gt; — &lt;Company, product, or site identifier&gt;</b>. For example: <b>Portfolio — Work center — Blackbaud</b>. In addition, follow these guidelines for page titles:
+            If tabs are the main navigation on a page, display the tab header in the page title. Use the following format for tab titles: <b>&lt;Tab title&gt; - &lt;Page title&gt; — &lt;Company, product, or site identifier&gt;</b>. For example: <b>Portfolio — Work center — Blackbaud</b>. In addition, follow guidance for page titles such as keeping titles short and making them unique. For information about how to specify titles, see the <a href="https://developer.blackbaud.com/skyux/design/guidelines/page-layouts">page title guidelines</a>.
         </div>
-        <ul>
-            <li>Keep titles short.</li>
-            <li>Make titles unique.</li>
-            <li>Provide concise descriptions of each page's contents or purpose. Titles should stand on their own and make sense out of context.</li>
-            <li>Start with the most meaningful, differentiating terms for users to scan in browser tabs, window lists, and browser bookmarks.</li>
-        </ul>
-<!--
+
+<!-- REMOVED FOR BREVITY, SINCE THIS IS AVAILABLE ON THE PAGE DESIGN GUIDELINES
         <div class="sky-text-block">
             For information about how to use <a href="https://angular.io/docs/ts/latest/cookbook/set-document-title.html">the Angular <sky-code>Title</sky-code> service</a> and the SKY UX <sky-code>title</sky-code> configuration property to specify the title, see <a href="https://developer.blackbaud.com/skyux/learn/reference/configuration#app">the configuration reference</a>.
         </div>
@@ -354,6 +349,7 @@
       >
         
           <ul>
+              <li><a href="https://developer.blackbaud.com/skyux/components/action-button">Action buttons</a></li>
               <li><a href="https://developer.blackbaud.com/skyux/components/vertical-tabs">Vertical tabs</a></li>
           </ul>
           
