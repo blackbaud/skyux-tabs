@@ -84,7 +84,8 @@ export class SkyTabsetComponent
    * @deprecated
    * Specifies the behavior for a series of tabs.
    * The property was designed to create wizards by setting tabStyle="wizard" on tabsets in modals,
-   * but this wizard implementation was replaced by the progress indicator component.
+   * but this wizard implementation was replaced by the
+   * [progress indicator component](https://developer.blackbaud.com/skyux/components/progress-indicator).
    * @default "tabs"
    */
   @Input()
