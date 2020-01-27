@@ -1,6 +1,6 @@
 # 3.2.4 (2020-01-27)
 
-- Fixed the vertical tabset component to not have extra padding when placed inside a modal. [#53](https://github.com/blackbaud/skyux-tabs/pull/53)
+- Fixed the vertical tabset component to eliminate extra padding when placed inside a modal. [#53](https://github.com/blackbaud/skyux-tabs/pull/53)
 
 # 3.2.3 (2019-12-20)
 
