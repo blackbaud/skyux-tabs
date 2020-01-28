@@ -30,25 +30,51 @@
       </sky-docs-demo-control-panel-section>
     </sky-docs-demo-control-panel>
 
+    <!-- Add/close disabled -->
     <sky-tabset *ngIf="!demoSettings.includeAddAndClose">
-      <sky-tab *ngFor="let tab of tabArray; let i = index"
-        [tabHeaderCount]="demoSettings.showCounts ? tab.tabHeaderCount : null"
-        [tabHeading]="tab.tabHeading"
-      >
-        {{ tab.tabContent }}
-      </sky-tab>
+      <ng-container *ngFor="let tab of tabArray; let i = index">
+        <sky-tab
+          [tabHeaderCount]="demoSettings.showCounts ? tab.tabHeaderCount : null"
+          [tabHeading]="tab.tabHeading"
+        >
+          <div
+            class="sky-padding-even-large"
+          >
+            {{ tab.tabContent }}
+          </div>
+        </sky-tab>
+      </ng-container>
     </sky-tabset>
 
+    <!-- Add/close enabled -->
     <sky-tabset *ngIf="demoSettings.includeAddAndClose"
       (newTab)="onNewTabClick()"
     >
-      <sky-tab *ngFor="let tab of tabArray; let i = index"
-        [tabHeaderCount]="demoSettings.showCounts ? tab.tabHeaderCount : null"
-        [tabHeading]="tab.tabHeading"
-        (close)="onCloseClick(i)"
-      >
-        {{ tab.tabContent }}
-      </sky-tab>
+      <ng-container *ngFor="let tab of tabArray; let i = index">
+        <!-- Closeable tabs -->
+        <sky-tab *ngIf="tab.tabClosable"
+          [tabHeaderCount]="demoSettings.showCounts ? tab.tabHeaderCount : null"
+          [tabHeading]="tab.tabHeading"
+          (close)="onCloseClick(i)"
+        >
+          <div
+            class="sky-padding-even-large"
+          >
+            {{ tab.tabContent }}
+          </div>
+        </sky-tab>
+        <!-- Non-closeable tabs -->
+        <sky-tab *ngIf="!tab.tabClosable"
+          [tabHeaderCount]="demoSettings.showCounts ? tab.tabHeaderCount : null"
+          [tabHeading]="tab.tabHeading"
+        >
+          <div
+            class="sky-padding-even-large"
+          >
+            {{ tab.tabContent }}
+          </div>
+        </sky-tab>
+      </ng-container>
     </sky-tabset>
   </sky-docs-demo>
 

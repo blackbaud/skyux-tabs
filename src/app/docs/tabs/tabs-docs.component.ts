@@ -23,17 +23,19 @@ export class TabsDocsComponent {
     {
       tabHeading: 'Tab 1',
       tabContent: 'Content for Tab 1',
-      tabHeaderCount: 99
+      tabHeaderCount: 99,
+      tabClosable: true
     },
     {
       tabHeading: 'Tab 2',
       tabContent: 'Content for Tab 2',
-      tabHeaderCount: 99
+      tabHeaderCount: 99,
+      tabClosable: true
     },
     {
       tabHeading: 'Tab 3',
       tabContent: 'Content for Tab 3',
-      tabHeaderCount: 99
+      tabClosable: false
     }
   ];
 
@@ -58,8 +60,9 @@ export class TabsDocsComponent {
 
     this.tabArray.push({
       tabHeading: 'Tab ' + this.tabCounter,
-      tabContent: 'Content for Tab' + this.tabCounter,
-      tabHeaderCount: 99
+      tabContent: 'Content for Tab ' + this.tabCounter,
+      tabHeaderCount: 99,
+      tabClosable: true
     });
   }
 
