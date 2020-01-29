@@ -3,6 +3,10 @@ import {
 } from '@angular/core';
 
 import {
+  SkyCodeModule
+} from '@blackbaud/skyux-lib-code-bock';
+
+import {
   SkyDocsToolsModule,
   SkyDocsToolsOptions
 } from '@skyux/docs-tools';
@@ -25,6 +29,7 @@ import {
   exports: [
     SkyAppLinkModule,
     SkyCheckboxModule,
+    SkyCodeModule,
     SkyDocsToolsModule,
     SkySectionedFormModule,
     SkyTabsModule,
