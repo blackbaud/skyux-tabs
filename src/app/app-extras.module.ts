@@ -4,7 +4,7 @@ import {
 
 import {
   SkyCodeModule
-} from '@blackbaud/skyux-lib-code-bock';
+} from '@blackbaud/skyux-lib-code-block';
 
 import {
   SkyDocsToolsModule,
