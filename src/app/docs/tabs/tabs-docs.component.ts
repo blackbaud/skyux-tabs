@@ -19,7 +19,7 @@ export class TabsDocsComponent {
 
   public includeCounts: boolean;
 
-  public tabArray = [
+  public initialTabArray = [
     {
       tabHeading: 'Tab 1',
       tabContent: 'Content for Tab 1',
@@ -39,7 +39,9 @@ export class TabsDocsComponent {
     }
   ];
 
-  private tabCounter: number = 3;
+  public tabArray = this.initialTabArray.slice();
+
+  private tabCounter: number = this.tabArray.length;
 
   public onDemoSelectionChange(change: SkyDocsDemoControlPanelChange): void {
     if (change.includeCounts === true) {
@@ -68,5 +70,10 @@ export class TabsDocsComponent {
 
   public onCloseClick(arrayIndex: number): void {
     this.tabArray.splice(arrayIndex, 1);
+  }
+
+  public onResetClick(): void {
+    this.tabArray = this.initialTabArray.slice();
+    this.tabCounter = this.tabArray.length;
   }
 }

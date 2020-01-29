@@ -9,6 +9,7 @@
 
   <sky-docs-demo>
     <sky-docs-demo-control-panel
+      (reset)="onResetClick()"
       (selectionChange)="onDemoSelectionChange($event)"
     >
       <sky-docs-demo-control-panel-section>
@@ -31,7 +32,9 @@
     </sky-docs-demo-control-panel>
 
     <!-- Add/close disabled -->
-    <sky-tabset *ngIf="!demoSettings.includeAddAndClose">
+    <sky-tabset *ngIf="!demoSettings.includeAddAndClose"
+      style="width: 100%"
+    >
       <ng-container *ngFor="let tab of tabArray; let i = index">
         <sky-tab
           [tabHeaderCount]="demoSettings.showCounts ? tab.tabHeaderCount : null"
@@ -48,6 +51,7 @@
 
     <!-- Add/close enabled -->
     <sky-tabset *ngIf="demoSettings.includeAddAndClose"
+    style="width: 100%"
       (newTab)="onNewTabClick()"
     >
       <ng-container *ngFor="let tab of tabArray; let i = index">
