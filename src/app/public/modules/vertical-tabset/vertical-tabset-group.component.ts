@@ -16,11 +16,13 @@ import {
   trigger
 } from '@angular/animations';
 
-import 'rxjs/add/operator/takeUntil';
-
 import {
   Subject
-} from 'rxjs/Subject';
+} from 'rxjs';
+
+import {
+  takeUntil
+} from 'rxjs/operators';
 
 import {
   SkyVerticalTabComponent
@@ -93,16 +95,16 @@ export class SkyVerticalTabsetGroupComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit(): void {
-    this.tabService.hidingTabs
-      .takeUntil(this.ngUnsubscribe)
+    this.tabService.hidingTabs.pipe(
+      takeUntil(this.ngUnsubscribe))
       .subscribe(this.tabsHidden);
 
-    this.tabService.showingTabs
-      .takeUntil(this.ngUnsubscribe)
+    this.tabService.showingTabs.pipe(
+      takeUntil(this.ngUnsubscribe))
       .subscribe(this.tabsShown);
 
-    this.tabService.tabClicked
-      .takeUntil(this.ngUnsubscribe)
+    this.tabService.tabClicked.pipe(
+      takeUntil(this.ngUnsubscribe))
       .subscribe(this.tabClicked);
   }
 
