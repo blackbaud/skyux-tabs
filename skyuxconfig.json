@@ -3,6 +3,7 @@
   "name": "skyux-tabs",
   "mode": "easy",
   "compileMode": "aot",
+  "enableIvy": false,
   "plugins": [
     "@skyux-sdk/builder-plugin-skyux"
   ],

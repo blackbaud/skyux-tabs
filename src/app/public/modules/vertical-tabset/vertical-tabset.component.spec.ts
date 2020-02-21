@@ -11,11 +11,11 @@ import {
 import {
   SkyMediaBreakpoints,
   SkyMediaQueryService
-} from '@skyux/core/modules/media-query';
+} from '@skyux/core';
 
 import {
   MockSkyMediaQueryService
-} from '@skyux/core/testing/mock-media-query.service';
+} from '@skyux/core/testing';
 
 import {
   SkyVerticalTabsetComponent
