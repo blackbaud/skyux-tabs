@@ -22,11 +22,13 @@ import {
 
 import {
   Subject
-} from 'rxjs/Subject';
+} from 'rxjs';
 
-import 'rxjs/add/operator/distinctUntilChanged';
-
-import 'rxjs/add/operator/takeUntil';
+import {
+  distinctUntilChanged,
+  take,
+  takeUntil
+} from 'rxjs/operators';
 
 import {
   SkyTabComponent
@@ -192,11 +194,11 @@ export class SkyTabsetComponent
     this.tabs.forEach(tab => tab.initializeTabIndex());
 
     this.tabs.changes
-      .takeUntil(this.ngUnsubscribe)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((change: QueryList<SkyTabComponent>) => {
 
         this.tabsetService.tabs
-          .take(1)
+          .pipe(take(1))
           .subscribe(tabs => {
             change
               .filter(tab => tabs.indexOf(tab) === -1)
@@ -211,8 +213,10 @@ export class SkyTabsetComponent
     }
 
     this.tabsetService.activeIndex
-      .distinctUntilChanged()
-      .takeUntil(this.ngUnsubscribe)
+      .pipe(
+        distinctUntilChanged(),
+        takeUntil(this.ngUnsubscribe)
+      )
       .subscribe((newActiveIndex) => {
         // HACK: Not selecting the active tab in a timeout causes an error.
         // https://github.com/angular/angular/issues/6005
@@ -235,7 +239,7 @@ export class SkyTabsetComponent
     this.adapterService.init(this.elRef);
 
     this.adapterService.overflowChange
-      .takeUntil(this.ngUnsubscribe)
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe((currentOverflow: boolean) => {
         this.updateDisplayMode(currentOverflow);
       });
@@ -261,8 +265,10 @@ export class SkyTabsetComponent
 
   private watchQueryParamChanges(): void {
     this.activatedRoute.queryParams
-      .distinctUntilChanged()
-      .takeUntil(this.ngUnsubscribe)
+      .pipe(
+        distinctUntilChanged(),
+        takeUntil(this.ngUnsubscribe)
+      )
       .subscribe((params) => {
         if (!this.permalinkId) {
           return;
@@ -278,10 +284,12 @@ export class SkyTabsetComponent
   }
 
   private setQueryParamByActiveTab(): void {
-    this.tabsetService.tabs.take(1).subscribe((tabs) => {
-      const activeTab = tabs.find(tab => tab.active);
-      this.setQueryParamPermalinkValue(activeTab.permalinkValue);
-    });
+    this.tabsetService.tabs
+      .pipe(take(1))
+      .subscribe((tabs) => {
+        const activeTab = tabs.find(tab => tab.active);
+        this.setQueryParamPermalinkValue(activeTab.permalinkValue);
+      });
   }
 
   private activateTabByPermalinkValue(value: string): void {

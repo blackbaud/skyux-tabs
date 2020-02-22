@@ -7,15 +7,15 @@ import {
 
 import {
   SkyLibResourcesService
-} from '@skyux/i18n/modules/i18n';
+} from '@skyux/i18n';
 
 import {
-  Observable
-} from 'rxjs/Observable';
+  forkJoin as observableForkJoin
+} from 'rxjs';
 
-import 'rxjs/add/operator/take';
-
-import 'rxjs/add/observable/forkJoin';
+import {
+  take
+} from 'rxjs/operators';
 
 import {
   SkyTabsetComponent
@@ -122,9 +122,9 @@ export class SkyTabsetNavButtonComponent implements AfterViewInit {
   constructor(private resourceService: SkyLibResourcesService, private changeDetector: ChangeDetectorRef) { }
 
   public ngAfterViewInit() {
-    Observable.forkJoin(this.resourceService.getString('skyux_tabs_navigator_previous'),
-      this.resourceService.getString('skyux_tabs_navigator_next'))
-      .take(1).subscribe(resources => {
+    observableForkJoin(this.resourceService.getString('skyux_tabs_navigator_previous'),
+      this.resourceService.getString('skyux_tabs_navigator_next')).pipe(
+      take(1)).subscribe(resources => {
         this.previousButtonText = resources[0];
         this.nextButtonText = resources[1];
         this.changeDetector.detectChanges();
