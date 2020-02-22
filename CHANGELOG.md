@@ -1,3 +1,14 @@
+# 4.0.0-rc.0 (2020-02-22)
+
+### New features
+
+- Added support for `@angular/core@^9`. [#56](https://github.com/blackbaud/skyux-tabs/pull/56)
+- Updated the pipeline to transpile to the [Angular Package Format](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview). [#56](https://github.com/blackbaud/skyux-tabs/pull/56)
+
+### Breaking changes
+
+- Dropped support for `rxjs@5`. Consumers may install `rxjs-compat@^6` to support older versions of `rxjs`. [#56](https://github.com/blackbaud/skyux-tabs/pull/56)
+
 # 3.2.4 (2020-01-27)
 
 - Fixed the vertical tabset component to eliminate extra padding when placed inside a modal. [#53](https://github.com/blackbaud/skyux-tabs/pull/53)
