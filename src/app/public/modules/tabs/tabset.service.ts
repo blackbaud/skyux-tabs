@@ -5,9 +5,11 @@ import {
 
 import {
   BehaviorSubject
- } from 'rxjs/BehaviorSubject';
+ } from 'rxjs';
 
-import 'rxjs/add/operator/take';
+ import {
+   take
+  } from 'rxjs/operators';
 
 import {
   SkyTabComponent
@@ -29,59 +31,65 @@ export class SkyTabsetService implements OnDestroy {
   }
 
   public activateTab(tab: SkyTabComponent) {
-    this.tabs.take(1).subscribe((currentTabs) => {
-      this.activeIndex.next(tab.tabIndex);
-    });
+    this.tabs
+      .pipe(take(1))
+      .subscribe(() => {
+        this.activeIndex.next(tab.tabIndex);
+      });
   }
 
   public activateTabIndex(tabIndex: string | number) {
 
-    this.tabs.take(1).subscribe((currentTabs) => {
-      let newSelectedTab = this.getTabFromIndex(tabIndex, currentTabs);
+    this.tabs
+      .pipe(take(1))
+      .subscribe((currentTabs) => {
+        let newSelectedTab = this.getTabFromIndex(tabIndex, currentTabs);
 
-      if (newSelectedTab) {
-        this.activeIndex.next(newSelectedTab.tabIndex);
-      } else {
-        this.activeIndex.next(tabIndex);
-      }
-    });
+        if (newSelectedTab) {
+          this.activeIndex.next(newSelectedTab.tabIndex);
+        } else {
+          this.activeIndex.next(tabIndex);
+        }
+      });
   }
 
   public addTab(tab: SkyTabComponent) {
-    this.tabs.take(1).subscribe((currentTabs) => {
-      if (tab.tabIndex === undefined) {
-        tab.tabIndex = 0;
-        let lastTabIndex = this.getLastTabIndex(currentTabs);
-        if (currentTabs && (lastTabIndex || lastTabIndex === 0)) {
-          tab.tabIndex = lastTabIndex + 1;
+    this.tabs
+      .pipe(take(1))
+      .subscribe((currentTabs) => {
+        if (tab.tabIndex === undefined) {
+          tab.tabIndex = 0;
+          let lastTabIndex = this.getLastTabIndex(currentTabs);
+          if (currentTabs && (lastTabIndex || lastTabIndex === 0)) {
+            tab.tabIndex = lastTabIndex + 1;
+          }
         }
-      }
-      currentTabs.push(tab);
-      this.tabs.next(currentTabs);
-    });
+        currentTabs.push(tab);
+        this.tabs.next(currentTabs);
+      });
   }
 
   public destroyTab(tab: SkyTabComponent) {
-    this.tabs.take(1).subscribe((currentTabs) => {
+    this.tabs
+      .pipe(take(1))
+      .subscribe((currentTabs) => {
+        let tabIndex = currentTabs.indexOf(tab);
+        if (tab.active) {
+          // Try selecting the next tab first, and if there's no next tab then
+          // try selecting the previous one.
+          let newActiveTab = currentTabs[tabIndex + 1] || currentTabs[tabIndex - 1];
 
-      let tabIndex = currentTabs.indexOf(tab);
-      if (tab.active) {
-        // Try selecting the next tab first, and if there's no next tab then
-        // try selecting the previous one.
-        let newActiveTab = currentTabs[tabIndex + 1] || currentTabs[tabIndex - 1];
-
-        /*istanbul ignore else */
-        if (newActiveTab) {
-          this.activeIndex.next(newActiveTab.tabIndex);
+          /*istanbul ignore else */
+          if (newActiveTab) {
+            this.activeIndex.next(newActiveTab.tabIndex);
+          }
         }
-      }
 
-      if (tabIndex > -1) {
-        currentTabs.splice(tabIndex, 1);
-      }
-      this.tabs.next(currentTabs);
-    });
-
+        if (tabIndex > -1) {
+          currentTabs.splice(tabIndex, 1);
+        }
+        this.tabs.next(currentTabs);
+      });
   }
 
   /**
