@@ -1,4 +1,8 @@
 import {
+  Location
+} from '@angular/common';
+
+import {
   AfterContentInit,
   AfterViewInit,
   ChangeDetectorRef,
@@ -11,16 +15,13 @@ import {
   OnDestroy,
   Output,
   QueryList,
-  SimpleChanges
+  SimpleChanges,
+  Optional
 } from '@angular/core';
-
-import {Location} from '@angular/common';
 
 import {
   ActivatedRoute,
-  Params,
-  Router,
-  NavigationStart
+  Router
 } from '@angular/router';
 
 import {
@@ -145,8 +146,8 @@ export class SkyTabsetComponent
     private elRef: ElementRef,
     private changeRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private location: Location
+    private location: Location,
+    @Optional() private router?: Router
   ) { }
 
   public getTabButtonId(tab: SkyTabComponent): string {
@@ -175,7 +176,7 @@ export class SkyTabsetComponent
 
   public selectTab(tab: SkyTabComponent): void {
     if (this.permalinkId && tab.permalinkValue) {
-      return;
+      this.setQueryParamPermalinkValue(tab.permalinkValue);
     }
 
     this.tabsetService.activateTab(tab);
@@ -264,18 +265,14 @@ export class SkyTabsetComponent
   }
 
   private watchQueryParamChanges(): void {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart && event.navigationTrigger === 'imperative') {
-        console.log('Navigation trigger. BAD!');
-      }
-    });
-
     this.activatedRoute.queryParams
       .distinctUntilChanged()
       .takeUntil(this.ngUnsubscribe)
       .subscribe((params) => {
-        console.log('param changes:', params);
-        if (!this.permalinkId) {
+        if (
+          !this.permalinkId ||
+          !(this.permalinkId in params)
+        ) {
           return;
         }
 
@@ -312,23 +309,15 @@ export class SkyTabsetComponent
 
   private setQueryParamPermalinkValue(value: string): void {
     if (this.permalinkId) {
-      const queryParams: Params = {};
-      queryParams[this.permalinkId] = value;
+      const queryParams = `${this.permalinkId}=${value}`;
 
-      // this.router.navigate([], {
-      //   queryParams,
-      //   queryParamsHandling: 'merge',
-      //   skipLocationChange: true
-      // });
-
-      const url = this
-        .router
-        .createUrlTree([queryParams], {
+      const url = this.router
+        .createUrlTree([], {
           relativeTo: this.activatedRoute
         })
         .toString();
 
-        this.location.go(url);
+      this.location.go(url, queryParams);
     }
   }
 }
