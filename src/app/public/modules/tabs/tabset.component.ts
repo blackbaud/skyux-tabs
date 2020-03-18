@@ -13,16 +13,21 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
+  Optional,
   Output,
   QueryList,
-  SimpleChanges,
-  Optional
+  SimpleChanges
 } from '@angular/core';
 
 import {
   ActivatedRoute,
   Router
 } from '@angular/router';
+
+import {
+  Observable
+} from 'rxjs/Observable';
 
 import {
   Subject
@@ -44,6 +49,10 @@ import {
   SkyTabsetService
 } from './tabset.service';
 
+interface SkyTabsetPermalinkParams {
+  [_: string]: string;
+}
+
 @Component({
   selector: 'sky-tabset',
   styleUrls: ['./tabset.component.scss'],
@@ -54,7 +63,7 @@ import {
   ]
 })
 export class SkyTabsetComponent
-  implements AfterContentInit, AfterViewInit, OnDestroy, OnChanges {
+  implements OnInit, AfterContentInit, AfterViewInit, OnDestroy, OnChanges {
 
   /**
    * Specifies the index of the active tab.
@@ -136,6 +145,8 @@ export class SkyTabsetComponent
 
   private ngUnsubscribe = new Subject<void>();
 
+  private activeIndexOnLoad: number;
+
   private _permalinkId: string;
 
   private _tabStyle: string;
@@ -175,11 +186,15 @@ export class SkyTabsetComponent
   }
 
   public selectTab(tab: SkyTabComponent): void {
-    if (this.permalinkId && tab.permalinkValue) {
+    if (this.permalinkId) {
       this.setQueryParamPermalinkValue(tab.permalinkValue);
     }
 
     this.tabsetService.activateTab(tab);
+  }
+
+  public ngOnInit(): void {
+    this.activeIndexOnLoad = (this.active !== undefined) ? +this.active : 0;
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -229,11 +244,10 @@ export class SkyTabsetComponent
         });
       });
 
-    // Wait for the tab components' `active` state to be resolved before
-    // listening to changes to the URL params.
-    setTimeout(() => {
-      this.watchQueryParamChanges();
-    });
+      // Listen for back/forward history button presses.
+      Observable.fromEvent(window, 'popstate')
+        .takeUntil(this.ngUnsubscribe)
+        .subscribe(() => this.activateTabByPermalinkValue());
   }
 
   public ngAfterViewInit(): void {
@@ -244,6 +258,8 @@ export class SkyTabsetComponent
       .subscribe((currentOverflow: boolean) => {
         this.updateDisplayMode(currentOverflow);
       });
+
+    this.activateTabByPermalinkValue();
 
     setTimeout(() => {
       this.adapterService.detectOverflow();
@@ -264,35 +280,16 @@ export class SkyTabsetComponent
     this.changeRef.markForCheck();
   }
 
-  private watchQueryParamChanges(): void {
-    this.activatedRoute.queryParams
-      .distinctUntilChanged()
-      .takeUntil(this.ngUnsubscribe)
-      .subscribe((params) => {
-        if (
-          !this.permalinkId ||
-          !(this.permalinkId in params)
-        ) {
-          return;
-        }
+  private activateTabByPermalinkValue(): void {
+    const params = this.getLocationParams();
 
-        const permalinkValue = params[this.permalinkId];
-        if (permalinkValue) {
-          this.activateTabByPermalinkValue(permalinkValue);
-        } else {
-          this.setQueryParamByActiveTab();
-        }
-      });
-  }
+    if (!(this.permalinkId in params)) {
+      this.tabsetService.activateTabIndex(this.activeIndexOnLoad);
+      return;
+    }
 
-  private setQueryParamByActiveTab(): void {
-    this.tabsetService.tabs.take(1).subscribe((tabs) => {
-      const activeTab = tabs.find(tab => tab.active);
-      this.setQueryParamPermalinkValue(activeTab.permalinkValue);
-    });
-  }
+    const value = params[this.permalinkId];
 
-  private activateTabByPermalinkValue(value: string): void {
     let index: number;
 
     this.tabs.forEach((tabComponent, i) => {
@@ -309,15 +306,28 @@ export class SkyTabsetComponent
 
   private setQueryParamPermalinkValue(value: string): void {
     if (this.permalinkId) {
-      const queryParams = `${this.permalinkId}=${value}`;
+      const params = this.getLocationParams();
 
-      const url = this.router
-        .createUrlTree([], {
-          relativeTo: this.activatedRoute
-        })
-        .toString();
+      params[this.permalinkId] = value;
 
-      this.location.go(url, queryParams);
+      const url = this.router.createUrlTree([params], {
+        relativeTo: this.activatedRoute
+      }).toString();
+
+      this.location.go(url);
     }
+  }
+
+  private getLocationParams(): SkyTabsetPermalinkParams {
+    const params: SkyTabsetPermalinkParams = {};
+
+    const existingParamPairs = this.location.path().split(';');
+    existingParamPairs.shift();
+    existingParamPairs.forEach((pair) => {
+      const fragments = pair.split('=');
+      params[fragments[0]] = fragments[1];
+    });
+
+    return params;
   }
 }
