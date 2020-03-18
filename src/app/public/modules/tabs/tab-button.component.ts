@@ -80,34 +80,19 @@ export class SkyTabButtonComponent {
   @Output()
   public closeClick = new EventEmitter<any>();
 
-  public get queryParams(): {[_: string]: string} {
+  public get tabHref(): string {
     if (!this.hasPermalink) {
-      return;
+      /*tslint:disable-next-line:no-null-keyword*/
+      return null;
     }
 
-    const params: {[_: string]: string} = {};
+    const params = this.tabsetComponent.getLocationParams();
     params[this.tabsetComponent.permalinkId] = this.permalinkValue;
 
-    return params;
-  }
+    const baseUrl = this.location.path().split(';')[0];
+    const paramString = Object.keys(params).map(k => `${k}=${params[k]}`).join(';');
 
-  public get tabHref(): string {
-    const fragments = this.location.path().split('?');
-    const base = fragments[0];
-    const paramString = fragments[1];
-
-    const params: {[_: string]: string} = {};
-    paramString.split('&').forEach((pair) => {
-      const param = pair.split('=');
-      params[param[0]] = param[1];
-    });
-
-    const newParams = {...params, ...this.queryParams};
-    const newParamString = Object.keys(newParams)
-      .map(k => `${k}=${newParams[k]}`)
-      .join('&');
-
-    return this.location.prepareExternalUrl(`${base}?${newParamString}`);
+    return this.location.prepareExternalUrl(`${baseUrl};${paramString}`);
   }
 
   private get hasPermalink(): boolean {

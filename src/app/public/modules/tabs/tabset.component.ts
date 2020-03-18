@@ -275,6 +275,19 @@ export class SkyTabsetComponent
     this.setQueryParamPermalinkValue(null);
   }
 
+  public getLocationParams(): SkyTabsetPermalinkParams {
+    const params: SkyTabsetPermalinkParams = {};
+
+    const existingParamPairs = this.location.path().split(';');
+    existingParamPairs.shift();
+    existingParamPairs.forEach((pair) => {
+      const fragments = pair.split('=');
+      params[fragments[0]] = fragments[1];
+    });
+
+    return params;
+  }
+
   private updateDisplayMode(currentOverflow: boolean): void {
     this.tabDisplayMode = (currentOverflow) ? 'dropdown' : 'tabs';
     this.changeRef.markForCheck();
@@ -316,18 +329,5 @@ export class SkyTabsetComponent
 
       this.location.go(url);
     }
-  }
-
-  private getLocationParams(): SkyTabsetPermalinkParams {
-    const params: SkyTabsetPermalinkParams = {};
-
-    const existingParamPairs = this.location.path().split(';');
-    existingParamPairs.shift();
-    existingParamPairs.forEach((pair) => {
-      const fragments = pair.split('=');
-      params[fragments[0]] = fragments[1];
-    });
-
-    return params;
   }
 }
