@@ -14,10 +14,13 @@ import {
   SimpleChanges
 } from '@angular/core';
 
+import {Location} from '@angular/common';
+
 import {
   ActivatedRoute,
   Params,
-  Router
+  Router,
+  NavigationStart
 } from '@angular/router';
 
 import {
@@ -142,7 +145,8 @@ export class SkyTabsetComponent
     private elRef: ElementRef,
     private changeRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) { }
 
   public getTabButtonId(tab: SkyTabComponent): string {
@@ -260,10 +264,17 @@ export class SkyTabsetComponent
   }
 
   private watchQueryParamChanges(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart && event.navigationTrigger === 'imperative') {
+        console.log('Navigation trigger. BAD!');
+      }
+    });
+
     this.activatedRoute.queryParams
       .distinctUntilChanged()
       .takeUntil(this.ngUnsubscribe)
       .subscribe((params) => {
+        console.log('param changes:', params);
         if (!this.permalinkId) {
           return;
         }
@@ -304,10 +315,20 @@ export class SkyTabsetComponent
       const queryParams: Params = {};
       queryParams[this.permalinkId] = value;
 
-      this.router.navigate([], {
-        queryParams,
-        queryParamsHandling: 'merge'
-      });
+      // this.router.navigate([], {
+      //   queryParams,
+      //   queryParamsHandling: 'merge',
+      //   skipLocationChange: true
+      // });
+
+      const url = this
+        .router
+        .createUrlTree([queryParams], {
+          relativeTo: this.activatedRoute
+        })
+        .toString();
+
+        this.location.go(url);
     }
   }
 }
