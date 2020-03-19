@@ -46,12 +46,12 @@ import {
 } from './tabset-adapter.service';
 
 import {
+  SkyTabsetPermalinkParams
+} from './tabset-permalink-params';
+
+import {
   SkyTabsetService
 } from './tabset.service';
-
-interface SkyTabsetPermalinkParams {
-  [_: string]: string;
-}
 
 @Component({
   selector: 'sky-tabset',
@@ -63,7 +63,7 @@ interface SkyTabsetPermalinkParams {
   ]
 })
 export class SkyTabsetComponent
-  implements OnInit, AfterContentInit, AfterViewInit, OnDestroy, OnChanges {
+  implements OnInit, AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
 
   /**
    * Specifies the index of the active tab.
@@ -143,9 +143,9 @@ export class SkyTabsetComponent
   @ContentChildren(SkyTabComponent)
   public tabs: QueryList<SkyTabComponent>;
 
-  private ngUnsubscribe = new Subject<void>();
-
   private activeIndexOnLoad: number;
+
+  private ngUnsubscribe = new Subject<void>();
 
   private _permalinkId: string;
 
@@ -187,7 +187,7 @@ export class SkyTabsetComponent
 
   public selectTab(tab: SkyTabComponent): void {
     if (this.permalinkId && tab.permalinkValue) {
-      this.setQueryParamPermalinkValue(tab.permalinkValue);
+      this.setPathParamPermalinkValue(tab.permalinkValue);
     }
 
     this.tabsetService.activateTab(tab);
@@ -274,10 +274,10 @@ export class SkyTabsetComponent
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
     /*tslint:disable-next-line:no-null-keyword*/
-    this.setQueryParamPermalinkValue(null);
+    this.setPathParamPermalinkValue(null);
   }
 
-  public getLocationParams(): SkyTabsetPermalinkParams {
+  public getPathParams(): SkyTabsetPermalinkParams {
     const params: SkyTabsetPermalinkParams = {};
 
     const existingParamPairs = this.location.path().split(';');
@@ -296,7 +296,7 @@ export class SkyTabsetComponent
   }
 
   private activateTabByPermalinkValue(): void {
-    const params = this.getLocationParams();
+    const params = this.getPathParams();
 
     if (!(this.permalinkId in params)) {
       this.tabsetService.activateTabIndex(this.activeIndexOnLoad);
@@ -319,9 +319,9 @@ export class SkyTabsetComponent
     }
   }
 
-  private setQueryParamPermalinkValue(value: string): void {
+  private setPathParamPermalinkValue(value: string): void {
     if (this.permalinkId) {
-      const params = this.getLocationParams();
+      const params = this.getPathParams();
 
       params[this.permalinkId] = value;
 

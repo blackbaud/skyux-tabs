@@ -86,7 +86,7 @@ export class SkyTabButtonComponent {
       return null;
     }
 
-    const params = this.tabsetComponent.getLocationParams();
+    const params = this.tabsetComponent.getPathParams();
     params[this.tabsetComponent.permalinkId] = this.permalinkValue;
 
     const baseUrl = this.location.path().split(';')[0];

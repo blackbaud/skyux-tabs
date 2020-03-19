@@ -880,7 +880,7 @@ describe('Tabset component', () => {
       fixture.destroy();
     });
 
-    it('should activate a tab based on a location param', fakeAsync(() => {
+    it('should activate a tab based on a path param', fakeAsync(() => {
       fixture.componentInstance.activeIndex = 0;
       fixture.componentInstance.permalinkId = 'foobar';
       spyOn(location, 'path').and.returnValue(';foobar-active-tab=design-guidelines');
@@ -893,7 +893,7 @@ describe('Tabset component', () => {
       validateTabSelected(fixture.nativeElement, 1);
     }));
 
-    it('should handle unrecognized location param', fakeAsync(() => {
+    it('should handle unrecognized path param', fakeAsync(() => {
       fixture.componentInstance.activeIndex = 0;
       fixture.componentInstance.permalinkId = 'foobar';
       spyOn(location, 'path').and.returnValue(';foobar-active-tab=invalid-tab');
@@ -906,7 +906,7 @@ describe('Tabset component', () => {
       validateTabSelected(fixture.nativeElement, 0);
     }));
 
-    it('should set a location param when a tab is selected', fakeAsync(() => {
+    it('should set a path param when a tab is selected', fakeAsync(() => {
       fixture.componentInstance.permalinkId = 'foobar';
 
       fixture.detectChanges();
@@ -928,7 +928,7 @@ describe('Tabset component', () => {
       expect(fixture.componentInstance.activeIndex).toEqual(1);
     }));
 
-    it('should allow custom location param value for each tab', fakeAsync(() => {
+    it('should allow custom path param value for each tab', fakeAsync(() => {
       fixture.componentInstance.permalinkId = 'foobar';
       fixture.componentInstance.permalinkValue = 'baz';
 
@@ -989,9 +989,8 @@ describe('Tabset component', () => {
       );
     }));
 
-    it('should fall back to `active` if query param value does not match a tab', fakeAsync(() => {
+    it('should fall back to `active` if path param value does not match a tab', fakeAsync(() => {
       fixture.componentInstance.activeIndex = 0;
-
       fixture.detectChanges();
       tick();
       fixture.detectChanges();
@@ -1000,7 +999,6 @@ describe('Tabset component', () => {
       validateTabSelected(fixture.nativeElement, 0);
 
       fixture.componentInstance.activeIndex = 2;
-
       fixture.detectChanges();
       tick();
       fixture.detectChanges();
