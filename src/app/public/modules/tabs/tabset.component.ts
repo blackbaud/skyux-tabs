@@ -186,7 +186,7 @@ export class SkyTabsetComponent
   }
 
   public selectTab(tab: SkyTabComponent): void {
-    if (this.permalinkId) {
+    if (this.permalinkId && tab.permalinkValue) {
       this.setQueryParamPermalinkValue(tab.permalinkValue);
     }
 
