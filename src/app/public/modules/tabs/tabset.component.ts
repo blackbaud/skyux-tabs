@@ -244,7 +244,9 @@ export class SkyTabsetComponent
         });
       });
 
-      // Listen for back/forward history button presses.
+      // Listen for back/forward history button presses to detect path param changes in the URL.
+      // (Angular's router events observable doesn't emit when path params change.)
+      // See: https://stackoverflow.com/a/51471155/6178885
       Observable.fromEvent(window, 'popstate')
         .takeUntil(this.ngUnsubscribe)
         .subscribe(() => this.activateTabByPermalinkValue());
@@ -323,6 +325,8 @@ export class SkyTabsetComponent
 
       params[this.permalinkId] = value;
 
+      // Update the URL without triggering a navigation state change.
+      // See: https://stackoverflow.com/a/46486677
       const url = this.router.createUrlTree([params], {
         relativeTo: this.activatedRoute
       }).toString();
