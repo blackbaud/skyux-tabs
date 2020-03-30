@@ -1,6 +1,6 @@
 # 3.2.5 (2020-03-30)
 
-- Fixed the tabset component to not trigger navigation changes when using the `permalinkId` property. [#59](https://github.com/blackbaud/skyux-tabs/pull/59)
+- Fixed the tabset component to avoid triggering navigation changes when using the `permalinkId` property. [#59](https://github.com/blackbaud/skyux-tabs/pull/59)
 
 # 3.2.4 (2020-01-27)
 
