@@ -488,7 +488,7 @@ describe('Tabset component', () => {
     });
   }));
 
-  fdescribe('when collapsed', () => {
+  describe('when collapsed', () => {
     let fixture: ComponentFixture<TabsetTestComponent>;
     let mockAdapterService: MockTabsetAdapterService;
 
