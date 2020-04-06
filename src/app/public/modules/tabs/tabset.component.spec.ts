@@ -281,19 +281,27 @@ describe('Tabset component', () => {
     expect(openTabSpy).toHaveBeenCalled();
   });
 
-  it('should notify the consumer when a tab\'s close button is clicked', () => {
+  it('should notify the consumer when a tab\'s close button is clicked', fakeAsync(() => {
     let fixture = TestBed.createComponent(TabsetTestComponent);
     let cmp: TabsetTestComponent = fixture.componentInstance;
     let el = fixture.nativeElement;
 
     fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    tick();
 
     let closeTabSpy = spyOn(cmp, 'closeTab2');
 
     el.querySelectorAll('.sky-btn-tab')[1].querySelector('.sky-btn-tab-close').click();
 
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    tick();
+
     expect(closeTabSpy).toHaveBeenCalled();
-  });
+  }));
 
   it('should select the next tab when the active tab is closed', fakeAsync(() => {
     let fixture = TestBed.createComponent(TabsetTestComponent);
@@ -471,8 +479,11 @@ describe('Tabset component', () => {
 
   it('should be accessible', async(() => {
     let fixture = TestBed.createComponent(TabsetTestComponent);
+
     fixture.detectChanges();
+
     fixture.whenStable().then(() => {
+      fixture.detectChanges();
       expect(fixture.nativeElement).toBeAccessible();
     });
   }));
