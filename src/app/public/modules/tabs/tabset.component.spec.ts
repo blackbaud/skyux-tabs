@@ -895,14 +895,15 @@ describe('Tabset component', () => {
       tick();
 
       let tabs = document.querySelectorAll('.sky-tab');
-      tabs.forEach((tab) => {
+      for (let i = 0; i < tabs.length; i++) {
+        const tab = tabs.item(i);
         let dropBtn = document.getElementById(`${tab.getAttribute('id')}-nav-btn`);
         let tabBtn = document.getElementById(`${tab.getAttribute('id')}-hidden-nav-btn`);
 
         expect(tab.getAttribute('aria-labelledby')).toBe(dropBtn.getAttribute('id'));
         expect(dropBtn.getAttribute('aria-controls')).toBe(tab.getAttribute('id'));
         expect(tabBtn.tagName.toLowerCase()).toBe('sky-tab-button');
-      });
+      }
     }));
 
     it('should emit a click event on enter press', fakeAsync(() => {
