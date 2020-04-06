@@ -488,7 +488,7 @@ describe('Tabset component', () => {
     });
   }));
 
-  describe('when collapsed', () => {
+  fdescribe('when collapsed', () => {
     let fixture: ComponentFixture<TabsetTestComponent>;
     let mockAdapterService: MockTabsetAdapterService;
 
@@ -604,31 +604,45 @@ describe('Tabset component', () => {
 
     it(
       'should notify the consumer when a tab\'s close button is clicked',
-      () => {
+      fakeAsync(() => {
+        fixture.detectChanges();
+        tick();
+
         let el = fixture.nativeElement;
+
         const closeSpy = spyOn(fixture.componentInstance, 'closeTab2').and.callThrough();
 
         fixture.detectChanges();
+        tick();
 
         mockAdapterService.fakeOverflowChange(true);
 
         fixture.detectChanges();
+        tick();
 
         let tabEl = el.querySelector('.sky-dropdown-button-type-tab');
 
         tabEl.click();
+
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        tick();
+
         el.querySelectorAll('.sky-btn-tab-close')[0].click();
 
         fixture.detectChanges();
+        tick();
 
         mockAdapterService.fakeOverflowChange(false);
 
         fixture.detectChanges();
+        tick();
 
         expect(el.querySelectorAll('.sky-btn-tab').length).toBe(2);
         expect(closeSpy).toHaveBeenCalled();
       }
-    );
+    ));
 
     it(
       'should notify the consumer when a dropdown tab\'s close button is clicked',
