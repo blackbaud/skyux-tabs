@@ -1,0 +1,88 @@
+<sky-docs-demo-page
+  moduleName="SkyTabsModule"
+  moduleSourceCodePath="src/app/public/modules/vertical-tabset/"
+  pageTitle="Vertical tabs"
+>
+  <sky-docs-demo-page-summary>
+    Sample description.
+  </sky-docs-demo-page-summary>
+
+  <sky-docs-demo>
+    <sky-docs-demo-control-panel
+      (selectionChange)="onDemoSelectionChangeTabs($event)"
+    >
+      <sky-docs-demo-control-panel-section>
+        <sky-docs-demo-control-panel-checkbox
+          label="Include counts"
+          propertyName="counts"
+          [checked]="false"
+        >
+        </sky-docs-demo-control-panel-checkbox>
+      </sky-docs-demo-control-panel-section>
+    </sky-docs-demo-control-panel>
+
+    <sky-vertical-tabset>
+      <sky-vertical-tab
+        *ngFor="let tab of tabs"
+        [active]="tab.active"
+        [tabHeading]="tab.tabHeading"
+        [tabHeaderCount]="tab.tabHeaderCount"
+        [disabled]="tab.disabled">
+        {{ tab.content }}
+      </sky-vertical-tab>
+    </sky-vertical-tabset>
+  </sky-docs-demo>
+
+  <sky-docs-demo>
+    <sky-docs-demo-control-panel
+      (selectionChange)="onDemoSelectionChangeGroups($event)"
+    >
+      <sky-docs-demo-control-panel-section>
+        <sky-docs-demo-control-panel-checkbox
+          label="Include counts"
+          propertyName="counts"
+          [checked]="false"
+        >
+        </sky-docs-demo-control-panel-checkbox>
+      </sky-docs-demo-control-panel-section>
+    </sky-docs-demo-control-panel>
+
+    <sky-vertical-tabset
+      showTabsText="Tab list"
+      (activeChange)="tabChanged($event)">
+
+      <sky-vertical-tabset-group
+        *ngFor="let group of groups"
+        [groupHeading]="group.heading"
+        [open]="group.isOpen"
+        [disabled]="group.isDisabled">
+
+        <sky-vertical-tab
+          *ngFor="let tab of group.subTabs"
+          [active]="tab.active"
+          [tabHeading]="tab.tabHeading"
+          [tabHeaderCount]="tab.tabHeaderCount"
+          [disabled]="tab.disabled">
+          {{ tab.content }}
+        </sky-vertical-tab>
+      </sky-vertical-tabset-group>
+    </sky-vertical-tabset>
+    <!-- <sky-alert
+      [alertType]="demoSettings.type"
+      [closeable]="demoSettings.closable"
+      [(closed)]="demoSettings.closed">
+      {{ alertMessage }}
+    </sky-alert> -->
+  </sky-docs-demo>
+
+  <sky-docs-code-examples>
+    <!-- <sky-docs-code-example
+      heading="Basic setup"
+      sourceCodePath="src/app/public/plugin-resources/code-examples/alert/basic"
+    ></sky-docs-code-example> -->
+  </sky-docs-code-examples>
+
+  <sky-docs-design-guidelines>
+    See documentation for how to setup design guidelines.
+  </sky-docs-design-guidelines>
+</sky-docs-demo-page>
