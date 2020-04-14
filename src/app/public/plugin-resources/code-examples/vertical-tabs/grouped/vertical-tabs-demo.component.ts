@@ -4,7 +4,7 @@ import {
 
 @Component({
   selector: 'app-vertical-tab-demo',
-  templateUrl: './vertical-tab-demo.component.html'
+  templateUrl: './vertical-tabs-demo.component.html'
 })
 export class SkyVerticalTabsDemoComponent {
   public groups: any[];
