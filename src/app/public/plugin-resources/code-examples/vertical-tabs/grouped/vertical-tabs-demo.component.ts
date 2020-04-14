@@ -3,8 +3,8 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-alert-demo',
-  templateUrl: './alert-demo.component.html'
+  selector: 'app-vertical-tab-demo',
+  templateUrl: './vertical-tab-demo.component.html'
 })
 export class SkyVerticalTabsDemoComponent {
   public groups: any[];

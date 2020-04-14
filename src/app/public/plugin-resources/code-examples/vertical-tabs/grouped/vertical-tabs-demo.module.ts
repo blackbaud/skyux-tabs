@@ -12,7 +12,7 @@ import {
 } from '@skyux/indicators';
 
 import {
-  VerticalTabDemoComponent
+  SkyVerticalTabsDemoComponent
 } from './vertical-tabs-demo.component';
 
 @NgModule({
@@ -21,10 +21,10 @@ import {
     SkyAlertModule
   ],
   declarations: [
-    VerticalTabDemoComponent
+    SkyVerticalTabsDemoComponent
   ],
   exports: [
-    VerticalTabDemoComponent
+    SkyVerticalTabsDemoComponent
   ]
 })
 

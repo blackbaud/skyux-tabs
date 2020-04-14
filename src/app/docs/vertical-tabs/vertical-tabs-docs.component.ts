@@ -10,7 +10,7 @@ import {
   selector: 'app-vertical-tabs-docs',
   templateUrl: './vertical-tabs-docs.component.html'
 })
-export class VerticalTabsDocsComponent {
+export class VerticalTabDemoComponent {
   public groups: any[];
   public tabs: any[];
   public demoSettings: any = {};
