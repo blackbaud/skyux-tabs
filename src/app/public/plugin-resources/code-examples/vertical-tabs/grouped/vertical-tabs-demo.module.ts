@@ -8,7 +8,7 @@ import {
 } from '@angular/common';
 
 import {
-  SkyTabsModule
+  SkyVerticalTabsetModule
 } from '@skyux/tabs';
 
 import {
@@ -18,7 +18,7 @@ import {
 @NgModule({
   imports: [
     CommonModule,
-    SkyTabsModule
+    SkyVerticalTabsetModule
   ],
   declarations: [
     SkyVerticalTabsDemoComponent
