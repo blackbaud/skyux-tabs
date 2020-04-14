@@ -3,11 +3,12 @@ import {
 } from '@angular/common';
 
 import {
+  async,
   ComponentFixture,
-  TestBed,
   fakeAsync,
-  tick,
-  async
+  inject,
+  TestBed,
+  tick
 } from '@angular/core/testing';
 
 import {
@@ -19,6 +20,7 @@ import {
 } from '@angular/platform-browser';
 
 import {
+  ActivatedRoute,
   Router
 } from '@angular/router';
 
@@ -279,19 +281,27 @@ describe('Tabset component', () => {
     expect(openTabSpy).toHaveBeenCalled();
   });
 
-  it('should notify the consumer when a tab\'s close button is clicked', () => {
+  it('should notify the consumer when a tab\'s close button is clicked', fakeAsync(() => {
     let fixture = TestBed.createComponent(TabsetTestComponent);
     let cmp: TabsetTestComponent = fixture.componentInstance;
     let el = fixture.nativeElement;
 
     fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    tick();
 
     let closeTabSpy = spyOn(cmp, 'closeTab2');
 
     el.querySelectorAll('.sky-btn-tab')[1].querySelector('.sky-btn-tab-close').click();
 
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
+    tick();
+
     expect(closeTabSpy).toHaveBeenCalled();
-  });
+  }));
 
   it('should select the next tab when the active tab is closed', fakeAsync(() => {
     let fixture = TestBed.createComponent(TabsetTestComponent);
@@ -469,8 +479,11 @@ describe('Tabset component', () => {
 
   it('should be accessible', async(() => {
     let fixture = TestBed.createComponent(TabsetTestComponent);
+
     fixture.detectChanges();
+
     fixture.whenStable().then(() => {
+      fixture.detectChanges();
       expect(fixture.nativeElement).toBeAccessible();
     });
   }));
@@ -533,15 +546,13 @@ describe('Tabset component', () => {
       let tabEl = el.querySelector('.sky-dropdown-button-type-tab');
 
       tabEl.click();
-      tick();
       fixture.detectChanges();
       tick();
 
-      let dropdownTabButtons = el.querySelectorAll('.sky-tab-dropdown-item .sky-btn-tab');
+      let dropdownTabButtons = document.querySelectorAll('.sky-tab-dropdown-item .sky-btn-tab');
       expect(dropdownTabButtons[1]).toHaveText('Tab 2');
 
-      dropdownTabButtons[1].click();
-      tick();
+      (dropdownTabButtons[1] as HTMLElement).click();
       fixture.detectChanges();
       tick();
 
@@ -567,27 +578,23 @@ describe('Tabset component', () => {
         let tabEl = el.querySelector('.sky-dropdown-button-type-tab');
 
         tabEl.click();
-        tick();
         fixture.detectChanges();
         tick();
 
-        let dropdownTabButtons = el.querySelectorAll('.sky-tab-dropdown-item .sky-btn-tab');
+        let dropdownTabButtons = document.querySelectorAll('.sky-tab-dropdown-item .sky-btn-tab');
 
-        dropdownTabButtons[0].click();
-        tick();
+        (dropdownTabButtons[0] as HTMLElement).click();
         fixture.detectChanges();
         tick();
 
         tabEl.click();
-        tick();
         fixture.detectChanges();
         tick();
 
         expect(dropdownTabButtons[1]).toHaveText('Tab 2');
         expect(dropdownTabButtons[1]).toHaveCssClass('sky-btn-tab-disabled');
 
-        dropdownTabButtons[1].click();
-        tick();
+        (dropdownTabButtons[1] as HTMLElement).click();
         fixture.detectChanges();
         tick();
 
@@ -597,29 +604,82 @@ describe('Tabset component', () => {
 
     it(
       'should notify the consumer when a tab\'s close button is clicked',
-      () => {
+      fakeAsync(() => {
+        fixture.detectChanges();
+        tick();
+
         let el = fixture.nativeElement;
 
+        const closeSpy = spyOn(fixture.componentInstance, 'closeTab2').and.callThrough();
+
         fixture.detectChanges();
+        tick();
 
         mockAdapterService.fakeOverflowChange(true);
 
         fixture.detectChanges();
+        tick();
 
         let tabEl = el.querySelector('.sky-dropdown-button-type-tab');
 
         tabEl.click();
+
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        tick();
+
         el.querySelectorAll('.sky-btn-tab-close')[0].click();
 
         fixture.detectChanges();
+        tick();
 
         mockAdapterService.fakeOverflowChange(false);
 
         fixture.detectChanges();
+        tick();
 
         expect(el.querySelectorAll('.sky-btn-tab').length).toBe(2);
+        expect(closeSpy).toHaveBeenCalled();
       }
-    );
+    ));
+
+    it(
+      'should notify the consumer when a dropdown tab\'s close button is clicked',
+      fakeAsync(() => {
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+
+        let el = fixture.nativeElement;
+
+        const closeSpy = spyOn(fixture.componentInstance, 'closeTab2').and.callThrough();
+
+        fixture.componentInstance.tabsetComponent.tabDisplayMode = 'dropdown';
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        tick();
+
+        let tabEl: HTMLElement = document.querySelector('.sky-dropdown-button');
+        tabEl.click();
+        fixture.detectChanges();
+        tick();
+
+        const closeButton = document.querySelectorAll(
+          '.sky-dropdown-item .sky-btn-tab-close'
+        )[0] as HTMLElement;
+
+        closeButton.click();
+        fixture.detectChanges();
+        tick();
+        fixture.detectChanges();
+        tick();
+
+        expect(el.querySelectorAll('.sky-btn-tab').length).toBe(2);
+        expect(closeSpy).toHaveBeenCalled();
+      }
+    ));
 
     it('should be accessible', async(() => {
       fixture.detectChanges();
@@ -640,6 +700,20 @@ describe('Tabset component', () => {
       tick();
       validateTabSelected(el, 0);
 
+    }));
+
+    it('should initialize active state based on string tabIndex values', fakeAsync(() => {
+      let fixture = TestBed.createComponent(TabsetActiveTestComponent);
+      let el = fixture.nativeElement;
+
+      fixture.componentInstance.activeIndex = 'something';
+
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+      tick();
+
+      validateTabSelected(el, 2);
     }));
 
     it('should listen for changes in active state', fakeAsync(() => {
@@ -812,16 +886,24 @@ describe('Tabset component', () => {
       fixture.componentInstance.tabsetComponent.tabDisplayMode = 'dropdown';
       fixture.detectChanges();
 
-      let tabs = debugElement.queryAll(By.css('.sky-tab'));
-      tabs.forEach((value) => {
-        let tab = value.nativeElement;
-        let dropBtn = debugElement.query(By.css('#' + tab.getAttribute('id') + '-nav-btn')).nativeElement;
-        let tabBtn = debugElement.query(By.css('#' + tab.getAttribute('id') + '-hidden-nav-btn')).nativeElement;
+      const button = document.querySelector('.sky-dropdown-button') as HTMLElement;
+      button.click();
+
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+      tick();
+
+      let tabs = document.querySelectorAll('.sky-tab');
+      for (let i = 0; i < tabs.length; i++) {
+        const tab = tabs.item(i);
+        let dropBtn = document.getElementById(`${tab.getAttribute('id')}-nav-btn`);
+        let tabBtn = document.getElementById(`${tab.getAttribute('id')}-hidden-nav-btn`);
 
         expect(tab.getAttribute('aria-labelledby')).toBe(dropBtn.getAttribute('id'));
         expect(dropBtn.getAttribute('aria-controls')).toBe(tab.getAttribute('id'));
         expect(tabBtn.tagName.toLowerCase()).toBe('sky-tab-button');
-      });
+      }
     }));
 
     it('should emit a click event on enter press', fakeAsync(() => {
@@ -831,12 +913,18 @@ describe('Tabset component', () => {
       tick();
       let el = debugElement.queryAll(By.css('.sky-btn-tab'))[1];
 
-      el.triggerEventHandler('keydown', { keyCode: 15 });
+      el.triggerEventHandler('keydown', {
+        keyCode: 15,
+        preventDefault() {}
+      });
       fixture.detectChanges();
       tick();
       validateTabSelected(fixture.nativeElement, 0);
 
-      el.triggerEventHandler('keydown', { keyCode: 13 });
+      el.triggerEventHandler('keydown', {
+        keyCode: 13,
+        preventDefault() {}
+      });
       fixture.detectChanges();
       tick();
       validateTabSelected(fixture.nativeElement, 1);
@@ -846,63 +934,65 @@ describe('Tabset component', () => {
 
   describe('Permalinks', () => {
     let fixture: ComponentFixture<SkyTabsetPermalinksFixtureComponent>;
-    let router: Router;
     let location: Location;
+    let router: Router;
 
     beforeEach(() => {
       fixture = TestBed.createComponent(SkyTabsetPermalinksFixtureComponent);
-      router = TestBed.get(Router);
-      location = TestBed.get(Location);
     });
 
-    it('should activate a tab based on a query param', fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
+    beforeEach(inject(
+      [Location, Router, ActivatedRoute],
+      (_location: Location, _router: Router) => {
+        location = _location;
+        router = _router;
 
-      expect(fixture.componentInstance.activeIndex).toEqual(0);
+        spyOn(router, 'createUrlTree').and.callFake((commands: any[]) => {
+          const params = Object.keys(commands[0])
+            .map(k => `${k}=${commands[0][k]}`)
+            .join(';');
+          return `;${params}`;
+        });
+      }
+    ));
 
+    afterEach(() => {
+      fixture.destroy();
+    });
+
+    it('should activate a tab based on a path param', fakeAsync(() => {
+      fixture.componentInstance.activeIndex = 0;
       fixture.componentInstance.permalinkId = 'foobar';
-
-      router.navigate([], {
-        queryParams: {
-          'foobar-active-tab': 'design-guidelines'
-        }
-      });
+      spyOn(location, 'path').and.returnValue(';foobar-active-tab=design-guidelines');
 
       fixture.detectChanges();
       tick();
+      fixture.detectChanges();
+      tick();
 
-      expect(location.path()).toEqual('/?foobar-active-tab=design-guidelines');
-      expect(fixture.componentInstance.activeIndex).toEqual(1);
+      validateTabSelected(fixture.nativeElement, 1);
     }));
 
-    it('should set a query param on init', fakeAsync(() => {
-      fixture.componentInstance.permalinkId = 'foobar';
+    it('should handle unrecognized path param', fakeAsync(() => {
       fixture.componentInstance.activeIndex = 0;
+      fixture.componentInstance.permalinkId = 'foobar';
+      spyOn(location, 'path').and.returnValue(';foobar-active-tab=invalid-tab');
+
       fixture.detectChanges();
       tick();
       fixture.detectChanges();
       tick();
 
       validateTabSelected(fixture.nativeElement, 0);
-      expect(location.path()).toEqual('/?foobar-active-tab=api');
     }));
 
-    it('should NOT set a query param on init if permalinkId not set', fakeAsync(() => {
-      fixture.componentInstance.permalinkId = undefined;
-      fixture.componentInstance.activeIndex = 0;
-      fixture.detectChanges();
-      tick();
-      fixture.detectChanges();
-      tick();
-
-      validateTabSelected(fixture.nativeElement, 0);
-      expect(location.path()).toEqual('');
-    }));
-
-    it('should set a query param when a tab is selected', fakeAsync(() => {
+    it('should set a path param when a tab is selected', fakeAsync(() => {
       fixture.componentInstance.permalinkId = 'foobar';
 
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+      tick();
       fixture.detectChanges();
       tick();
 
@@ -914,16 +1004,20 @@ describe('Tabset component', () => {
       fixture.detectChanges();
       tick();
 
-      expect(location.path()).toEqual('/?foobar-active-tab=design-guidelines');
+      expect(location.path()).toEqual('/;foobar-active-tab=design-guidelines');
       expect(fixture.componentInstance.activeIndex).toEqual(1);
     }));
 
-    it('should allow custom query param value for each tab', fakeAsync(() => {
+    it('should allow custom path param value for each tab', fakeAsync(() => {
       fixture.componentInstance.permalinkId = 'foobar';
       fixture.componentInstance.permalinkValue = 'baz';
 
       fixture.detectChanges();
       tick();
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+      tick();
 
       expect(fixture.componentInstance.activeIndex).toEqual(0);
 
@@ -933,7 +1027,7 @@ describe('Tabset component', () => {
       fixture.detectChanges();
       tick();
 
-      expect(location.path()).toEqual('/?foobar-active-tab=baz');
+      expect(location.path()).toEqual('/;foobar-active-tab=baz');
       expect(fixture.componentInstance.activeIndex).toEqual(1);
     }));
 
@@ -943,6 +1037,10 @@ describe('Tabset component', () => {
 
       fixture.detectChanges();
       tick();
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+      tick();
 
       expect(fixture.componentInstance.activeIndex).toEqual(0);
 
@@ -952,7 +1050,7 @@ describe('Tabset component', () => {
       fixture.detectChanges();
       tick();
 
-      expect(location.path()).toEqual('/?foobar-active-tab=a-b-c-d');
+      expect(location.path()).toEqual('/;foobar-active-tab=a-b-c-d');
       expect(fixture.componentInstance.activeIndex).toEqual(1);
 
       // Make sure non-English special characters still work!
@@ -966,13 +1064,12 @@ describe('Tabset component', () => {
       fixture.detectChanges();
       tick();
 
-      // Angular's Location returns a URI encoded result.
       expect(location.path()).toEqual(
-        `/?foobar-active-tab=${encodeURIComponent('片仮名')}`
+        '/;foobar-active-tab=片仮名'
       );
     }));
 
-    it('should fall back to `active` if query param value does not match a tab', fakeAsync(() => {
+    it('should fall back to `active` if path param value does not match a tab', fakeAsync(() => {
       fixture.componentInstance.activeIndex = 0;
       fixture.detectChanges();
       tick();
@@ -990,21 +1087,17 @@ describe('Tabset component', () => {
       validateTabSelected(fixture.nativeElement, 2);
 
       fixture.componentInstance.permalinkId = 'foobar';
+      spyOn(location, 'path').and.returnValue(';foobar-active-tab=invalid-tab');
+      SkyAppTestUtility.fireDomEvent(window, 'popstate');
+
+      fixture.detectChanges();
+      tick();
       fixture.detectChanges();
       tick();
       fixture.detectChanges();
       tick();
 
-      router.navigate([], {
-        queryParams: {
-          'foobar-active-tab': 'invalid-value'
-        }
-      });
-
-      fixture.detectChanges();
-      tick();
-
-      validateTabSelected(fixture.nativeElement, 2);
+      validateTabSelected(fixture.nativeElement, 0);
     }));
   });
 });
