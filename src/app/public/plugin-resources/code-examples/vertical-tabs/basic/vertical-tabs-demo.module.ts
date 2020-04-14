@@ -8,8 +8,8 @@ import {
 } from '@angular/common';
 
 import {
-  SkyAlertModule
-} from '@skyux/indicators';
+  SkyTabsModule
+} from '@skyux/tabs';
 
 import {
   VerticalTabDemoComponent
@@ -18,7 +18,7 @@ import {
 @NgModule({
   imports: [
     CommonModule,
-    SkyAlertModule
+    SkyTabsModule
   ],
   declarations: [
     VerticalTabDemoComponent
