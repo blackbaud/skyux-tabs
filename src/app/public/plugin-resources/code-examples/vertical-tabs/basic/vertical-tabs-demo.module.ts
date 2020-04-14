@@ -28,4 +28,4 @@ import {
   ]
 })
 
-export class SkyVerticalTabDemoComponent { }
+export class SkyVerticalTabDemoModule { }

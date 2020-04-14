@@ -48,8 +48,7 @@
     </sky-docs-demo-control-panel>
 
     <sky-vertical-tabset
-      showTabsText="Tab list"
-      (activeChange)="tabChanged($event)">
+      showTabsText="Tab list">
 
       <sky-vertical-tabset-group
         *ngFor="let group of groups"
@@ -80,6 +79,17 @@
       heading="Basic setup"
       sourceCodePath="src/app/public/plugin-resources/code-examples/alert/basic"
     ></sky-docs-code-example> -->
+  </sky-docs-code-examples>
+
+  <sky-docs-code-examples>
+    <sky-docs-code-example
+      heading="Vertical tabs"
+      sourceCodePath="src/app/public/plugin-resources/code-examples/vertical-tabs/basic"
+    ></sky-docs-code-example>
+    <sky-docs-code-example
+      heading="Grouped tabs"
+      sourceCodePath="src/app/public/plugin-resources/code-examples/vertical-tabs/grouped"
+    ></sky-docs-code-example>
   </sky-docs-code-examples>
 
   <sky-docs-design-guidelines>
