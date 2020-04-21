@@ -194,7 +194,6 @@ export class SkyTabsetComponent
   }
 
   public ngOnInit(): void {
-    this.activeIndexOnLoad = (this.active !== undefined) ? this.active : 0;
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -227,6 +226,7 @@ export class SkyTabsetComponent
       });
 
     if (this.active !== undefined) {
+      this.activeIndexOnLoad = this.active;
       this.tabsetService.activateTabIndex(this.active);
     }
 
@@ -239,6 +239,10 @@ export class SkyTabsetComponent
         setTimeout(() => {
           if (newActiveIndex !== this.active) {
             this.active = newActiveIndex;
+            if (this.activeIndexOnLoad === undefined) {
+              this.activeIndexOnLoad = newActiveIndex;
+            }
+            console.log('Activate:', this.active);
             this.activeChange.emit(newActiveIndex);
           }
         });
@@ -298,7 +302,7 @@ export class SkyTabsetComponent
   private activateTabByPermalinkValue(): void {
     const params = this.getPathParams();
 
-    if (!(this.permalinkId in params)) {
+    if (!(this.permalinkId in params) && this.activeIndexOnLoad) {
       this.tabsetService.activateTabIndex(this.activeIndexOnLoad);
       return;
     }

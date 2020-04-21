@@ -93,10 +93,14 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
 
   private _permalinkValue: string;
 
-  constructor(private tabsetService: SkyTabsetService, private ref: ChangeDetectorRef) {}
+  constructor(
+    private tabsetService: SkyTabsetService,
+    private ref: ChangeDetectorRef
+  ) { }
 
   public initializeTabIndex() {
-    setTimeout(() => {
+    console.log('initializeTabIndex()', this.tabId);
+    // setTimeout(() => {
       this.tabsetService.addTab(this);
 
       this.tabsetService.activeIndex.subscribe((activeIndex: any) => {
@@ -107,8 +111,7 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
       if (this.active) {
         this.tabsetService.activateTab(this);
       }
-    });
-
+    // });
   }
 
   public ngOnChanges(changes: SimpleChanges) {
@@ -118,9 +121,7 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
   }
 
   public ngOnDestroy() {
-
     this.tabsetService.destroyTab(this);
-
   }
 
   private isTabActivated(changes: SimpleChanges): boolean {
