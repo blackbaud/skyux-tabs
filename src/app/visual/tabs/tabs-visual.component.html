@@ -12,6 +12,7 @@
     permalinkId="sample"
     (newTab)="newTabClick()"
     (openTab)="openTabClick()"
+    [active]="1"
     >
     <sky-tab [tabHeading]="'Tab 1'" (close)="closeTab()">
       Tab 1 Content
@@ -22,19 +23,19 @@
     <sky-tab [tabHeading]="'Tab 3'" (close)="closeTab()">
       Tab 3 Content
     </sky-tab>
-    <sky-tab [tabHeading]="'Tab 4'" (close)="closeTab()" [active]="true">
+    <sky-tab [tabHeading]="'Tab 4'" (close)="closeTab()">
       Tab 4 Content
     </sky-tab>
     <sky-tab tabHeading="Permanent tab" [tabHeaderCount]="9">
       This tab cannot be closed
     </sky-tab>
-    <sky-tab *ngIf="isTabVisible"
+    <sky-tab
       permalinkValue="foobar"
-      tabHeading="Tab 6"
+      tabHeading="Tab 3"
       [tabHeaderCount]="144"
-      (close)="isTabVisible = false"
+      (close)="closeTab()"
     >
-      Tab 6 Content
+      Tab 3 Content
     </sky-tab>
   </sky-tabset>
 
