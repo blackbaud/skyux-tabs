@@ -13,7 +13,6 @@ import {
   Input,
   OnChanges,
   OnDestroy,
-  OnInit,
   Optional,
   Output,
   QueryList,
@@ -63,7 +62,7 @@ import {
   ]
 })
 export class SkyTabsetComponent
-  implements OnInit, AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
+  implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
 
   /**
    * Specifies the index of the active tab.
@@ -193,9 +192,6 @@ export class SkyTabsetComponent
     this.tabsetService.activateTab(tab);
   }
 
-  public ngOnInit(): void {
-  }
-
   public ngOnChanges(changes: SimpleChanges): void {
     const activeChange = changes['active'];
     if (
@@ -242,7 +238,6 @@ export class SkyTabsetComponent
             if (this.activeIndexOnLoad === undefined) {
               this.activeIndexOnLoad = newActiveIndex;
             }
-            console.log('Activate:', this.active);
             this.activeChange.emit(newActiveIndex);
           }
         });
@@ -302,18 +297,21 @@ export class SkyTabsetComponent
   private activateTabByPermalinkValue(): void {
     const params = this.getPathParams();
 
-    if (!(this.permalinkId in params) && this.activeIndexOnLoad) {
+    if (
+      !(this.permalinkId in params) &&
+      this.activeIndexOnLoad !== undefined
+    ) {
       this.tabsetService.activateTabIndex(this.activeIndexOnLoad);
       return;
     }
 
     const value = params[this.permalinkId];
 
-    let index: number;
+    let index: number | string;
 
     this.tabs.forEach((tabComponent, i) => {
       if (tabComponent.permalinkValue === value) {
-        index = i;
+        index = tabComponent.tabIndex;
       }
     });
 
