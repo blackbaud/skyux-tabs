@@ -106,7 +106,6 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
       this.active = this.tabIndex === activeIndex;
       this.ref.markForCheck();
     });
-
   }
 
   public ngOnChanges(changes: SimpleChanges) {

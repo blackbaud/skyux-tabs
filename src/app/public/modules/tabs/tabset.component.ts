@@ -203,9 +203,6 @@ export class SkyTabsetComponent
   }
 
   public ngAfterContentInit(): void {
-    // Initialize each tab's index (in case tabs are instantiated out of order).
-    this.tabs.forEach(tab => tab.initializeTabIndex());
-
     this.tabs.changes
       .takeUntil(this.ngUnsubscribe)
       .subscribe((change: QueryList<SkyTabComponent>) => {
@@ -225,6 +222,13 @@ export class SkyTabsetComponent
       this.activeIndexOnLoad = this.active;
       this.tabsetService.activateTabIndex(this.active);
     }
+
+    // Render the template before activating a tab.
+    setTimeout(() => {
+      // Initialize each tab's index (in case tabs are instantiated out of order).
+      this.tabs.forEach(tab => tab.initializeTabIndex());
+      this.activateTabByPermalinkValue();
+    });
 
     this.tabsetService.activeIndex
       .distinctUntilChanged()
@@ -260,8 +264,7 @@ export class SkyTabsetComponent
         this.updateDisplayMode(currentOverflow);
       });
 
-    this.activateTabByPermalinkValue();
-
+    // Render the template before setting display mode.
     setTimeout(() => {
       this.adapterService.detectOverflow();
       this.updateDisplayMode(this.adapterService.currentOverflow);
