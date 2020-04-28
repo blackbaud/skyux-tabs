@@ -1,3 +1,15 @@
+# 3.2.7 (2020-04-23)
+
+- Fixed the tab and tabset components to set the active tab on initialization. [#73](https://github.com/blackbaud/skyux-tabs/pull/73)
+
+# 3.2.6 (2020-04-07)
+
+- Fixed the tabset component to set the active tab when `activeIndex` is set to a `string` value. [#62](https://github.com/blackbaud/skyux-tabs/pull/62)
+
+# 3.2.5 (2020-03-30)
+
+- Fixed the tabset component to avoid triggering navigation changes when using the `permalinkId` property. [#59](https://github.com/blackbaud/skyux-tabs/pull/59)
+
 # 4.0.0-rc.0 (2020-02-22)
 
 ### New features

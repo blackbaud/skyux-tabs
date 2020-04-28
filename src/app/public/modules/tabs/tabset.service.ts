@@ -40,17 +40,20 @@ export class SkyTabsetService implements OnDestroy {
 
   public activateTabIndex(tabIndex: string | number) {
 
-    this.tabs
-      .pipe(take(1))
-      .subscribe((currentTabs) => {
-        let newSelectedTab = this.getTabFromIndex(tabIndex, currentTabs);
+    this.tabs.take(1).subscribe((currentTabs) => {
+      if (currentTabs.length === 0) {
+        return;
+      }
 
-        if (newSelectedTab) {
-          this.activeIndex.next(newSelectedTab.tabIndex);
-        } else {
-          this.activeIndex.next(tabIndex);
-        }
-      });
+      let newSelectedTab = this.getTabFromIndex(tabIndex, currentTabs);
+
+      if (newSelectedTab) {
+        this.activeIndex.next(newSelectedTab.tabIndex);
+      } else {
+        // If the tabIndex does not point to a specific tab, use the first tab's index instead.
+        this.activeIndex.next(currentTabs[0].tabIndex);
+      }
+    });
   }
 
   public addTab(tab: SkyTabComponent) {
