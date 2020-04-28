@@ -27,7 +27,7 @@ import {
   SkyTabsModule,
   SkySectionedFormModule,
   SkyVerticalTabsetModule
-} from './public';
+} from './public/public_api';
 
 import {
   VerticalTabsetModalVisualComponent
