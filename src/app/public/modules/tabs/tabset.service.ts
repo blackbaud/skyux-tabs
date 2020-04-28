@@ -40,7 +40,7 @@ export class SkyTabsetService implements OnDestroy {
 
   public activateTabIndex(tabIndex: string | number) {
 
-    this.tabs.take(1).subscribe((currentTabs) => {
+    this.tabs.pipe(take(1)).subscribe((currentTabs) => {
       if (currentTabs.length === 0) {
         return;
       }
