@@ -16,6 +16,10 @@ import {
 } from '@skyux/forms';
 
 import {
+  SkyPageModule
+} from '@skyux/layout';
+
+import {
   SkyModalModule
 } from '@skyux/modals';
 
@@ -27,7 +31,7 @@ import {
   SkyTabsModule,
   SkySectionedFormModule,
   SkyVerticalTabsetModule
-} from './public';
+} from './public/public_api';
 
 import {
   VerticalTabsetModalVisualComponent
@@ -40,6 +44,7 @@ import {
     SkyCodeModule,
     SkyDocsToolsModule,
     SkyModalModule,
+    SkyPageModule,
     SkySectionedFormModule,
     SkyTabsModule,
     SkyVerticalTabsetModule
