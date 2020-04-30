@@ -1,3 +1,7 @@
+# 4.0.0-rc.1 (2020-04-30)
+
+- Added bug fixes and features from the `master` branch. [#75](https://github.com/blackbaud/skyux-tabs/pull/75)
+
 # 3.2.7 (2020-04-23)
 
 - Fixed the tab and tabset components to set the active tab on initialization. [#73](https://github.com/blackbaud/skyux-tabs/pull/73)
