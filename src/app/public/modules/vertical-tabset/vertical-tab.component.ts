@@ -24,10 +24,17 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkyVerticalTabComponent implements OnInit, OnDestroy {
-
+  /**
+   * Indicates whether the tab is active when the tabset loads.
+   */
   @Input()
   public active: boolean = false;
 
+  /**
+   * Specifies an ID to identify the element that contains the content that the vertical
+   * tab exposes. This ID corresponds to the tabId. This property supports accessibility
+   * rules for disclosures.
+   */
   @Input()
   public get ariaControls(): string {
     return this.isMobile ? undefined : this._ariaControls;
@@ -42,6 +49,11 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
   @Input()
   public ariaRequired: boolean;
 
+  /**
+   * Specifies an ARIA role for the tab to support accessibility by indicating how the
+   * tab functions and what it controls. For information about ARIA roles, see the
+   * WAI-ARIA roles model.
+   */
   @Input()
   public get ariaRole(): string {
     if (this.isMobile) {
@@ -53,12 +65,21 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
     this._ariaRole = value;
   }
 
+  /**
+   * Indicates whether to disable the tab.
+   */
   @Input()
   public disabled: boolean = false;
 
+  /**
+   * Displays a counter alongside the tab header.
+   */
   @Input()
   public tabHeaderCount: number;
 
+  /**
+   * Specifies the tab header.
+   */
   @Input()
   public tabHeading: string;
 
@@ -71,6 +92,9 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
     this._showTabRightArrow = value;
   }
 
+  /**
+   * Specifies an ID for the tab.
+   */
   @Input()
   public tabId: string;
 
