@@ -1,6 +1,6 @@
 {
   "name": "@skyux/tabs",
-  "version": "3.2.7",
+  "version": "3.2.8",
   "description": "SKY UX Tabs",
   "main": "bundles/bundle.umd.js",
   "module": "index.ts",
