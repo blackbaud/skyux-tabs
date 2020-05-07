@@ -651,7 +651,7 @@ describe('Tabset component', () => {
         tick();
         fixture.detectChanges();
 
-        let el = fixture.nativeElement.querySelector('.sky-tabset-dropdown');
+        let el = fixture.nativeElement;
 
         const closeSpy = spyOn(fixture.componentInstance, 'closeTab2').and.callThrough();
 
