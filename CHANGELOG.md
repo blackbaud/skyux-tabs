@@ -1,6 +1,6 @@
 # 3.2.8 (2020-05-07)
 
-- Fixed deep imports for the `SkyMediaQueryService`. [#77](https://github.com/blackbaud/skyux-tabs/pull/77)
+- Fixed deep imports for `SkyMediaQueryService`. [#77](https://github.com/blackbaud/skyux-tabs/pull/77)
 
 # 3.2.7 (2020-04-23)
 
