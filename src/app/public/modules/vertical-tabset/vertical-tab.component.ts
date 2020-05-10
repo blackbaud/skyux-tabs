@@ -43,9 +43,15 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
     this._ariaControls = value;
   }
 
+  /**
+   * Indicates whether XXXXXXXX
+   */
   @Input()
   public ariaInvalid: boolean;
 
+  /**
+   * Indicates whether XXXXXXXX
+   */
   @Input()
   public ariaRequired: boolean;
 
@@ -83,6 +89,9 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
   @Input()
   public tabHeading: string;
 
+  /**
+   * Indicates whether to display a chevron icon that points to the right in the righthand side of the tab.
+   */
   @Input()
   public get showTabRightArrow() {
     return this._showTabRightArrow && this.tabsetService.isMobile();
