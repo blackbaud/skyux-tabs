@@ -78,7 +78,7 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
   public disabled: boolean = false;
 
   /**
-   * Displays a counter alongside the tab header.
+   * Displays an item count in the tab header to indicate the number of list items in the tab.
    */
   @Input()
   public tabHeaderCount: number;

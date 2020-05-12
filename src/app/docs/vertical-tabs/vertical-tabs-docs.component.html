@@ -1,7 +1,7 @@
 <sky-docs-demo-page moduleName="SkyTabsModule" moduleSourceCodePath="src/app/public/modules/vertical-tabset/"
   pageTitle="Vertical tabs">
   <sky-docs-demo-page-summary>
-    Vertical tabs divide and categorize page content when the number of categories is large.
+    Vertical tabs divide and categorize content on pages with a large number of categories.
   </sky-docs-demo-page-summary>
 
   <sky-docs-demo>
@@ -45,39 +45,38 @@
     <sky-docs-demo-page-section heading="Usage">
       <sky-docs-design-guideline heading="Use when" headingStyle="success">
         <p>
-          Use vertical tabs when the number of tabs and/or the tab label text is expected to exceed the horizontal space
-          available.
+          Use vertical tabs when you expect to exceed the available horizontal space because of the number of tabs or the length of tab labels.
         </p>
         <sky-docs-design-guideline-thumbnail
-          caption="Do use vertical tabs when it will be common to have a large number of tabs." captionType="success"
+          caption="Do use vertical tabs for a large number of tabs." captionType="success"
           imageSource="~/assets/img/guidelines/vertical-tabs/vertical-tabs-usage-1.png">
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
 
       <sky-docs-design-guideline>
         <p>
-          Use grouped vertical tabs when the tabs naturally fit into multiple categories.
+          Use collapsible groups to organize vertical tabs that fit naturally into multiple categories.
         </p>
-        <sky-docs-design-guideline-thumbnail caption="Do use grouped vertical tabs when the tabs can be categorized."
+        <sky-docs-design-guideline-thumbnail caption="Do use collapsible groups to organize vertical tabs into categories."
           captionType="success" imageSource="~/assets/img/guidelines/vertical-tabs/vertical-tabs-usage-2.png">
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
 
       <sky-docs-design-guideline heading="Don't use when" headingStyle="danger">
         <p>
-          Don’t use vertical tabs when horizontal tabs are also suitable.
+          Don’t use vertical tabs when <a href="https://developer.blackbaud.com/skyux/components/tabs">horizontal tabs</a> are appropriate.
         </p>
         <sky-docs-design-guideline-thumbnail
-          caption="Don't use vertical tabs when there is enough space for horizontal tabs." captionType="danger"
+          caption="Don't use vertical tabs when you have enough space for horizontal tabs." captionType="danger"
           imageSource="~/assets/img/guidelines/vertical-tabs/vertical-tabs-usage-3.png">
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
 
       <sky-docs-design-guideline>
         <p>
-          Don’t combine vertical tabs and horizontal tabs. Change the workflow instead of nesting multiple sets of tabs.
+          Don’t use vertical tabs with horizontal tabs. Change the workflow instead of nesting multiple sets of tabs.
         </p>
-        <sky-docs-design-guideline-thumbnail caption="Don't use horizontal and vertical tabs inside of each other."
+        <sky-docs-design-guideline-thumbnail caption="Don't use vertical tabs with horizontal tabs."
           captionType="danger" imageSource="~/assets/img/guidelines/vertical-tabs/vertical-tabs-usage-4.png">
         </sky-docs-design-guideline-thumbnail>
 
@@ -85,15 +84,14 @@
 
       <sky-docs-design-guideline>
         <p>
-          Don’t use vertical tabs when the user’s workflow will require them to view and perform actions on each
-          section. Use a split view instead.
+          Don’t use vertical tabs when the workflow requires users to view and perform actions on each tab. Use <a href="https://developer.blackbaud.com/skyux/components/split-view">split views</a> instead.
         </p>
         <sky-docs-design-guideline-thumbnail
-          caption="Don't use vertical tabs when a task requires users to interact with the contents of each tab. Use a split view instead."
+          caption="Don't use vertical tabs when users must interact with each tab."
           captionType="danger" imageSource="~/assets/img/guidelines/vertical-tabs/vertical-tabs-usage-5.png">
         </sky-docs-design-guideline-thumbnail>
         <sky-docs-design-guideline-thumbnail
-          caption="Do use split view to display a list of items that users must work through." captionType="success"
+          caption="Do use split views to display lists of items that users must work through." captionType="success"
           imageSource="~/assets/img/guidelines/vertical-tabs/vertical-tabs-usage-6.png">
         </sky-docs-design-guideline-thumbnail>
 
@@ -101,10 +99,9 @@
 
       <sky-docs-design-guideline>
         <p>
-          Don’t use vertical tabs inside a modal. Use a sectioned form instead. Although the two look similar, sectioned
-          form works better with modal interactions.
+          Don’t use vertical tabs in modals. Use <a href="https://developer.blackbaud.com/skyux/components/sectioned-form">sectioned forms</a> instead. The two approaches look similar, but sectioned forms work better with modal interactions.
         </p>
-        <sky-docs-design-guideline-thumbnail caption="Don't use vertical tabs inside a modal." captionType="danger"
+        <sky-docs-design-guideline-thumbnail caption="Don't use vertical tabs in modals." captionType="danger"
           imageSource="~/assets/img/guidelines/vertical-tabs/vertical-tabs-usage-7.png">
         </sky-docs-design-guideline-thumbnail>
 
@@ -120,10 +117,10 @@
         <sky-docs-anatomy-item>Unselected tab</sky-docs-anatomy-item>
         <sky-docs-anatomy-item>Tab label</sky-docs-anatomy-item>
         <sky-docs-anatomy-item>Tab border</sky-docs-anatomy-item>
-        <sky-docs-anatomy-item isOptional="true">Tab count</sky-docs-anatomy-item>
+        <sky-docs-anatomy-item isOptional="true">Item count</sky-docs-anatomy-item>
       </sky-docs-anatomy>
 
-      <h3>Grouped vertical tabs</h3>
+      <h3>Vertical tabs with collapsible groups</h3>
       <sky-docs-anatomy imagePath="~/assets/img/guidelines/vertical-tabs/vertical-tabs-anatomy-2.png">
         <sky-docs-anatomy-item>Selected tab</sky-docs-anatomy-item>
         <sky-docs-anatomy-item>Unselected tab</sky-docs-anatomy-item>
@@ -131,30 +128,28 @@
         <sky-docs-anatomy-item>Tab border</sky-docs-anatomy-item>
         <sky-docs-anatomy-item>Selected tab group</sky-docs-anatomy-item>
         <sky-docs-anatomy-item>Unselected tab group</sky-docs-anatomy-item>
-        <sky-docs-anatomy-item>Expand/collapse</sky-docs-anatomy-item>
-        <sky-docs-anatomy-item isOptional="true">Tab count</sky-docs-anatomy-item>
+        <sky-docs-anatomy-item>Expand/collapse icon</sky-docs-anatomy-item>
+        <sky-docs-anatomy-item isOptional="true">Item count</sky-docs-anatomy-item>
       </sky-docs-anatomy>
-
     </sky-docs-demo-page-section>
-      
+
     <sky-docs-demo-page-section
       heading="Options"
     >
-    
-      <sky-docs-design-guideline heading="Tab count">
-        
-        <p>When a vertical tab displays a list, you can include the count in the tab if that number will meaningfully impact user behavior.</p>
-        
+
+      <sky-docs-design-guideline heading="Item count">
+        <p>
+          When a vertical tab displays a list, you can include an item count in the tab header if that number meaningfully impacts user behavior.
+        </p>
       </sky-docs-design-guideline>
-        
-      <sky-docs-design-guideline heading="Groups">
-        
-        <p>Vertical tabs can be divided into groups when categorization will benefit the user.</p>
-        
+
+      <sky-docs-design-guideline heading="Collapsible groups">
+        <p>
+          You can organize vertical tabs into collapsible groups when the categories help users.
+        </p>
       </sky-docs-design-guideline>
-    
     </sky-docs-demo-page-section>
-      
+
     <sky-docs-demo-page-section
       heading="Behavior & states"
     >
@@ -198,7 +193,7 @@
           </tr>
           <tr>
             <td class="sky-docs-table-cell">
-              Group when the selected tab is inside
+              Group with selected tab
             </td>
             <td class="sky-docs-table-cell">
               <sky-docs-design-guideline-thumbnail
@@ -209,7 +204,7 @@
           </tr>
           <tr>
             <td class="sky-docs-table-cell">
-              Group when the selected tab is not inside
+              Group without selected tab
             </td>
             <td class="sky-docs-table-cell">
               <sky-docs-design-guideline-thumbnail
@@ -222,21 +217,21 @@
       </sky-docs-design-guideline>
 
     </sky-docs-demo-page-section>
-      
+
     <sky-docs-demo-page-section heading="Layout">
-      
+
       <sky-docs-design-guideline>
         <p>
-          Vertical tabs are always the last (bottommost) content in their container. Don't put additional content under vertical tabs.
+          Vertical tabs are always the bottom-most content in their containers. Don't include additional content after vertical tabs.
         </p>
-        <sky-docs-design-guideline-thumbnail caption="Don't put additional content under vertical tabs."
+        <sky-docs-design-guideline-thumbnail caption="Don't include content after vertical tabs."
           captionType="danger" imageSource="~/assets/img/guidelines/vertical-tabs/vertical-tabs-layout-1.png">
         </sky-docs-design-guideline-thumbnail>
 
       </sky-docs-design-guideline>
-      
+
     </sky-docs-demo-page-section>
-      
+
     <sky-docs-demo-page-section
       heading="Related information"
     >
