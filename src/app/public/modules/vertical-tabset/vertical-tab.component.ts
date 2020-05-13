@@ -32,8 +32,8 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
 
   /**
    * Specifies an ID to identify the element that contains the content that the vertical
-   * tab exposes. This ID corresponds to the tabId. This property supports accessibility
-   * rules for disclosures.
+   * tab exposes. This ID corresponds to the `tabId`. This property supports [accessibility
+   * rules for disclosures](https://www.w3.org/TR/wai-aria-practices-1.1/#disclosure).
    */
   @Input()
   public get ariaControls(): string {
@@ -44,13 +44,13 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Indicates whether XXXXXXXX
+   * @internal
    */
   @Input()
   public ariaInvalid: boolean;
 
   /**
-   * Indicates whether XXXXXXXX
+   * @internal
    */
   @Input()
   public ariaRequired: boolean;
@@ -58,7 +58,7 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
   /**
    * Specifies an ARIA role for the tab to support accessibility by indicating how the
    * tab functions and what it controls. For information about ARIA roles, see the
-   * WAI-ARIA roles model.
+   * [WAI-ARIA roles model](https://www.w3.org/WAI/PF/aria/roles).
    * @default "tab"
    */
   @Input()
@@ -79,7 +79,7 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
   public disabled: boolean = false;
 
   /**
-   * Displays an item count in the tab header to indicate the number of list items in the tab.
+   * Displays an item count alongside the tab header to indicate how many list items the tab contains.
    */
   @Input()
   public tabHeaderCount: number;
@@ -92,7 +92,8 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
   public tabHeading: string;
 
   /**
-   * Indicates whether to display a chevron icon that points to the right in the righthand side of the tab.
+   * Indicates whether to display a chevron-right icon in the righthand side of the tab.
+   * @internal
    */
   @Input()
   public get showTabRightArrow() {

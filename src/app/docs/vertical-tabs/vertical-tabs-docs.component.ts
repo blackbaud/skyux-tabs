@@ -18,14 +18,13 @@ export class VerticalTabDemoComponent {
   public otherCount = 4;
 
   public onDemoSelectionChangeTabs(change: SkyDocsDemoControlPanelChange): void {
-    this.demoSettings.contentTab1 = 'Tab 1 Content';
-    this.demoSettings.contentTab2 = 'Tab 2 Content';
+    this.demoSettings.contentTab1 = 'Tab 1 content';
+    this.demoSettings.contentTab2 = 'Tab 2 content';
 
     if (change.counts) {
       this.demoSettings.count = this.count;
       this.demoSettings.otherCount = this.otherCount;
-      this.demoSettings.contentTab1 = 'Tab 1 has ' + this.count + ' items';
-      this.demoSettings.contentTab2 = 'Tab 2 does not have a count';
+      this.demoSettings.contentTab1 = 'Tab 1 has ' + this.count + ' items.';
     } else {
       this.demoSettings.count = undefined;
       this.demoSettings.otherCount = undefined;
@@ -34,15 +33,15 @@ export class VerticalTabDemoComponent {
     this.tabs = [
       { tabHeading: 'Tab 1', content: this.demoSettings.contentTab1, tabHeaderCount: this.demoSettings.count },
       { tabHeading: 'Tab 2', content: this.demoSettings.contentTab2},
-      { tabHeading: 'Tab 3 is disabled', content: 'Tab 3 Content', disabled: true}
+      { tabHeading: 'Tab 3 (disabled)', content: 'Tab 3 content', disabled: true}
     ];
   }
   public onDemoSelectionChangeGroups(change: SkyDocsDemoControlPanelChange): void {
-    this.demoSettings.contentTab1 = 'Group 1 — Tab 1 Content';
-    this.demoSettings.contentTab2 = 'Group 2 — Tab 1 Content';
+    this.demoSettings.contentTab1 = 'Group 1 — Tab 1 content';
+    this.demoSettings.contentTab2 = 'Group 2 — Tab 1 content';
     if (change.counts) {
-      this.demoSettings.contentTab1 = 'Group 1 — Tab 1 has ' + this.count + ' items';
-      this.demoSettings.contentTab2 = 'Group 2 — Tab 1 has ' + this.otherCount + ' items';
+      this.demoSettings.contentTab1 = 'Group 1 — Tab 1 has ' + this.count + ' items.';
+      this.demoSettings.contentTab2 = 'Group 2 — Tab 1 has ' + this.otherCount + ' items.';
       this.demoSettings.count = this.count;
       this.demoSettings.otherCount = this.otherCount;
     } else {
@@ -52,15 +51,15 @@ export class VerticalTabDemoComponent {
 
     this.groups = [
       {
-        heading: 'Tab group 1',
+        heading: 'Group 1',
         isOpen: true,
         isDisabled: false,
         subTabs: [
           { tabHeading: 'Group 1 — Tab 1', content:  this.demoSettings.contentTab1, tabHeaderCount: this.demoSettings.count},
-          { tabHeading: 'Group 1 — Tab 2', content: 'Group 1 — Tab 2 Content' }]
+          { tabHeading: 'Group 1 — Tab 2', content: 'Group 1 — Tab 2 content' }]
       },
       {
-        heading: 'Tab group 2',
+        heading: 'Group 2',
         isOpen: false,
         isDisabled: false,
         subTabs: [
@@ -68,15 +67,15 @@ export class VerticalTabDemoComponent {
             tabHeaderCount: this.demoSettings.otherCount
           },
           { tabHeading: 'Group 2 — Tab 2',
-            content:  'Group 2 — Tab 2 Content'
+            content:  'Group 2 — Tab 2 content'
           },
-          { tabHeading: 'Group 2 — Tab 3 — Disabled',
+          { tabHeading: 'Group 2 — Tab 3 (disabled)',
           content: 'Group 2 — Tab 3 content',
           disabled: true
         }]
       },
       {
-        heading: 'Group 3 is disabled',
+        heading: 'Group 3 (disabled)',
         isOpen: false,
         isDisabled: true,
         subTabs: []

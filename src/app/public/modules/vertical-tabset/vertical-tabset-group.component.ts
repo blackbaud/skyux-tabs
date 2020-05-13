@@ -64,20 +64,21 @@ import {
 export class SkyVerticalTabsetGroupComponent implements OnInit, OnDestroy {
 
   /**
-   * Indicates whether to disable the ability to open and collapse the collapsible
-   * group.
+   * Indicates whether to disable the ability to expand and collapse the group.
+   * @default "false"
    */
   @Input()
   public disabled: boolean;
 
   /**
    * Specifies the header for the collapsible group of tabs.
+   * @default "false"
    */
   @Input()
   public groupHeading: string;
 
   /**
-   * Indicates whether the collapsible group is open.
+   * Indicates whether the collapsible group is expanded.
    */
   @Input()
   public set open(value: boolean) {
