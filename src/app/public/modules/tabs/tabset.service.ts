@@ -27,7 +27,8 @@ export class SkyTabsetService implements OnDestroy {
   public activeIndex: BehaviorSubject<any> = new BehaviorSubject(0);
 
   public ngOnDestroy(): void {
-    this.destroy();
+    this.tabs.complete();
+    this.activeIndex.complete();
   }
 
   public activateTab(tab: SkyTabComponent) {
@@ -93,14 +94,6 @@ export class SkyTabsetService implements OnDestroy {
         }
         this.tabs.next(currentTabs);
       });
-  }
-
-  /**
-   * @deprecated This method is called automatically during the OnDestroy lifecycle hook.
-   */
-  public destroy() {
-    this.tabs.complete();
-    this.activeIndex.complete();
   }
 
   private getLastTabIndex(tabs: Array<SkyTabComponent>) {
