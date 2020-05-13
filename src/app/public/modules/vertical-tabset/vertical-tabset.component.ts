@@ -66,6 +66,7 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
    * Specifies an ARIA role for the tabset to support accessibility by indicating
    * how the tabset functions and what it controls. For information about ARIA roles,
    * see the WAI-ARIA roles model.
+   * @default "tablist"
    */
   @Input()
   public get ariaRole(): string {

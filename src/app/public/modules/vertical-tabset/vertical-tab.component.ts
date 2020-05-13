@@ -59,6 +59,7 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
    * Specifies an ARIA role for the tab to support accessibility by indicating how the
    * tab functions and what it controls. For information about ARIA roles, see the
    * WAI-ARIA roles model.
+   * @default "tab"
    */
   @Input()
   public get ariaRole(): string {
@@ -85,6 +86,7 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
 
   /**
    * Specifies the tab header.
+   * @required
    */
   @Input()
   public tabHeading: string;
