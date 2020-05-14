@@ -25,6 +25,9 @@ import {
 
 export const VISIBLE_STATE = 'shown';
 
+/**
+ * @internal
+ */
 @Injectable()
 export class SkyVerticalTabsetService {
 
