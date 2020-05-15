@@ -31,7 +31,7 @@ export class VerticalTabDemoComponent {
     }
 
     this.tabs = [
-      { tabHeading: 'Tab 1', content: this.demoSettings.contentTab1, tabHeaderCount: this.demoSettings.count },
+      { tabHeading: 'Tab 1', content: this.demoSettings.contentTab1, tabHeaderCount: this.demoSettings.count, active: true },
       { tabHeading: 'Tab 2', content: this.demoSettings.contentTab2},
       { tabHeading: 'Tab 3 (disabled)', content: 'Tab 3 content', disabled: true}
     ];
@@ -55,7 +55,7 @@ export class VerticalTabDemoComponent {
         isOpen: true,
         isDisabled: false,
         subTabs: [
-          { tabHeading: 'Group 1 — Tab 1', content:  this.demoSettings.contentTab1, tabHeaderCount: this.demoSettings.count},
+          { tabHeading: 'Group 1 — Tab 1', content:  this.demoSettings.contentTab1, tabHeaderCount: this.demoSettings.count, active: true},
           { tabHeading: 'Group 1 — Tab 2', content: 'Group 1 — Tab 2 content' }]
       },
       {
