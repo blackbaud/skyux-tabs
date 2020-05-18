@@ -31,10 +31,6 @@ import {
 } from './tabset-permalinks.component.fixture';
 
 import {
-  SkyWizardTestFormComponent
-} from './tabset-wizard.component.fixture';
-
-import {
   TabsetTestComponent
 } from './tabset.component.fixture';
 
@@ -42,7 +38,6 @@ import {
   declarations: [
     TabsetTestComponent,
     SkyTabsetPermalinksFixtureComponent,
-    SkyWizardTestFormComponent,
     TabsetActiveTestComponent
   ],
   imports: [
@@ -55,11 +50,7 @@ import {
   exports: [
     TabsetTestComponent,
     SkyTabsetPermalinksFixtureComponent,
-    SkyWizardTestFormComponent,
     TabsetActiveTestComponent
-  ],
-  entryComponents: [
-    SkyWizardTestFormComponent
   ]
 })
 export class SkyTabsFixturesModule { }

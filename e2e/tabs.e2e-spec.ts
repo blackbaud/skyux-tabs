@@ -49,15 +49,6 @@ describe('Tabs', () => {
       SkyHostBrowser.moveCursorOffScreen();
     });
 
-  it('should match the tabset screenshot with wizard styling', (done) => {
-    SkyHostBrowser.get('visual/tabs');
-    SkyHostBrowser.setWindowBreakpoint('lg');
-    element(by.css('.sky-test-show-wizard')).click();
-    expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
-      screenshotName: 'tabset-wizard'
-    });
-  });
-
   it('should match previous dropdown tabset screenshot (screen: xs)', (done) => {
     SkyHostBrowser.get('visual/tabs');
     SkyHostBrowser.setWindowBreakpoint('xs');
