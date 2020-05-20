@@ -1,3 +1,15 @@
+# 4.0.0 (2020-05-20)
+
+### New features
+
+- Added support for `@angular/core@^9`. [#56](https://github.com/blackbaud/skyux-tabs/pull/56)
+- Updated the pipeline to transpile to the [Angular Package Format](https://docs.google.com/document/d/1CZC2rcpxffTDfRDs6p1cfbmKNLA6x5O-NtkJglDaBVs/preview). [#56](https://github.com/blackbaud/skyux-tabs/pull/56)
+
+### Breaking changes
+
+- Removed the `tabStyle` input from the tabset component, which was used to switch between "wizard" or "tabs" tab styles. If you wish to use a "wizard" styled component, use the progress indicator component. [#84](https://github.com/blackbaud/skyux-tabs/pull/84)
+- Dropped support for `rxjs@5`. Consumers can install `rxjs-compat@^6` to support older versions of `rxjs`. [#56](https://github.com/blackbaud/skyux-tabs/pull/56)
+
 # 4.0.0-rc.2 (2020-05-18)
 
 ### Breaking changes
