@@ -19,6 +19,10 @@ import {
 } from '@skyux/modals';
 
 import {
+  SkyThemeService
+} from '@skyux/theme';
+
+import {
   SkyTabsModule
 } from '../tabs.module';
 
@@ -51,6 +55,9 @@ import {
     TabsetTestComponent,
     SkyTabsetPermalinksFixtureComponent,
     TabsetActiveTestComponent
+  ],
+  providers: [
+    SkyThemeService
   ]
 })
 export class SkyTabsFixturesModule { }

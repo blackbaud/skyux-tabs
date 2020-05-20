@@ -3,6 +3,11 @@
   "name": "skyux-tabs",
   "mode": "easy",
   "compileMode": "aot",
+  "host": {
+    "frameOptions": {
+      "none": true
+    }
+  },
   "plugins": [
     "@skyux-sdk/builder-plugin-skyux"
   ],
@@ -23,11 +28,13 @@
   "app": {
     "styles": [
       "@skyux/docs-tools/css/docs-tools.css"
-    ]
-  },
-  "host": {
-    "frameOptions": {
-      "none": true
+    ],
+    "theming": {
+      "supportedThemes": [
+        "default",
+        "modern"
+      ],
+      "theme": "default"
     }
   }
 }

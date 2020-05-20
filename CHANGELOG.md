@@ -4,6 +4,14 @@
 
 - Removed the `tabStyle` input from the tabset component, which was used to switch between "wizard" or "tabs" tab styles. If you wish to use a "wizard" styled component, use the progress indicator component. [#84](https://github.com/blackbaud/skyux-tabs/pull/84)
 
+# 3.3.0 (2020-05-11)
+
+- Added modern theme styles to the tabset component. [#81](https://github.com/blackbaud/skyux-tabs/pull/81)
+
+# 3.2.8 (2020-05-07)
+
+- Fixed deep imports for `SkyMediaQueryService`. [#77](https://github.com/blackbaud/skyux-tabs/pull/77)
+
 # 4.0.0-rc.1 (2020-04-30)
 
 - Added bug fixes and features from the `master` branch. [#75](https://github.com/blackbaud/skyux-tabs/pull/75)

@@ -36,6 +36,10 @@ import {
 } from 'rxjs/operators';
 
 import {
+  SkyThemeService
+} from '@skyux/theme';
+
+import {
   SkyTabComponent
 } from './tab.component';
 
@@ -129,7 +133,8 @@ export class SkyTabsetComponent
     private changeRef: ChangeDetectorRef,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    @Optional() private router?: Router
+    @Optional() private router?: Router,
+    @Optional() public themeSvc?: SkyThemeService
   ) { }
 
   public getTabButtonId(tab: SkyTabComponent): string {
