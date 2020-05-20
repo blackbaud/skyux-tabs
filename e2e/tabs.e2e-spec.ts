@@ -67,8 +67,7 @@ describe('Tabs', () => {
     SkyHostBrowser.moveCursorOffScreen();
   }
 
-  it('should match previous dropdown tabset screenshot (screen: xs)', (done) => {
-    SkyHostBrowser.get('visual/tabs');
+  function validateDropdownTabset(done: DoneFn): void {
     SkyHostBrowser.setWindowBreakpoint('xs');
     element(by.css('#screenshot-tabset button.sky-dropdown-button-type-tab')).click();
     expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
@@ -107,10 +106,6 @@ describe('Tabs', () => {
     validateSelectedTabHoverXs(done);
   });
 
-  it('should match the tabset screenshot with wizard styling', (done) => {
-    validateWizard(done);
-  });
-
   it('should match previous dropdown tabset screenshot (screen: xs)', (done) => {
     validateDropdownTabset(done);
   });
@@ -139,10 +134,6 @@ describe('Tabs', () => {
 
     it('should match previous tabset screenshot when tab is hovered (screen: xs)', (done) => {
       validateSelectedTabHoverXs(done);
-    });
-
-    it('should match the tabset screenshot with wizard styling', (done) => {
-      validateWizard(done);
     });
 
     it('should match previous dropdown tabset screenshot (screen: xs)', (done) => {
