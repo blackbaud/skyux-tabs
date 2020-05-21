@@ -7,14 +7,14 @@
 
 ### Breaking changes
 
-- Removed the `tabStyle` input from the tabset component, which was used to switch between "wizard" or "tabs" tab styles. If you wish to use a "wizard" styled component, use the progress indicator component. [#84](https://github.com/blackbaud/skyux-tabs/pull/84)
+- Removed the `tabStyle` input from the tabset component, which was used to switch between `'wizard'` or `'tabs'` tab styles. To use a wizard-styled component, use the progress indicator component. [#84](https://github.com/blackbaud/skyux-tabs/pull/84)
 - Dropped support for `rxjs@5`. Consumers can install `rxjs-compat@^6` to support older versions of `rxjs`. [#56](https://github.com/blackbaud/skyux-tabs/pull/56)
 
 # 4.0.0-rc.2 (2020-05-18)
 
 ### Breaking changes
 
-- Removed the `tabStyle` input from the tabset component, which was used to switch between "wizard" or "tabs" tab styles. If you wish to use a "wizard" styled component, use the progress indicator component. [#84](https://github.com/blackbaud/skyux-tabs/pull/84)
+- Removed the `tabStyle` input from the tabset component, which was used to switch between `'wizard'` or `'tabs'` tab styles. To use a wizard-styled component, use the progress indicator component. [#84](https://github.com/blackbaud/skyux-tabs/pull/84)
 
 # 3.3.0 (2020-05-11)
 
