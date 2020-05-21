@@ -5,7 +5,7 @@
   </sky-docs-demo-page-summary>
 
   <sky-docs-demo>
-    <sky-docs-demo-control-panel (selectionChange)="onDemoSelectionChangeTabs($event)" (reset)="onTabsDemoReset($event)">
+    <sky-docs-demo-control-panel (selectionChange)="onDemoSelectionChangeTabs()" (reset)="onTabsDemoReset($event)">
       <sky-docs-demo-control-panel-section>
         <sky-docs-demo-control-panel-checkbox label="Include counts" propertyName="counts" [checked]="false">
         </sky-docs-demo-control-panel-checkbox>
@@ -21,7 +21,7 @@
   </sky-docs-demo>
 
   <sky-docs-demo>
-    <sky-docs-demo-control-panel (selectionChange)="onDemoSelectionChangeGroups($event)" (reset)="onTabGroupsDemoReset($event)">
+    <sky-docs-demo-control-panel (selectionChange)="onDemoSelectionChangeGroups()" (reset)="onTabGroupsDemoReset($event)">
       <sky-docs-demo-control-panel-section>
         <sky-docs-demo-control-panel-checkbox label="Include counts" propertyName="counts" [checked]="false">
         </sky-docs-demo-control-panel-checkbox>
