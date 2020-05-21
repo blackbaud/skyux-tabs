@@ -3,12 +3,15 @@
   "name": "skyux-tabs",
   "mode": "easy",
   "compileMode": "aot",
+  "host": {
+    "frameOptions": {
+      "none": true
+    }
+  },
   "plugins": [
     "@skyux-sdk/builder-plugin-skyux"
   ],
-  "omnibar": {
-    "experimental": true
-  },
+  "omnibar": {},
   "params": {
     "svcid": {
       "value": "skyux"
