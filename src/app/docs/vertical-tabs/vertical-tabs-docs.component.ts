@@ -17,6 +17,51 @@ export class VerticalTabDemoComponent {
   public count = 17;
   public otherCount = 4;
 
+  public onTabsDemoReset(): void {
+    this.tabs = [
+      { tabHeading: 'Tab 1', content: 'Tab 1 content', tabHeaderCount: undefined, active: true },
+      { tabHeading: 'Tab 2', content: 'Tab 2 content'},
+      { tabHeading: 'Tab 3 (disabled)', content: 'Tab 3 content', disabled: true}
+    ];
+  }
+
+  public onTabGroupsDemoReset(): void {
+    this.demoSettings.contentTab1 = 'Group 1 — Tab 1 content';
+    this.demoSettings.contentTab2 = 'Group 2 — Tab 1 content';
+    this.groups = [
+      {
+        heading: 'Group 1',
+        isOpen: true,
+        isDisabled: false,
+        subTabs: [
+          { tabHeading: 'Group 1 — Tab 1', content:  'Group 1 — Tab 1 content', tabHeaderCount: undefined, active: true},
+          { tabHeading: 'Group 1 — Tab 2', content: 'Group 1 — Tab 2 content' }]
+      },
+      {
+        heading: 'Group 2',
+        isOpen: false,
+        isDisabled: false,
+        subTabs: [
+          { tabHeading: 'Group 2 — Tab 1', content: 'Group 2 — Tab 1 content',
+            tabHeaderCount: undefined
+          },
+          { tabHeading: 'Group 2 — Tab 2',
+            content:  'Group 2 — Tab 2 content'
+          },
+          { tabHeading: 'Group 2 — Tab 3 (disabled)',
+          content: 'Group 2 — Tab 3 content',
+          disabled: true
+        }]
+      },
+      {
+        heading: 'Group 3 (disabled)',
+        isOpen: false,
+        isDisabled: true,
+        subTabs: []
+      }
+    ];
+  }
+
   public onDemoSelectionChangeTabs(change: SkyDocsDemoControlPanelChange): void {
     this.demoSettings.contentTab1 = 'Tab 1 content';
     this.demoSettings.contentTab2 = 'Tab 2 content';
