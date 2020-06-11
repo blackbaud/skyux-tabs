@@ -114,13 +114,13 @@ describe('Tabs', () => {
     validateDropdownLongTabXs(done);
   });
 
-  it('should match the tabset screenshot with wizard styling', (done) => {	
-    SkyHostBrowser.get('visual/tabs');	
-    SkyHostBrowser.setWindowBreakpoint('lg');	
-    element(by.css('.sky-test-show-wizard')).click();	
-    expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {	
-      screenshotName: 'tabset-wizard'	
-    });	
+  it('should match the tabset screenshot with wizard styling', (done) => {
+    SkyHostBrowser.get('visual/tabs');
+    SkyHostBrowser.setWindowBreakpoint('lg');
+    element(by.css('.sky-test-show-wizard')).click();
+    expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
+      screenshotName: 'tabset-wizard'
+    });
   });
 
   describe('when modern theme', () => {
