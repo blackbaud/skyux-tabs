@@ -1,6 +1,6 @@
 {
   "name": "@skyux/tabs",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "SKY UX Tabs",
   "scripts": {
     "build": "skyux build-public-library",
