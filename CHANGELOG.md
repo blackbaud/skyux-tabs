@@ -1,4 +1,4 @@
-# 4.1.0 (2020-06-15)
+# 4.1.0 (2020-06-16)
 
 - Added the `ariaLabel` and `ariaLabelledBy` input properties to the tabset component. [#90](https://github.com/blackbaud/skyux-tabs/pull/90)
 - Fixed the `aria-controls` and `role` HTML properties on the tabset component to follow proper accessibility guidelines. [#90](https://github.com/blackbaud/skyux-tabs/pull/90)
