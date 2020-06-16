@@ -74,14 +74,4 @@ describe('Vertical tabset service', () => {
     expect(tab2.active).toBe(true);
     expect(service.activeIndex).toBe(1);
   });
-
-  it('content should return undefined when no active tabs', () => {
-    let tab1 = new SkyVerticalTabComponent(undefined, mockDetectChanges);
-    let tab2 = new SkyVerticalTabComponent(undefined, mockDetectChanges);
-
-    service.addTab(tab1);
-    service.addTab(tab2);
-
-    expect(service.activeTabContent()).toBe(undefined);
-  });
 });

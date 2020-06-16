@@ -52,8 +52,12 @@ function getVisibleTabContent(fixture: ComponentFixture<any>): HTMLElement[] {
   return fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane:not(.sky-vertical-tab-hidden)');
 }
 
+function getVisibleTabsetContent(fixture: ComponentFixture<any>): HTMLElement[] {
+  return fixture.nativeElement.querySelectorAll('.sky-vertical-tabset-content:not(.sky-vertical-tabset-content-hidden)');
+}
+
 function getTabsContainer(fixture: ComponentFixture<any>): HTMLElement[] {
-  return fixture.nativeElement.querySelectorAll('.sky-vertical-tabset-group-container');
+  return fixture.nativeElement.querySelectorAll('.sky-vertical-tabset-group-container:not(.sky-vertical-tabset-hidden)');
 }
 
 function getTabs(fixture: ComponentFixture<any>): HTMLElement[] {
@@ -92,14 +96,14 @@ describe('Vertical tabset component', () => {
 
     fixture.detectChanges();
 
-    // check open tab content
-    const content = el.querySelector('.sky-vertical-tabset-content');
-    expect(content.textContent.trim()).toBe('Group 1 Tab 1 content');
-
     // check open group
     const openGroup = el.querySelectorAll('.sky-vertical-tabset-group-header-sub-open');
     expect(openGroup.length).toBe(1);
     expect(openGroup[0].textContent.trim()).toBe('Group 1');
+
+    // check open group tab content
+    const content = getVisibleTabContent(fixture)[0];
+    expect(content.textContent.trim()).toBe('Group 1 Tab 1 content');
   });
 
   it('open second tab in second group', () => {
@@ -248,7 +252,7 @@ describe('Vertical tabset component', () => {
     expect(tabsUpdated.length).toBe(1);
 
     // check content is not visible
-    visibleTabs = getVisibleTabContent(fixture);
+    visibleTabs = getVisibleTabsetContent(fixture);
     expect(visibleTabs.length).toBe(0);
   });
 
@@ -499,6 +503,9 @@ describe('Vertical tabset component - with ngFor', () => {
     let tabElements = getTabs(fixture);
     expect(tabElements.length).toBe(3);
 
+    let tabContentElements = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
+    expect(tabContentElements.length).toBe(3);
+
     // Remove first tab from array.
     component.tabs.splice(0, 1);
     fixture.detectChanges();
@@ -506,6 +513,9 @@ describe('Vertical tabset component - with ngFor', () => {
     // Expect tab to be removed from DOM.
     tabElements = getTabs(fixture);
     expect(tabElements.length).toBe(2);
+
+    tabContentElements = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
+    expect(tabContentElements.length).toBe(2);
 
     // Add tab to array.
     component.tabs.push({
@@ -518,11 +528,15 @@ describe('Vertical tabset component - with ngFor', () => {
     // New tab should be redered in DOM.
     tabElements = getTabs(fixture);
     expect(tabElements.length).toBe(3);
+
+    tabContentElements = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
+    expect(tabContentElements.length).toBe(3);
   });
 
   it('should update active index when the active tab is removed via structural directives', () => {
     // Activate first tab.
     let tabElements = getTabs(fixture);
+    expect(tabElements.length).toEqual(3);
     tabElements[0].click();
     fixture.detectChanges();
 
@@ -531,8 +545,23 @@ describe('Vertical tabset component - with ngFor', () => {
     fixture.detectChanges();
 
     // Next active tab should be selected.
-    const tabContent = getVisibleTabContent(fixture)[0];
-    expect(fixture.componentInstance.activeIndex).toEqual(1);
+    let visibleTabContent = getVisibleTabContent(fixture);
+    expect(visibleTabContent.length).toBe(1);
+    let tabContent = visibleTabContent[0];
+    expect(tabContent).not.toBeUndefined();
+    expect(fixture.componentInstance.activeIndex).toEqual(0);
+    expect(tabContent.textContent.trim()).toBe('Tab 2 content');
+
+    // Now, remove last (second) tab from array.
+    component.tabs.splice(1, 1);
+    fixture.detectChanges();
+
+    // Next active tab should be selected.
+    visibleTabContent = getVisibleTabContent(fixture);
+    expect(visibleTabContent.length).toBe(1);
+    tabContent = visibleTabContent[0];
+    expect(tabContent).not.toBeUndefined();
+    expect(fixture.componentInstance.activeIndex).toEqual(0);
     expect(tabContent.textContent.trim()).toBe('Tab 2 content');
   });
 });

@@ -32,7 +32,8 @@ import { SkyLibResourcesService } from '@skyux/i18n';
 
 import {
   SkyVerticalTabsetService,
-  VISIBLE_STATE
+  VISIBLE_STATE,
+  HIDDEN_STATE
 } from './vertical-tabset.service';
 
 @Component({
@@ -44,7 +45,7 @@ import {
   animations: [
     trigger(
       'tabGroupEnter', [
-        transition(`void => ${VISIBLE_STATE}`, [
+        transition(`${HIDDEN_STATE} => ${VISIBLE_STATE}`, [
           style({transform: 'translate(-100%)'}),
           animate('150ms ease-in')
         ])
@@ -52,7 +53,7 @@ import {
     ),
     trigger(
       'contentEnter', [
-        transition(`void => ${VISIBLE_STATE}`, [
+        transition(`${HIDDEN_STATE} => ${VISIBLE_STATE}`, [
           style({transform: 'translate(100%)'}),
           animate('150ms ease-in')
         ])
@@ -124,7 +125,7 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
 
     if (this.tabService.isMobile()) {
       this.isMobile = true;
-      this.tabService.animationVisibleState = VISIBLE_STATE;
+      this.tabService.animationContentVisibleState = VISIBLE_STATE;
       this.changeRef.markForCheck();
     }
     if (!this.showTabsText) {

@@ -28,7 +28,8 @@ import {
 
 import {
   SkyVerticalTabsetService,
-  VISIBLE_STATE
+  VISIBLE_STATE,
+  HIDDEN_STATE
 } from './../vertical-tabset/vertical-tabset.service';
 
 @Component({
@@ -40,7 +41,7 @@ import {
   animations: [
     trigger(
       'tabEnter', [
-        transition(`void => ${VISIBLE_STATE}`, [
+        transition(`${HIDDEN_STATE} => ${VISIBLE_STATE}`, [
           style({transform: 'translate(-100%)'}),
           animate('150ms ease-in')
         ])
@@ -48,7 +49,7 @@ import {
     ),
     trigger(
       'contentEnter', [
-        transition(`void => ${VISIBLE_STATE}`, [
+        transition(`${HIDDEN_STATE} => ${VISIBLE_STATE}`, [
           style({transform: 'translate(100%)'}),
           animate('150ms ease-in')
         ])
@@ -92,7 +93,7 @@ export class SkySectionedFormComponent implements OnInit, OnDestroy, AfterViewCh
 
     if (this.tabService.isMobile()) {
       this.isMobile = true;
-      this.tabService.animationVisibleState = VISIBLE_STATE;
+      this.tabService.animationContentVisibleState = VISIBLE_STATE;
       this.changeRef.markForCheck();
     }
   }

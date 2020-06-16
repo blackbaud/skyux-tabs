@@ -18,6 +18,7 @@ import {
 } from './vertical-tab.component';
 
 export const VISIBLE_STATE = 'shown';
+export const HIDDEN_STATE = 'void';
 
 /**
  * @internal
@@ -35,7 +36,8 @@ export class SkyVerticalTabsetService {
   public indexChanged: BehaviorSubject<number> = new BehaviorSubject(undefined);
   public switchingMobile: Subject<boolean> = new Subject();
 
-  public animationVisibleState: string;
+  public animationTabsVisibleState: string;
+  public animationContentVisibleState: string;
 
   private _content: ElementRef;
 
@@ -44,7 +46,6 @@ export class SkyVerticalTabsetService {
   }
 
   private _tabsVisible: boolean = false;
-  private _contentAdded: boolean = false;
   private _isMobile: boolean = false;
 
   public constructor(private mediaQueryService: SkyMediaQueryService) {
@@ -87,20 +88,22 @@ export class SkyVerticalTabsetService {
 
   public destroyTab(tab: SkyVerticalTabComponent): void {
     let tabIndex = this.tabs.indexOf(tab);
-    if (tab.active) {
-      this.destroyContent();
 
+    if (tabIndex > -1) {
+      this._content.nativeElement.removeChild(tab.tabContent.nativeElement);
+      this.tabs.splice(tabIndex, 1);
+      // update tab indices
+      this.tabs.forEach((tabItem, index) => tabItem.index = index);
+    }
+
+    if (tab.active) {
       // Try selecting the next tab first, and if there's no next tab then
       // try selecting the previous one.
-      let newActiveTab = this.tabs[tabIndex + 1] || this.tabs[tabIndex - 1];
+      let newActiveTab = this.tabs[tabIndex] || this.tabs[tabIndex - 1];
       /*istanbul ignore else */
       if (newActiveTab) {
         newActiveTab.activateTab();
       }
-    }
-
-    if (tabIndex > -1) {
-      this.tabs.splice(tabIndex, 1);
     }
   }
 
@@ -118,28 +121,18 @@ export class SkyVerticalTabsetService {
     this.updateTabClicked();
   }
 
-  public activeTabContent(): ElementRef {
-    let activeTab = this.tabs.find(t => t.index === this.activeIndex);
-
-    if (activeTab) {
-      return activeTab.tabContent;
-    } else {
-      return undefined;
-    }
-  }
-
   public isMobile() {
     return this._isMobile;
   }
 
   public updateContent() {
-    if (!this._contentAdded && this.contentVisible()) {
-      // content needs to be moved
-      this.moveContent();
-
-    } else if (this._contentAdded && !this.contentVisible()) {
-      // content hidden
-      this._contentAdded = false;
+    if (this.contentVisible()) {
+      this.tabs.forEach((tab) => {
+        if (!tab.contentAdded) {
+          this._content.nativeElement.appendChild(tab.tabContent.nativeElement);
+          tab.contentAdded = true;
+        }
+      });
     }
   }
 
@@ -153,35 +146,16 @@ export class SkyVerticalTabsetService {
 
   public showTabs() {
     this._tabsVisible = true;
-    this._contentAdded = false;
-    this.animationVisibleState = VISIBLE_STATE;
+    this.animationTabsVisibleState = VISIBLE_STATE;
+    this.animationContentVisibleState = HIDDEN_STATE;
     this.showingTabs.next(true);
   }
 
-  private destroyContent(): void {
-    if (this._content) {
-      this._content.nativeElement.innerHTML = '';
-    }
-    this.content = undefined;
-  }
-
-  private moveContent() {
-    if (this._content && !this._contentAdded) {
-      let activeContent = this.activeTabContent();
-
-      if (activeContent && activeContent.nativeElement) {
-        this._content.nativeElement.appendChild(activeContent.nativeElement);
-        this._contentAdded = true;
-      }
-    }
-  }
-
   private updateTabClicked() {
-    this._contentAdded = false;
-
     if (this.isMobile()) {
       this._tabsVisible = false;
-      this.animationVisibleState = VISIBLE_STATE;
+      this.animationContentVisibleState = VISIBLE_STATE;
+      this.animationTabsVisibleState = HIDDEN_STATE;
       this.hidingTabs.next(true);
     }
 

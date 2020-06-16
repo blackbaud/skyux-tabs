@@ -31,7 +31,15 @@ import {
   MockSkyMediaQueryService
 } from '@skyux/core/testing';
 
+function getVisibleTabs(el: any) {
+  return el.querySelectorAll('.sky-sectioned-form-tabs:not(.sky-sectioned-form-tabs-hidden)');
+}
+
 function getVisibleContent(el: any) {
+  return el.querySelectorAll('.sky-sectioned-form-content:not(.sky-sectioned-form-content-hidden)');
+}
+
+function getVisibleTabContent(el: any) {
   return el.querySelectorAll('.sky-vertical-tab-content-pane:not(.sky-vertical-tab-hidden)');
 }
 
@@ -85,7 +93,7 @@ describe('Sectioned form component', () => {
     expect(count.textContent.trim()).toBe('(2)');
 
     // check correct section content is displayed
-    let content = getVisibleContent(el);
+    let content = getVisibleTabContent(el);
     expect(content.length).toBe(1);
     expect(content[0].textContent.trim()).toBe('information 2');
   });
@@ -197,7 +205,7 @@ describe('Sectioned form component', () => {
 
     fixture.detectChanges();
 
-    expect(fixture.componentInstance.sectionedForm.tabService.animationVisibleState).toBe('shown');
+    expect(fixture.componentInstance.sectionedForm.tabService.animationContentVisibleState).toBe('shown');
   });
 
   it('should hide content and show tabs on mobile after calling showtabs function', () => {
@@ -208,10 +216,10 @@ describe('Sectioned form component', () => {
     fixture.detectChanges();
 
     // check tabs not visible and content visible
-    let tabs = el.querySelectorAll('.sky-vertical-tab');
+    let tabs = getVisibleTabs(el);
     expect(tabs.length).toBe(0);
 
-    let content = getVisibleContent(el);
+    let content = getVisibleTabContent(el);
     expect(content.length).toBe(1);
     expect(content[0].textContent.trim()).toBe('information 2');
 
@@ -316,7 +324,7 @@ describe('Sectioned form component', () => {
     fixture.detectChanges();
 
     // content should be visible
-    let content = getVisibleContent(el);
+    let content = getVisibleTabContent(el);
     expect(content.length).toBe(1);
     expect(content[0].textContent.trim()).toBe('information 2');
 
@@ -337,7 +345,7 @@ describe('Sectioned form component', () => {
     fixture.detectChanges();
 
     // content should be visible
-    content = getVisibleContent(el);
+    content = getVisibleTabContent(el);
     expect(content.length).toBe(1);
     expect(content[0].textContent.trim()).toBe('information 2');
   });
