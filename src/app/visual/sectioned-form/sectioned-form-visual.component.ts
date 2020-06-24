@@ -6,5 +6,5 @@ import { ChangeDetectionStrategy, Component} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SectionedFormVisualComponent {
-  public loadTabContentOnInit: boolean = true;
+  public loadTabContentOnInit: boolean = false;
 }
