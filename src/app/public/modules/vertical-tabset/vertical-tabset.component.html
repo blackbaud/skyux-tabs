@@ -1,5 +1,6 @@
  <div class="sky-vertical-tabset" (window:resize)="tabService.updateContent()">
   <div
+    *ngIf="loadTabContentOnInit || tabService.tabsVisible()"
     #contentWrapper
     class="sky-vertical-tabset-group-container"
     [ngClass]="{'sky-vertical-tabset-hidden': !tabService.tabsVisible()}"
@@ -9,6 +10,7 @@
     <ng-content></ng-content>
   </div>
   <div
+    *ngIf="loadTabContentOnInit || tabService.contentVisible()"
     class="sky-vertical-tabset-content"
     [ngClass]="{'sky-vertical-tabset-content-hidden': !tabService.contentVisible()}"
     [@contentEnter]="tabService.animationContentVisibleState"

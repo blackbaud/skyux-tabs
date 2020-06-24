@@ -65,6 +65,7 @@ function getTabs(fixture: ComponentFixture<any>): HTMLElement[] {
 }
 // #endregion
 
+for (let testRunCount = 0; testRunCount < 2; ++testRunCount) {
 describe('Vertical tabset component', () => {
   beforeEach(() => {
     mockQueryService  = new MockSkyMediaQueryService();
@@ -79,7 +80,7 @@ describe('Vertical tabset component', () => {
   });
 
   function createTestComponent() {
-    return TestBed.overrideComponent(SkyVerticalTabsetComponent, {
+    let fixture = TestBed.overrideComponent(SkyVerticalTabsetComponent, {
       add: {
         providers: [
           { provide: SkyMediaQueryService, useValue: mockQueryService }
@@ -87,6 +88,10 @@ describe('Vertical tabset component', () => {
       }
     })
     .createComponent(VerticalTabsetTestComponent);
+    if (testRunCount === 1) {
+      fixture.componentInstance.loadTabContentOnInit = true;
+    }
+    return fixture;
   }
 
   it('first tab in open group should be selected', () => {
@@ -495,6 +500,9 @@ describe('Vertical tabset component - with ngFor', () => {
     });
     fixture = TestBed.createComponent(VerticalTabsetWithNgForTestComponent);
     component = fixture.componentInstance;
+    if (testRunCount === 1) {
+      component.loadTabContentOnInit = true;
+    }
     fixture.detectChanges();
   });
 
@@ -568,35 +576,42 @@ describe('Vertical tabset component - with ngFor', () => {
 
 // test tab group with no subtabs
 describe('Vertical tabset component - no subtabs', () => {
+  let fixture: ComponentFixture<VerticalTabsetEmptyGroupTestComponent>;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         SkyVerticalTabsFixturesModule
       ]
     });
+    fixture = TestBed.createComponent(VerticalTabsetEmptyGroupTestComponent);
+    if (testRunCount === 1) {
+      fixture.componentInstance.loadTabContentOnInit = true;
+    }
+    fixture.detectChanges();
   });
 
   it('group without tab should load without failing', () => {
-    let fixture = TestBed.createComponent(VerticalTabsetEmptyGroupTestComponent);
-
-    fixture.detectChanges();
-
     const visibleTabs = getVisibleTabContent(fixture);
     expect(visibleTabs.length).toBe(0);
   });
 });
 
 describe('Vertical tabset component - no groups', () => {
+  let fixture: ComponentFixture<VerticalTabsetNoGroupTestComponent>;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         SkyVerticalTabsFixturesModule
       ]
     });
+    fixture = TestBed.createComponent(VerticalTabsetNoGroupTestComponent);
+    if (testRunCount === 1) {}
+    fixture.componentInstance.loadTabContentOnInit = true;
   });
 
   it('should load tabs without groups', () => {
-    let fixture = TestBed.createComponent(VerticalTabsetNoGroupTestComponent);
     let el = fixture.nativeElement as HTMLElement;
 
     fixture.detectChanges();
@@ -610,7 +625,6 @@ describe('Vertical tabset component - no groups', () => {
   });
 
   it('should switch tabs on clicking without groups', () => {
-    let fixture = TestBed.createComponent(VerticalTabsetNoGroupTestComponent);
     let el = fixture.nativeElement;
 
     fixture.detectChanges();
@@ -633,7 +647,6 @@ describe('Vertical tabset component - no groups', () => {
   });
 
   it('should be accessible', async(() => {
-    let fixture = TestBed.createComponent(VerticalTabsetNoGroupTestComponent);
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(fixture.nativeElement).toBeAccessible();
@@ -642,28 +655,30 @@ describe('Vertical tabset component - no groups', () => {
 });
 
 describe('Vertical tabset no active tabs', () => {
+  let fixture: ComponentFixture<VerticalTabsetNoActiveTestComponent>;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         SkyVerticalTabsFixturesModule
       ]
     });
+    fixture = TestBed.createComponent(VerticalTabsetNoActiveTestComponent);
+    if (testRunCount === 1) {
+      fixture.componentInstance.loadTabContentOnInit = true;
+    }
+    fixture.detectChanges();
   });
 
   it('should not fail when trying to move active content when no tabs are active', () => {
-    let fixture = TestBed.createComponent(VerticalTabsetNoActiveTestComponent);
-
-    fixture.detectChanges();
-
     // move content should not fail
     fixture.componentInstance.tabset.tabService.updateContent();
   });
 
   it('should be accessible', async(() => {
-    let fixture = TestBed.createComponent(VerticalTabsetNoActiveTestComponent);
-    fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(fixture.nativeElement).toBeAccessible();
     });
   }));
 });
+}

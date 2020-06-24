@@ -47,6 +47,7 @@ function getActiveSection(el: any) {
   return el.querySelectorAll('sky-sectioned-form-section .sky-vertical-tab-active');
 }
 
+for (let testRunCount = 0; testRunCount < 2; ++testRunCount) {
 describe('Sectioned form component', () => {
 
   let mockQueryService: MockSkyMediaQueryService;
@@ -66,7 +67,7 @@ describe('Sectioned form component', () => {
   });
 
   function createTestComponent() {
-    return TestBed.overrideComponent(SkySectionedFormComponent, {
+    let fixture = TestBed.overrideComponent(SkySectionedFormComponent, {
       add: {
         providers: [
           { provide: SkyMediaQueryService, useValue: mockQueryService }
@@ -74,6 +75,10 @@ describe('Sectioned form component', () => {
       }
     })
     .createComponent(SkySectionedFormFixtureComponent);
+    if (testRunCount === 1) {
+      fixture.componentInstance.loadTabContentOnInit = true;
+    }
+    return fixture;
   }
 
   it('active tab should be open', () => {
@@ -369,7 +374,11 @@ describe('Sectioned form component - no sections', () => {
   });
 
   function createTestComponent() {
-    return TestBed.createComponent(SkySectionedFormNoSectionsFixtureComponent);
+    let fixture = TestBed.createComponent(SkySectionedFormNoSectionsFixtureComponent);
+    if (testRunCount === 1) {
+      fixture.componentInstance.loadTabContentOnInit = true;
+    }
+    return fixture;
   }
 
   it('should not fail to load when no sections exist', () => {
@@ -394,7 +403,11 @@ describe('Sectioned form component - no active sections', () => {
   });
 
   function createTestComponent() {
-    return TestBed.createComponent(SkySectionedFormNoActiveFixtureComponent);
+    let fixture = TestBed.createComponent(SkySectionedFormNoActiveFixtureComponent);
+    if (testRunCount === 1) {
+      fixture.componentInstance.loadTabContentOnInit = true;
+    }
+    return fixture;
   }
 
   it('should not fail to load when no active sections exist', () => {
@@ -418,3 +431,4 @@ describe('Sectioned form component - no active sections', () => {
     });
   }));
 });
+}

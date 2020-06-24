@@ -9,6 +9,7 @@ import {
 export class VerticalTabsetWithNgForTestComponent {
 
   public activeIndex: number;
+  public loadTabContentOnInit: boolean = false;
 
   public tabs = [
     {

@@ -36,6 +36,8 @@ export class VerticalTabsVisualComponent {
 
   public tabDisabled: boolean = true;
 
+  public loadTabContentOnInit: boolean = true;
+
   public tabs = [
     {
       id: '1',

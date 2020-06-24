@@ -7,6 +7,7 @@ class MockChangeDetector {
   public markForCheck() {}
 }
 
+for (let testRunCount = 0; testRunCount < 2; ++testRunCount) {
 describe('Vertical tabset service', () => {
   let service: SkyVerticalTabsetService;
   let mockDetectChanges: any = new MockChangeDetector();
@@ -14,6 +15,9 @@ describe('Vertical tabset service', () => {
 
   beforeEach(() => {
     service = new SkyVerticalTabsetService(mockQueryService as any);
+    if (testRunCount === 1) {
+      service.loadTabContentOnInit = true;
+    }
   });
 
   it('should add two non active tabs', () => {
@@ -74,4 +78,36 @@ describe('Vertical tabset service', () => {
     expect(tab2.active).toBe(true);
     expect(service.activeIndex).toBe(1);
   });
+
+  it('content should return undefined when no active tabs', () => {
+    let tab1 = new SkyVerticalTabComponent(undefined, mockDetectChanges);
+    let tab2 = new SkyVerticalTabComponent(undefined, mockDetectChanges);
+
+    service.addTab(tab1);
+    service.addTab(tab2);
+
+    expect(service.activeTab()).toBe(undefined);
+  });
+
+  it('destroyed tab removes it from the service', () => {
+    let tab1 = new SkyVerticalTabComponent(undefined, mockDetectChanges);
+    tab1.tabHeading = 'tab 1';
+
+    let tab2 = new SkyVerticalTabComponent(undefined, mockDetectChanges);
+    tab2.tabHeading = 'tab 2';
+
+    service.addTab(tab1);
+    service.addTab(tab2);
+
+    expect(service.tabs.length).toBe(2);
+
+    // attempt to destroy tab not existing in service
+    service.destroyTab(new SkyVerticalTabComponent(undefined, mockDetectChanges));
+    expect(service.tabs.length).toBe(2);
+
+    service.destroyTab(tab1);
+    expect(service.tabs.length).toBe(1);
+    expect(service.tabs[0]).toBe(tab2);
+  });
 });
+}

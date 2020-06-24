@@ -1,6 +1,7 @@
 <sky-vertical-tabset
   ariaRole="tablist"
-  showTabsText='Tab list'>
+  showTabsText='Tab list'
+  [loadTabContentOnInit]="loadTabContentOnInit">
   <sky-vertical-tabset-group
     groupHeading="Group 1"
     [open]="group1Open"

@@ -12,6 +12,7 @@ export class SkySectionedFormFixtureComponent implements AfterContentChecked {
 
   public activeTab: boolean = true;
   public activeIndexDisplay: number;
+  public loadTabContentOnInit: boolean = false;
 
   private _activeIndex: number;
 

@@ -87,6 +87,13 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
   }
 
   /**
+   * Specifies if the vertical tabset should load tab content when tabs initialize
+   * and show/hide content without moving around elements in the content container.
+   */
+  @Input()
+  public loadTabContentOnInit: boolean = false;
+
+  /**
    * Fires when the active tab changes. Emits the index of the active tab. The
    * index is based on the tab's position when it loads.
    */
@@ -109,6 +116,8 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
     private changeRef: ChangeDetectorRef) {}
 
   public ngOnInit() {
+    this.tabService.loadTabContentOnInit = this.loadTabContentOnInit;
+
     this.tabService.indexChanged
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((index: any) => {

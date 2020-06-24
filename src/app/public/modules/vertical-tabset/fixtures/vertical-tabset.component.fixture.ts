@@ -20,6 +20,8 @@ export class VerticalTabsetTestComponent {
   public active: boolean = true;
   public tabDisabled: boolean = true;
 
+  public loadTabContentOnInit: boolean = false;
+
   @ViewChild(SkyVerticalTabsetComponent)
   public tabset: SkyVerticalTabsetComponent;
 

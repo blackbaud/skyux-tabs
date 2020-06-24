@@ -11,6 +11,7 @@ import {
   templateUrl: './vertical-tabs-modal-visual.component.html'
 })
 export class VerticalTabsetModalVisualComponent {
+  public loadTabContentOnInit: boolean = true;
 
   constructor(public instance: SkyModalInstance) {}
 

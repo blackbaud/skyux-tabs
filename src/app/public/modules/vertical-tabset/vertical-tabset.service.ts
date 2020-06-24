@@ -35,6 +35,7 @@ export class SkyVerticalTabsetService {
   public tabAdded: Subject<SkyVerticalTabComponent> = new Subject();
   public indexChanged: BehaviorSubject<number> = new BehaviorSubject(undefined);
   public switchingMobile: Subject<boolean> = new Subject();
+  public loadTabContentOnInit: boolean = false;
 
   public animationTabsVisibleState: string;
   public animationContentVisibleState: string;
@@ -46,6 +47,7 @@ export class SkyVerticalTabsetService {
   }
 
   private _tabsVisible: boolean = false;
+  private _contentAdded: boolean = false;
   private _isMobile: boolean = false;
 
   public constructor(private mediaQueryService: SkyMediaQueryService) {
@@ -88,13 +90,16 @@ export class SkyVerticalTabsetService {
 
   public destroyTab(tab: SkyVerticalTabComponent): void {
     let tabIndex = this.tabs.indexOf(tab);
-
-    if (tabIndex > -1) {
-      this._content.nativeElement.removeChild(tab.tabContent.nativeElement);
-      this.tabs.splice(tabIndex, 1);
-      // update tab indices
-      this.tabs.forEach((tabItem, index) => tabItem.index = index);
+    if (tabIndex === -1) {
+      return;
     }
+
+    if (tab.contentAdded) {
+      this._content.nativeElement.removeChild(tab.tabContent.nativeElement);
+    }
+    this.tabs.splice(tabIndex, 1);
+    // update tab indices
+    this.tabs.forEach((tabItem, index) => tabItem.index = index);
 
     if (tab.active) {
       // Try selecting the next tab first, and if there's no next tab then
@@ -121,18 +126,33 @@ export class SkyVerticalTabsetService {
     this.updateTabClicked();
   }
 
+  public activeTab(): SkyVerticalTabComponent {
+    return this.tabs.find(t => t.index === this.activeIndex);
+  }
+
   public isMobile() {
     return this._isMobile;
   }
 
   public updateContent() {
-    if (this.contentVisible()) {
-      this.tabs.forEach((tab) => {
-        if (!tab.contentAdded) {
-          this._content.nativeElement.appendChild(tab.tabContent.nativeElement);
-          tab.contentAdded = true;
-        }
-      });
+    if (!this.loadTabContentOnInit) {
+      if (!this._contentAdded && this.contentVisible()) {
+        // content needs to be moved
+        this.moveContent();
+
+      } else if (this._contentAdded && !this.contentVisible()) {
+        // content hidden
+        this._contentAdded = false;
+      }
+    } else {
+      if (this.contentVisible()) {
+        this.tabs.forEach((tab) => {
+          if (!tab.contentAdded) {
+            this._content.nativeElement.appendChild(tab.tabContent.nativeElement);
+            tab.contentAdded = true;
+          }
+        });
+      }
     }
   }
 
@@ -146,12 +166,28 @@ export class SkyVerticalTabsetService {
 
   public showTabs() {
     this._tabsVisible = true;
+    this._contentAdded = false;
     this.animationTabsVisibleState = VISIBLE_STATE;
     this.animationContentVisibleState = HIDDEN_STATE;
     this.showingTabs.next(true);
   }
 
+  private moveContent() {
+    if (this._content && !this._contentAdded) {
+      let activeTab = this.activeTab();
+      let activeContent = activeTab ? activeTab.tabContent : undefined;
+
+      if (activeContent && activeContent.nativeElement) {
+        this._content.nativeElement.appendChild(activeContent.nativeElement);
+        activeTab.contentAdded = true;
+        this._contentAdded = true;
+      }
+    }
+  }
+
   private updateTabClicked() {
+    this._contentAdded = false;
+
     if (this.isMobile()) {
       this._tabsVisible = false;
       this.animationContentVisibleState = VISIBLE_STATE;

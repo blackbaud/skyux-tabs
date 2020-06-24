@@ -1,4 +1,6 @@
-<sky-vertical-tabset showTabsText='Tab list'>
+<sky-vertical-tabset
+  [loadTabContentOnInit]="loadTabContentOnInit"
+  showTabsText='Tab list'>
   <sky-vertical-tabset-group groupHeading="Group 1" open="true">
     <sky-vertical-tab tabHeading="Group 1 Tab 1">
       Group 1 Tab 1 content

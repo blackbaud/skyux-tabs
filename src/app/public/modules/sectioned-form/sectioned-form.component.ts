@@ -8,7 +8,8 @@ import {
   Output,
   AfterViewChecked,
   ChangeDetectionStrategy,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  Input
 } from '@angular/core';
 
 import {
@@ -59,6 +60,9 @@ import {
 })
 export class SkySectionedFormComponent implements OnInit, OnDestroy, AfterViewChecked {
 
+  @Input()
+  public loadTabContentOnInit: boolean = false;
+
   @Output()
   public indexChanged: EventEmitter<number> = new EventEmitter();
 
@@ -77,6 +81,8 @@ export class SkySectionedFormComponent implements OnInit, OnDestroy, AfterViewCh
     private changeRef: ChangeDetectorRef) {}
 
   public ngOnInit() {
+    this.tabService.loadTabContentOnInit = this.loadTabContentOnInit;
+
     this.tabService.indexChanged
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe(index => {
