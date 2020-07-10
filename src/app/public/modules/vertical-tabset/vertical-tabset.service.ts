@@ -35,7 +35,7 @@ export class SkyVerticalTabsetService {
   public tabAdded: Subject<SkyVerticalTabComponent> = new Subject();
   public indexChanged: BehaviorSubject<number> = new BehaviorSubject(undefined);
   public switchingMobile: Subject<boolean> = new Subject();
-  public loadTabContentOnInit: boolean = false;
+  public maintainTabContent: boolean = false;
 
   public animationTabsVisibleState: string;
   public animationContentVisibleState: string;
@@ -94,8 +94,10 @@ export class SkyVerticalTabsetService {
       return;
     }
 
-    if (tab.contentAdded) {
-      this._content.nativeElement.removeChild(tab.tabContent.nativeElement);
+    if (tab.contentRendered && this._content) {
+      if (this._content.nativeElement.contains(tab.tabContent.nativeElement)) {
+        this._content.nativeElement.removeChild(tab.tabContent.nativeElement);
+      }
     }
     this.tabs.splice(tabIndex, 1);
     // update tab indices
@@ -135,7 +137,7 @@ export class SkyVerticalTabsetService {
   }
 
   public updateContent() {
-    if (!this.loadTabContentOnInit) {
+    if (!this.maintainTabContent) {
       if (!this._contentAdded && this.contentVisible()) {
         // content needs to be moved
         this.moveContent();
@@ -145,14 +147,12 @@ export class SkyVerticalTabsetService {
         this._contentAdded = false;
       }
     } else {
-      if (this.contentVisible()) {
-        this.tabs.forEach((tab) => {
-          if (!tab.contentAdded) {
-            this._content.nativeElement.appendChild(tab.tabContent.nativeElement);
-            tab.contentAdded = true;
-          }
-        });
-      }
+      this.tabs.forEach((tab) => {
+        if (!tab.contentRendered) {
+          this._content.nativeElement.appendChild(tab.tabContent.nativeElement);
+          tab.contentRendered = true;
+        }
+      });
     }
   }
 
@@ -179,7 +179,7 @@ export class SkyVerticalTabsetService {
 
       if (activeContent && activeContent.nativeElement) {
         this._content.nativeElement.appendChild(activeContent.nativeElement);
-        activeTab.contentAdded = true;
+        activeTab.contentRendered = true;
         this._contentAdded = true;
       }
     }

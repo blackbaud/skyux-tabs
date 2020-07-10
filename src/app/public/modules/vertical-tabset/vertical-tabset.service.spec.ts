@@ -7,7 +7,6 @@ class MockChangeDetector {
   public markForCheck() {}
 }
 
-for (let testRunCount = 0; testRunCount < 2; ++testRunCount) {
 describe('Vertical tabset service', () => {
   let service: SkyVerticalTabsetService;
   let mockDetectChanges: any = new MockChangeDetector();
@@ -15,9 +14,6 @@ describe('Vertical tabset service', () => {
 
   beforeEach(() => {
     service = new SkyVerticalTabsetService(mockQueryService as any);
-    if (testRunCount === 1) {
-      service.loadTabContentOnInit = true;
-    }
   });
 
   it('should add two non active tabs', () => {
@@ -110,4 +106,3 @@ describe('Vertical tabset service', () => {
     expect(service.tabs[0]).toBe(tab2);
   });
 });
-}

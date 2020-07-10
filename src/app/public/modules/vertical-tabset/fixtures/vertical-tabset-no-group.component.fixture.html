@@ -1,6 +1,6 @@
 <div class="vertical-tabset-test-indexchange">current index = {{ currentIndex }}</div>
 <sky-vertical-tabset
-  [loadTabContentOnInit]="loadTabContentOnInit"
+  [maintainTabContent]="maintainTabContent"
   (activeChange)="indexChanged($event)">
   <sky-vertical-tab tabHeading="tab 1">
     Tab 1 content

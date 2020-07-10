@@ -5,7 +5,7 @@
 
 <h2>Vertical tabset</h2>
 <div id="screenshot-vertical-tabset" [@.disabled]="true">
-  <sky-vertical-tabset [loadTabContentOnInit]="loadTabContentOnInit" showTabsText='Tab list'>
+  <sky-vertical-tabset [maintainTabContent]="maintainTabContent" showTabsText='Tab list'>
     <sky-vertical-tabset-group
       groupHeading="Group 1"
       [open]="group1Open"
@@ -57,7 +57,7 @@
 
 <h2>Vertical tabset with no tab groups</h2>
 <div id="screenshot-vertical-tabs-no-groups" [@.disabled]="true">
-  <sky-vertical-tabset [loadTabContentOnInit]="loadTabContentOnInit">
+  <sky-vertical-tabset [maintainTabContent]="maintainTabContent">
     <sky-vertical-tab tabHeading="tab 1">
       Tab 1 content
     </sky-vertical-tab>
@@ -77,7 +77,7 @@
   id="screenshot-vertical-dynamic-tabs"
   [@.disabled]="true"
 >
-  <sky-vertical-tabset [loadTabContentOnInit]="loadTabContentOnInit">
+  <sky-vertical-tabset [maintainTabContent]="maintainTabContent">
     <sky-vertical-tab *ngFor="let tab of tabs; let i = index"
       [tabHeading]="tab.heading"
     >

@@ -6,7 +6,7 @@ import { SkyVerticalTabsetComponent } from './../vertical-tabset.component';
   templateUrl: './vertical-tabset-no-active.component.fixture.html'
 })
 export class VerticalTabsetNoActiveTestComponent {
-  public loadTabContentOnInit: boolean = false;
+  public maintainTabContent: boolean = false;
 
   @ViewChild(SkyVerticalTabsetComponent)
   public tabset: SkyVerticalTabsetComponent;

@@ -61,7 +61,7 @@ import {
 export class SkySectionedFormComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   @Input()
-  public loadTabContentOnInit: boolean = false;
+  public maintainTabContent: boolean = false;
 
   @Output()
   public indexChanged: EventEmitter<number> = new EventEmitter();
@@ -81,7 +81,7 @@ export class SkySectionedFormComponent implements OnInit, OnDestroy, AfterViewCh
     private changeRef: ChangeDetectorRef) {}
 
   public ngOnInit() {
-    this.tabService.loadTabContentOnInit = this.loadTabContentOnInit;
+    this.tabService.maintainTabContent = this.maintainTabContent;
 
     this.tabService.indexChanged
       .pipe(takeUntil(this._ngUnsubscribe))

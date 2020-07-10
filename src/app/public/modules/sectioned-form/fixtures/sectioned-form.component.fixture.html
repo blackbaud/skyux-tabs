@@ -1,6 +1,6 @@
 <div id="activeIndexDiv">active index = {{ activeIndexDisplay }}</div>
 <sky-sectioned-form
-  [loadTabContentOnInit]="loadTabContentOnInit"
+  [maintainTabContent]="maintainTabContent"
   (indexChanged)="updateIndex($event)">
   <sky-sectioned-form-section heading="Information 1">
     <sky-sectioned-form-fixture-information-1></sky-sectioned-form-fixture-information-1>

@@ -65,7 +65,6 @@ function getTabs(fixture: ComponentFixture<any>): HTMLElement[] {
 }
 // #endregion
 
-for (let testRunCount = 0; testRunCount < 2; ++testRunCount) {
 describe('Vertical tabset component', () => {
   beforeEach(() => {
     mockQueryService  = new MockSkyMediaQueryService();
@@ -88,9 +87,6 @@ describe('Vertical tabset component', () => {
       }
     })
     .createComponent(VerticalTabsetTestComponent);
-    if (testRunCount === 1) {
-      fixture.componentInstance.loadTabContentOnInit = true;
-    }
     return fixture;
   }
 
@@ -117,11 +113,36 @@ describe('Vertical tabset component', () => {
     fixture.detectChanges();
     let el = fixture.nativeElement;
 
+    // check open tab
+    const visibleTabs1 = getVisibleTabContent(fixture);
+    expect(visibleTabs1.length).toBe(1);
+    expect(visibleTabs1[0].textContent.trim()).toBe('Group 1 Tab 1 content');
+
+    // check order of vertical tab content
+    const allTabContentElements = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
+    expect(allTabContentElements.length).toBe(2);
+    expect(allTabContentElements[0].textContent.trim()).toBe('Group 1 Tab 2 content');
+    expect(allTabContentElements[1].textContent.trim()).toBe('Group 1 Tab 1 content');
+
     // open second group
     const group = el.querySelectorAll('.sky-vertical-tabset-group-header');
     group[1].click();
 
     fixture.detectChanges();
+
+    // check open tab
+    const visibleTabs2 = getVisibleTabContent(fixture);
+    expect(visibleTabs2.length).toBe(1);
+    expect(visibleTabs2[0].textContent.trim()).toBe('Group 1 Tab 1 content');
+
+    // check order of vertical tab content
+    const allTabContentElements2 = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
+    expect(allTabContentElements2.length).toBe(5);
+    expect(allTabContentElements2[0].textContent.trim()).toBe('Group 1 Tab 2 content');
+    expect(allTabContentElements2[1].textContent.trim()).toBe('Group 2 Tab 1 content');
+    expect(allTabContentElements2[2].textContent.trim()).toBe('Group 2 Tab 2 content');
+    expect(allTabContentElements2[3].textContent.trim()).toBe('Group 2 Tab 3 content');
+    expect(allTabContentElements2[4].textContent.trim()).toBe('Group 1 Tab 1 content');
 
     // check second group open
     const openedGroups = el.querySelectorAll('.sky-chevron-up');
@@ -134,14 +155,23 @@ describe('Vertical tabset component', () => {
     fixture.detectChanges();
 
     // check open tab
-    const visibleTabs = getVisibleTabContent(fixture);
-    expect(visibleTabs.length).toBe(1);
-    expect(visibleTabs[0].textContent.trim()).toBe('Group 2 Tab 2 content');
+    const visibleTabs3 = getVisibleTabContent(fixture);
+    expect(visibleTabs3.length).toBe(1);
+    expect(visibleTabs3[0].textContent.trim()).toBe('Group 2 Tab 2 content');
 
     // check open group
     const openGroup = el.querySelectorAll('.sky-vertical-tabset-group-header-sub-open');
     expect(openGroup.length).toBe(1);
     expect(openGroup[0].textContent.trim()).toBe('Group 2');
+
+    // check order of vertical tab content
+    const allTabContentElements3 = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
+    expect(allTabContentElements3.length).toBe(5);
+    expect(allTabContentElements3[0].textContent.trim()).toBe('Group 1 Tab 2 content');
+    expect(allTabContentElements3[1].textContent.trim()).toBe('Group 2 Tab 1 content');
+    expect(allTabContentElements3[2].textContent.trim()).toBe('Group 2 Tab 3 content');
+    expect(allTabContentElements3[3].textContent.trim()).toBe('Group 1 Tab 1 content');
+    expect(allTabContentElements3[4].textContent.trim()).toBe('Group 2 Tab 2 content');
   });
 
   it('should pass through aria inputs, id, and set role', () => {
@@ -482,6 +512,64 @@ describe('Vertical tabset component', () => {
       expect(fixture.nativeElement).toBeAccessible();
     });
   }));
+
+  it('maintainTabContent - tab content remains in same order', () => {
+    mockQueryService.fire(SkyMediaBreakpoints.lg);
+    let fixture = createTestComponent();
+    fixture.componentInstance.maintainTabContent = true;
+    fixture.detectChanges();
+    let el = fixture.nativeElement;
+
+    // check order of vertical tab content
+    const allTabContentElements = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
+    expect(allTabContentElements.length).toBe(7);
+    expect(allTabContentElements[0].textContent.trim()).toBe('Group 1 Tab 1 content');
+    expect(allTabContentElements[1].textContent.trim()).toBe('Group 1 Tab 2 content');
+    expect(allTabContentElements[2].textContent.trim()).toBe('Group 2 Tab 1 content');
+    expect(allTabContentElements[3].textContent.trim()).toBe('Group 2 Tab 2 content');
+    expect(allTabContentElements[4].textContent.trim()).toBe('Group 2 Tab 3 content');
+    expect(allTabContentElements[5].textContent.trim()).toBe('Group 3 Tab 1 content');
+    expect(allTabContentElements[6].textContent.trim()).toBe('Group 3 Tab 2 content');
+
+    // open second group
+    const group = el.querySelectorAll('.sky-vertical-tabset-group-header');
+    group[1].click();
+
+    fixture.detectChanges();
+
+    // check second group open
+    const openedGroups = el.querySelectorAll('.sky-chevron-up');
+    expect(openedGroups.length).toBe(2);
+
+    // click second tab in second group
+    const tabs = el.querySelectorAll('.sky-vertical-tab');
+    tabs[3].click();
+
+    fixture.detectChanges();
+
+    // check open tab
+    const visibleTabs = getVisibleTabContent(fixture);
+    expect(visibleTabs.length).toBe(1);
+    expect(visibleTabs[0].textContent.trim()).toBe('Group 2 Tab 2 content');
+
+    // check open group
+    const openGroup = el.querySelectorAll('.sky-vertical-tabset-group-header-sub-open');
+    expect(openGroup.length).toBe(1);
+    expect(openGroup[0].textContent.trim()).toBe('Group 2');
+
+    fixture.detectChanges();
+
+    // check order of vertical tab content - order should not change
+    const allTabContentElements2 = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
+    expect(allTabContentElements2.length).toBe(7);
+    expect(allTabContentElements2[0].textContent.trim()).toBe('Group 1 Tab 1 content');
+    expect(allTabContentElements2[1].textContent.trim()).toBe('Group 1 Tab 2 content');
+    expect(allTabContentElements2[2].textContent.trim()).toBe('Group 2 Tab 1 content');
+    expect(allTabContentElements2[3].textContent.trim()).toBe('Group 2 Tab 2 content');
+    expect(allTabContentElements2[4].textContent.trim()).toBe('Group 2 Tab 3 content');
+    expect(allTabContentElements2[5].textContent.trim()).toBe('Group 3 Tab 1 content');
+    expect(allTabContentElements2[6].textContent.trim()).toBe('Group 3 Tab 2 content');
+  });
 });
 
 describe('Vertical tabset component - with ngFor', () => {
@@ -500,9 +588,6 @@ describe('Vertical tabset component - with ngFor', () => {
     });
     fixture = TestBed.createComponent(VerticalTabsetWithNgForTestComponent);
     component = fixture.componentInstance;
-    if (testRunCount === 1) {
-      component.loadTabContentOnInit = true;
-    }
     fixture.detectChanges();
   });
 
@@ -585,9 +670,6 @@ describe('Vertical tabset component - no subtabs', () => {
       ]
     });
     fixture = TestBed.createComponent(VerticalTabsetEmptyGroupTestComponent);
-    if (testRunCount === 1) {
-      fixture.componentInstance.loadTabContentOnInit = true;
-    }
     fixture.detectChanges();
   });
 
@@ -607,8 +689,6 @@ describe('Vertical tabset component - no groups', () => {
       ]
     });
     fixture = TestBed.createComponent(VerticalTabsetNoGroupTestComponent);
-    if (testRunCount === 1) {}
-    fixture.componentInstance.loadTabContentOnInit = true;
   });
 
   it('should load tabs without groups', () => {
@@ -664,9 +744,6 @@ describe('Vertical tabset no active tabs', () => {
       ]
     });
     fixture = TestBed.createComponent(VerticalTabsetNoActiveTestComponent);
-    if (testRunCount === 1) {
-      fixture.componentInstance.loadTabContentOnInit = true;
-    }
     fixture.detectChanges();
   });
 
@@ -681,4 +758,3 @@ describe('Vertical tabset no active tabs', () => {
     });
   }));
 });
-}

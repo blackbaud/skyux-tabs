@@ -91,7 +91,7 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
    * and show/hide content without moving around elements in the content container.
    */
   @Input()
-  public loadTabContentOnInit: boolean = false;
+  public maintainTabContent: boolean = false;
 
   /**
    * Fires when the active tab changes. Emits the index of the active tab. The
@@ -116,7 +116,7 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
     private changeRef: ChangeDetectorRef) {}
 
   public ngOnInit() {
-    this.tabService.loadTabContentOnInit = this.loadTabContentOnInit;
+    this.tabService.maintainTabContent = this.maintainTabContent;
 
     this.tabService.indexChanged
       .pipe(takeUntil(this._ngUnsubscribe))

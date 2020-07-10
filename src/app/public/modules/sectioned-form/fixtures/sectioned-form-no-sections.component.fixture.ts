@@ -6,7 +6,7 @@ import { SkySectionedFormComponent } from '../sectioned-form.component';
   templateUrl: './sectioned-form-no-sections.component.fixture.html'
 })
 export class SkySectionedFormNoSectionsFixtureComponent {
-  public loadTabContentOnInit: boolean = false;
+  public maintainTabContent: boolean = false;
 
   @ViewChild(SkySectionedFormComponent)
   public sectionedForm: SkySectionedFormComponent;

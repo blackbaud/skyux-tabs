@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
   templateUrl: './vertical-tabset-empty-group.component.fixture.html'
 })
 export class VerticalTabsetEmptyGroupTestComponent {
-  public loadTabContentOnInit: boolean = false;
+  public maintainTabContent: boolean = false;
 }
