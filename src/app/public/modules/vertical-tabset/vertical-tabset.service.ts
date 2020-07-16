@@ -94,7 +94,7 @@ export class SkyVerticalTabsetService {
       return;
     }
 
-    if (tab.contentRendered && this._content) {
+    if (this.maintainTabContent && tab.contentRendered && this._content) {
       if (this._content.nativeElement.contains(tab.tabContent.nativeElement)) {
         this._content.nativeElement.removeChild(tab.tabContent.nativeElement);
       }
@@ -104,6 +104,9 @@ export class SkyVerticalTabsetService {
     this.tabs.forEach((tabItem, index) => tabItem.index = index);
 
     if (tab.active) {
+      if (!this.maintainTabContent) {
+        this.destroyContent();
+      }
       // Try selecting the next tab first, and if there's no next tab then
       // try selecting the previous one.
       let newActiveTab = this.tabs[tabIndex] || this.tabs[tabIndex - 1];
@@ -170,6 +173,13 @@ export class SkyVerticalTabsetService {
     this.animationTabsVisibleState = VISIBLE_STATE;
     this.animationContentVisibleState = HIDDEN_STATE;
     this.showingTabs.next(true);
+  }
+
+  private destroyContent(): void {
+    if (this._content) {
+      this._content.nativeElement.innerHTML = '';
+    }
+    this.content = undefined;
   }
 
   private moveContent() {

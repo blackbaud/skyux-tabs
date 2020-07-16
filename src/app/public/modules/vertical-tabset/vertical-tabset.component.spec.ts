@@ -114,12 +114,12 @@ describe('Vertical tabset component', () => {
     let el = fixture.nativeElement;
 
     // check open tab
-    const visibleTabs1 = getVisibleTabContent(fixture);
-    expect(visibleTabs1.length).toBe(1);
-    expect(visibleTabs1[0].textContent.trim()).toBe('Group 1 Tab 1 content');
+    let visibleTabs = getVisibleTabContent(fixture);
+    expect(visibleTabs.length).toBe(1);
+    expect(visibleTabs[0].textContent.trim()).toBe('Group 1 Tab 1 content');
 
     // check order of vertical tab content
-    const allTabContentElements = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
+    let allTabContentElements = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
     expect(allTabContentElements.length).toBe(2);
     expect(allTabContentElements[0].textContent.trim()).toBe('Group 1 Tab 2 content');
     expect(allTabContentElements[1].textContent.trim()).toBe('Group 1 Tab 1 content');
@@ -131,18 +131,18 @@ describe('Vertical tabset component', () => {
     fixture.detectChanges();
 
     // check open tab
-    const visibleTabs2 = getVisibleTabContent(fixture);
-    expect(visibleTabs2.length).toBe(1);
-    expect(visibleTabs2[0].textContent.trim()).toBe('Group 1 Tab 1 content');
+    visibleTabs = getVisibleTabContent(fixture);
+    expect(visibleTabs.length).toBe(1);
+    expect(visibleTabs[0].textContent.trim()).toBe('Group 1 Tab 1 content');
 
     // check order of vertical tab content
-    const allTabContentElements2 = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
-    expect(allTabContentElements2.length).toBe(5);
-    expect(allTabContentElements2[0].textContent.trim()).toBe('Group 1 Tab 2 content');
-    expect(allTabContentElements2[1].textContent.trim()).toBe('Group 2 Tab 1 content');
-    expect(allTabContentElements2[2].textContent.trim()).toBe('Group 2 Tab 2 content');
-    expect(allTabContentElements2[3].textContent.trim()).toBe('Group 2 Tab 3 content');
-    expect(allTabContentElements2[4].textContent.trim()).toBe('Group 1 Tab 1 content');
+    allTabContentElements = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
+    expect(allTabContentElements.length).toBe(5);
+    expect(allTabContentElements[0].textContent.trim()).toBe('Group 1 Tab 2 content');
+    expect(allTabContentElements[1].textContent.trim()).toBe('Group 2 Tab 1 content');
+    expect(allTabContentElements[2].textContent.trim()).toBe('Group 2 Tab 2 content');
+    expect(allTabContentElements[3].textContent.trim()).toBe('Group 2 Tab 3 content');
+    expect(allTabContentElements[4].textContent.trim()).toBe('Group 1 Tab 1 content');
 
     // check second group open
     const openedGroups = el.querySelectorAll('.sky-chevron-up');
@@ -155,9 +155,9 @@ describe('Vertical tabset component', () => {
     fixture.detectChanges();
 
     // check open tab
-    const visibleTabs3 = getVisibleTabContent(fixture);
-    expect(visibleTabs3.length).toBe(1);
-    expect(visibleTabs3[0].textContent.trim()).toBe('Group 2 Tab 2 content');
+    visibleTabs = getVisibleTabContent(fixture);
+    expect(visibleTabs.length).toBe(1);
+    expect(visibleTabs[0].textContent.trim()).toBe('Group 2 Tab 2 content');
 
     // check open group
     const openGroup = el.querySelectorAll('.sky-vertical-tabset-group-header-sub-open');
@@ -165,13 +165,13 @@ describe('Vertical tabset component', () => {
     expect(openGroup[0].textContent.trim()).toBe('Group 2');
 
     // check order of vertical tab content
-    const allTabContentElements3 = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
-    expect(allTabContentElements3.length).toBe(5);
-    expect(allTabContentElements3[0].textContent.trim()).toBe('Group 1 Tab 2 content');
-    expect(allTabContentElements3[1].textContent.trim()).toBe('Group 2 Tab 1 content');
-    expect(allTabContentElements3[2].textContent.trim()).toBe('Group 2 Tab 3 content');
-    expect(allTabContentElements3[3].textContent.trim()).toBe('Group 1 Tab 1 content');
-    expect(allTabContentElements3[4].textContent.trim()).toBe('Group 2 Tab 2 content');
+    allTabContentElements = fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane');
+    expect(allTabContentElements.length).toBe(5);
+    expect(allTabContentElements[0].textContent.trim()).toBe('Group 1 Tab 2 content');
+    expect(allTabContentElements[1].textContent.trim()).toBe('Group 2 Tab 1 content');
+    expect(allTabContentElements[2].textContent.trim()).toBe('Group 2 Tab 3 content');
+    expect(allTabContentElements[3].textContent.trim()).toBe('Group 1 Tab 1 content');
+    expect(allTabContentElements[4].textContent.trim()).toBe('Group 2 Tab 2 content');
   });
 
   it('should pass through aria inputs, id, and set role', () => {

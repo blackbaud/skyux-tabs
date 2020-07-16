@@ -85,7 +85,7 @@ describe('Vertical tabset service', () => {
     expect(service.activeTab()).toBe(undefined);
   });
 
-  it('destroyed tab removes it from the service', () => {
+  it('destroy tab removes it from the service', () => {
     let tab1 = new SkyVerticalTabComponent(undefined, mockDetectChanges);
     tab1.tabHeading = 'tab 1';
 
