@@ -71,13 +71,13 @@ class TestComponent {
 
   public ariaLabelledBy: string;
 
-  public onActiveChange() { }
+  public onActiveChange(): void { }
 
-  public onNewTab() { }
+  public onNewTab(): void { }
 
-  public onOpenTab() { }
+  public onOpenTab(): void { }
 
-  public onTab1Close() { }
+  public onTab1Close(): void { }
 }
 //#endregion Test component
 
