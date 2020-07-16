@@ -5,7 +5,7 @@
   (window:resize)="tabService.updateContent()"
 >
   <div
-    *ngIf="maintainTabContent || tabsVisible()"
+    *ngIf="maintainSectionContent || tabsVisible()"
     class="sky-sectioned-form-tabs"
     [ngClass]="{'sky-sectioned-form-tabs-hidden': !tabsVisible()}"
     [@tabEnter]="tabService.animationTabsVisibleState"
@@ -13,7 +13,7 @@
     <ng-content></ng-content>
   </div>
   <div
-    *ngIf="maintainTabContent || tabService.contentVisible()"
+    *ngIf="maintainSectionContent || tabService.contentVisible()"
     class="sky-sectioned-form-content sky-padding-even-large"
     [ngClass]="{'sky-sectioned-form-content-hidden': !tabService.contentVisible()}"
     [@contentEnter]="tabService.animationContentVisibleState"

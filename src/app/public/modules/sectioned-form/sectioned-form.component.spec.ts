@@ -371,9 +371,9 @@ describe('Sectioned form component', () => {
     });
   }));
 
-  it('maintainTabContent - tab content remains in same order', () => {
+  it('maintainSectionContent - tab content remains in same order', () => {
     let fixture = createTestComponent();
-    fixture.componentInstance.maintainTabContent = true;
+    fixture.componentInstance.maintainSectionContent = true;
     let el = fixture.nativeElement;
 
     fixture.detectChanges();

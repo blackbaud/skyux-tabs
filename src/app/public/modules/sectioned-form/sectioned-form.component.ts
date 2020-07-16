@@ -29,8 +29,8 @@ import {
 
 import {
   SkyVerticalTabsetService,
-  VISIBLE_STATE,
-  HIDDEN_STATE
+  HIDDEN_STATE,
+  VISIBLE_STATE
 } from './../vertical-tabset/vertical-tabset.service';
 
 @Component({
@@ -60,8 +60,13 @@ import {
 })
 export class SkySectionedFormComponent implements OnInit, OnDestroy, AfterViewChecked {
 
+  /**
+   * Indicates whether the sectioned form should load section content when the form initializes
+   * and show/hide content without moving around elements in the content container.
+   * @default 'false'
+   */
   @Input()
-  public maintainTabContent: boolean = false;
+  public maintainSectionContent: boolean = false;
 
   @Output()
   public indexChanged: EventEmitter<number> = new EventEmitter();
@@ -81,7 +86,7 @@ export class SkySectionedFormComponent implements OnInit, OnDestroy, AfterViewCh
     private changeRef: ChangeDetectorRef) {}
 
   public ngOnInit() {
-    this.tabService.maintainTabContent = this.maintainTabContent;
+    this.tabService.maintainTabContent = this.maintainSectionContent;
 
     this.tabService.indexChanged
       .pipe(takeUntil(this._ngUnsubscribe))

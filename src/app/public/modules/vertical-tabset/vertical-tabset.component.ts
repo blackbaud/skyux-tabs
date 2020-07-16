@@ -32,8 +32,8 @@ import { SkyLibResourcesService } from '@skyux/i18n';
 
 import {
   SkyVerticalTabsetService,
-  VISIBLE_STATE,
-  HIDDEN_STATE
+  HIDDEN_STATE,
+  VISIBLE_STATE
 } from './vertical-tabset.service';
 
 @Component({

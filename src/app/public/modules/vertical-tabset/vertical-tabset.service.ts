@@ -26,28 +26,38 @@ export const HIDDEN_STATE = 'void';
 @Injectable()
 export class SkyVerticalTabsetService {
 
-  public tabs: Array<SkyVerticalTabComponent> = [];
-  public tabClicked: BehaviorSubject<boolean> = new BehaviorSubject(undefined);
   public activeIndex: number = undefined;
 
-  public hidingTabs = new BehaviorSubject(false);
-  public showingTabs = new BehaviorSubject(false);
-  public tabAdded: Subject<SkyVerticalTabComponent> = new Subject();
-  public indexChanged: BehaviorSubject<number> = new BehaviorSubject(undefined);
-  public switchingMobile: Subject<boolean> = new Subject();
-  public maintainTabContent: boolean = false;
-
-  public animationTabsVisibleState: string;
   public animationContentVisibleState: string;
 
-  private _content: ElementRef;
+  public animationTabsVisibleState: string;
 
   public set content(value: ElementRef) {
     this._content = value;
   }
 
-  private _tabsVisible: boolean = false;
+  public hidingTabs = new BehaviorSubject(false);
+
+  public indexChanged: BehaviorSubject<number> = new BehaviorSubject(undefined);
+
+  public maintainTabContent: boolean = false;
+
+  public showingTabs = new BehaviorSubject(false);
+
+  public switchingMobile: Subject<boolean> = new Subject();
+
+  public tabs: Array<SkyVerticalTabComponent> = [];
+
+  public tabAdded: Subject<SkyVerticalTabComponent> = new Subject();
+
+  public tabClicked: BehaviorSubject<boolean> = new BehaviorSubject(undefined);
+
+  private _content: ElementRef;
+
   private _contentAdded: boolean = false;
+
+  private _tabsVisible: boolean = false;
+
   private _isMobile: boolean = false;
 
   public constructor(private mediaQueryService: SkyMediaQueryService) {
