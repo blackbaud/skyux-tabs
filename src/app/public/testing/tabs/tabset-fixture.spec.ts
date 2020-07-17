@@ -1,5 +1,6 @@
 import {
-  TestBed, ComponentFixture
+  ComponentFixture,
+  TestBed
 } from '@angular/core/testing';
 
 import {
@@ -15,7 +16,8 @@ import {
 } from '@angular/router/testing';
 
 import {
-  expect, SkyAppTestUtility
+  SkyAppTestUtility,
+  expect
 } from '@skyux-sdk/testing';
 
 import {
@@ -28,7 +30,7 @@ import {
 
 //#region Test component
 @Component({
-  selector: 'avatar-test',
+  selector: 'tabset-test',
   template: `
 <sky-tabset
   data-sky-id="test-tabset"
