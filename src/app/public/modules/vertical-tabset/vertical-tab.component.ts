@@ -74,6 +74,8 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
   @Input()
   public tabId: string;
 
+  public contentRendered: boolean;
+
   public index: number;
 
   @ViewChild('tabContentWrapper')
