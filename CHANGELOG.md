@@ -1,4 +1,4 @@
-# 4.2.0 (2020-07-17)
+# 4.2.0 (2020-07-20)
 
 - Added a test fixture for the tabset component to use in consumer unit tests. [#113](https://github.com/blackbaud/skyux-tabs/pull/113)
 - Added the `maintainSectionContent` input property to the sectioned form component. [#112](https://github.com/blackbaud/skyux-tabs/pull/112) (Thanks [@michael-tims](https://github.com/michael-tims)!)
