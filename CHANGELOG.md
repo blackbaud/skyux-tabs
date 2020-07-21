@@ -1,3 +1,8 @@
+# 3.4.0 (2020-07-21)
+
+- Added the `maintainSectionContent` input property to the sectioned form component. [#115](https://github.com/blackbaud/skyux-tabs/pull/115) (Thanks [@michael-tims](https://github.com/michael-tims)!)
+- Added the `maintainTabContent` input property to the vertical tabset component. [#115](https://github.com/blackbaud/skyux-tabs/pull/115) (Thanks [@michael-tims](https://github.com/michael-tims)!)
+
 # 3.3.0 (2020-05-11)
 
 - Added modern theme styles to the tabset component. [#81](https://github.com/blackbaud/skyux-tabs/pull/81)
