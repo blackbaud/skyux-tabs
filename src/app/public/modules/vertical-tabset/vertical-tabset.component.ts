@@ -32,6 +32,7 @@ import { SkyLibResourcesService } from '@skyux/i18n';
 
 import {
   SkyVerticalTabsetService,
+  HIDDEN_STATE,
   VISIBLE_STATE
 } from './vertical-tabset.service';
 
@@ -44,7 +45,7 @@ import {
   animations: [
     trigger(
       'tabGroupEnter', [
-        transition(`void => ${VISIBLE_STATE}`, [
+        transition(`${HIDDEN_STATE} => ${VISIBLE_STATE}`, [
           style({transform: 'translate(-100%)'}),
           animate('150ms ease-in')
         ])
@@ -52,7 +53,7 @@ import {
     ),
     trigger(
       'contentEnter', [
-        transition(`void => ${VISIBLE_STATE}`, [
+        transition(`${HIDDEN_STATE} => ${VISIBLE_STATE}`, [
           style({transform: 'translate(100%)'}),
           animate('150ms ease-in')
         ])
@@ -86,6 +87,14 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
   }
 
   /**
+   * Indicates whether the vertical tabset loads tab content during initialization so that it
+   * displays content without moving around elements in the content container.
+   * @default 'false'
+   */
+  @Input()
+  public maintainTabContent: boolean = false;
+
+  /**
    * Fires when the active tab changes. Emits the index of the active tab. The
    * index is based on the tab's position when it loads.
    */
@@ -108,6 +117,8 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
     private changeRef: ChangeDetectorRef) {}
 
   public ngOnInit() {
+    this.tabService.maintainTabContent = this.maintainTabContent;
+
     this.tabService.indexChanged
       .pipe(takeUntil(this._ngUnsubscribe))
       .subscribe((index: any) => {
@@ -124,7 +135,7 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
 
     if (this.tabService.isMobile()) {
       this.isMobile = true;
-      this.tabService.animationVisibleState = VISIBLE_STATE;
+      this.tabService.animationContentVisibleState = VISIBLE_STATE;
       this.changeRef.markForCheck();
     }
     if (!this.showTabsText) {

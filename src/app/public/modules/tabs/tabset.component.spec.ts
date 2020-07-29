@@ -199,6 +199,22 @@ describe('Tabset component', () => {
     });
   }));
 
+  it('should not attempt to remove the path param if permalinkId is not set', () => {
+    const location = TestBed.inject(Location);
+
+    const fixture = TestBed.createComponent(TabsetTestComponent);
+
+    fixture.detectChanges();
+
+    spyOn(location, 'path').and.returnValue('');
+
+    const goSpy = spyOn(location, 'go');
+
+    fixture.destroy();
+
+    expect(goSpy).not.toHaveBeenCalled();
+  });
+
   it('should update the tab button margin class when the theme is modern', () => {
     function validateMargins(theme: string): void {
       for (const btnEl of btnEls) {
@@ -1097,6 +1113,7 @@ describe('Tabset component', () => {
     let fixture: ComponentFixture<SkyTabsetPermalinksFixtureComponent>;
     let location: Location;
     let router: Router;
+    let createUrlTreeSpy: jasmine.Spy;
 
     beforeEach(() => {
       fixture = TestBed.createComponent(SkyTabsetPermalinksFixtureComponent);
@@ -1108,7 +1125,7 @@ describe('Tabset component', () => {
         location = _location;
         router = _router;
 
-        spyOn(router as any, 'createUrlTree').and.callFake((commands: any[]) => {
+        createUrlTreeSpy = spyOn(router as any, 'createUrlTree').and.callFake((commands: any[]) => {
           const params = Object.keys(commands[0])
             .map(k => `${k}=${commands[0][k]}`)
             .join(';');
@@ -1119,6 +1136,10 @@ describe('Tabset component', () => {
 
     afterEach(() => {
       fixture.destroy();
+      expect(createUrlTreeSpy.calls.mostRecent().args[0]).toEqual(
+        [{}],
+        'The permalink param should be cleared when the tabset is destroyed.'
+      );
     });
 
     it('should activate a tab based on a path param', fakeAsync(() => {
