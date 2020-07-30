@@ -265,10 +265,6 @@ export class SkyTabsetComponent
         });
     });
 
-    // setTimeout(() => {
-
-    // });
-
       // Listen for back/forward history button presses to detect path param changes in the URL.
       // (Angular's router events observable doesn't emit when path params change.)
       // See: https://stackoverflow.com/a/51471155/6178885

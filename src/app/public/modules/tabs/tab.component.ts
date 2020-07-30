@@ -110,18 +110,15 @@ export class SkyTabComponent implements OnDestroy, OnChanges {
 
   public ngOnChanges(changes: SimpleChanges) {
     if (this.isTabActivated(changes)) {
-      // this.tabsetService.activateTab(this);
+      this.tabsetService.activateTab(this);
     }
   }
 
   public ngOnDestroy() {
-    this.tabsetService.destroyTab(this);
-  }
 
-  // public checkIsActive(activeIndex: string | number): void {
-  //   this.active = (this.tabIndex === activeIndex);
-  //   this.ref.markForCheck();
-  // }
+    this.tabsetService.destroyTab(this);
+
+  }
 
   private isTabActivated(changes: SimpleChanges): boolean {
     /* istanbul ignore else */
