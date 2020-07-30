@@ -956,7 +956,7 @@ describe('Tabset component', () => {
       validateTabSelected(el, 1);
     }));
 
-    it('handle two-way binding on `active` input', fakeAsync(() => {
+    it('should handle two-way binding on `active` input', fakeAsync(() => {
       const fixture = TestBed.createComponent(TabsetActiveTwoWayBindingTestComponent);
       const component = fixture.componentInstance;
       component.activeTab = '1';
