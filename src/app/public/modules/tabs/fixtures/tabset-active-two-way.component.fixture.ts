@@ -10,4 +10,6 @@ export class TabsetActiveTwoWayBindingTestComponent {
 
   public activeTab: string = '1';
 
+  public onActiveChange(): void { }
+
 }
