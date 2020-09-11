@@ -233,12 +233,16 @@ export class SkyTabsetComponent
               .forEach(tab => tab.initializeTabIndex());
 
             this.adapterService.detectOverflow();
+
+            // Wait for tabs to render before activating.
+            setTimeout(() => {
+              this.tabsetService.activateTabIndex(this.active);
+            });
           });
       });
 
     if (this.active !== undefined) {
       this.activeIndexOnLoad = this.active;
-      this.tabsetService.activateTabIndex(this.active);
     }
 
     // Render the template before activating a tab.
