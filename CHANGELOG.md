@@ -1,6 +1,6 @@
 # 4.3.3 (2020-09-11)
 
-- Fixed the tabset component to allow activating a tab as soon as it is created. [#132](https://github.com/blackbaud/skyux-tabs/pull/132)
+- Fixed the tabset component to allow consumers to activate a tab as soon as they create it. [#132](https://github.com/blackbaud/skyux-tabs/pull/132)
 
 # 4.3.2 (2020-08-20)
 
