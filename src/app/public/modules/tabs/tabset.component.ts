@@ -228,15 +228,14 @@ export class SkyTabsetComponent
         this.tabsetService.tabs
           .pipe(take(1))
           .subscribe(tabs => {
-            change
-              .filter(tab => tabs.indexOf(tab) === -1)
-              .forEach(tab => tab.initializeTabIndex());
-
-            this.adapterService.detectOverflow();
-
             // Wait for tabs to render before activating.
             setTimeout(() => {
+              change
+                .filter(tab => tabs.indexOf(tab) === -1)
+                .forEach(tab => tab.initializeTabIndex());
+
               this.tabsetService.activateTabIndex(this.active);
+              this.adapterService.detectOverflow();
             });
           });
       });
