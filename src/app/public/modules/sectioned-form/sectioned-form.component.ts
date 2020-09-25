@@ -33,6 +33,9 @@ import {
   VISIBLE_STATE
 } from './../vertical-tabset/vertical-tabset.service';
 
+/**
+ * Creates a container for the form.
+ */
 @Component({
   selector: 'sky-sectioned-form',
   templateUrl: './sectioned-form.component.html',
@@ -68,6 +71,10 @@ export class SkySectionedFormComponent implements OnInit, OnDestroy, AfterViewCh
   @Input()
   public maintainSectionContent: boolean = false;
 
+/**
+ * Fires when the active tab changes and emits the index of the active
+ * section. The index is based on the section's position when the form loads.
+ */
   @Output()
   public indexChanged: EventEmitter<number> = new EventEmitter();
 
