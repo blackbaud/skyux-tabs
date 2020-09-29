@@ -34,7 +34,7 @@ import {
 } from './../vertical-tabset/vertical-tabset.service';
 
 /**
- * Creates a container for the form.
+ * Creates a container for the sectioned forms.
  */
 @Component({
   selector: 'sky-sectioned-form',
