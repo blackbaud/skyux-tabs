@@ -3,6 +3,16 @@
 @import "~@skyux/theme/scss/_compat/mixins";
 
 .sky-tabset {
+  &.sky-tabset-style-wizard {
+    .sky-tabset-buttons {
+      border-bottom: none;
+      padding-bottom: $sky-padding;
+      padding-left: 0;
+    }
+  }
+}
+
+.sky-tabset-buttons {
   align-items: center;
   border-bottom: 2px solid $sky-background-color-primary-dark;
   display: flex;
@@ -11,15 +21,9 @@
   overflow: hidden;
   padding: 0 0 0 $sky-padding-plus-half;
   white-space: nowrap;
-
-  &.sky-tabset-style-wizard {
-    border-bottom: none;
-    padding-bottom: $sky-padding;
-    padding-left: 0;
-  }
 }
 
-.sky-tabset-btns {
+.sky-tabset-extra-buttons {
   order: 1;
   padding-left: $sky-padding;
 }
@@ -39,6 +43,34 @@
   }
 }
 
+.sky-tab-dropdown-menu-item {
+  sky-tab-button {
+    display: flex;
+    min-width: 300px;
+  }
+
+  ::ng-deep {
+    .sky-dropdown-item {
+      margin: 0;
+    }
+
+    .sky-btn-tab {
+      margin: 0;
+      border-radius: 0;
+      width: 100%;
+      display: flex;
+
+      > .sky-tab-heading {
+        flex: 1 1 auto;
+      }
+
+      > .sky-btn-tab-close {
+        flex: 0 1 auto;
+      }
+    }
+  }
+}
+
 .sky-tabset-tabs {
   order: 0;
   white-space: nowrap;
@@ -50,7 +82,7 @@
 }
 
 @include sky-theme-modern {
-  .sky-tabset {
+  .sky-tabset-buttons {
     border-bottom: 1px solid $sky-theme-modern-border-color-neutral-medium;
     overflow: visible; /* for drop shadow visibility on focused tabs */
   }

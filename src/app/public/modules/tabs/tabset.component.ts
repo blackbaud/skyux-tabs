@@ -5,6 +5,7 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChildren,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
@@ -31,12 +32,20 @@ import {
 } from './tab-index';
 
 import {
-  SkyTabStyle
-} from './tab-style';
+  SkyTabsetMode
+} from './tabset-mode';
 
 import {
   SkyTabComponent
 } from './tab.component';
+
+import {
+  SkyTabsetAdapterService
+} from './tabset-adapter.service';
+
+import {
+  SkyTabsetButtonsDisplayMode
+} from './tabset-buttons-display-mode';
 
 import {
   SkyTabsetService
@@ -59,6 +68,7 @@ interface TabButtonViewModel {
   styleUrls: ['./tabset.component.scss'],
   templateUrl: './tabset.component.html',
   providers: [
+    SkyTabsetAdapterService,
     SkyTabsetService
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -100,7 +110,7 @@ export class SkyTabsetComponent
    * @default 'tabs'
    */
   @Input()
-  public set tabStyle(value: SkyTabStyle) {
+  public set tabStyle(value: SkyTabsetMode) {
     /*istanbul ignore else*/
     if (value && value.toLowerCase() === 'wizard') {
       console.warn(
@@ -112,7 +122,7 @@ export class SkyTabsetComponent
     this._tabStyle = value;
   }
 
-  public get tabStyle(): SkyTabStyle {
+  public get tabStyle(): SkyTabsetMode {
     return this._tabStyle || 'tabs';
   }
 
@@ -136,9 +146,11 @@ export class SkyTabsetComponent
   @Output()
   public openTab = new EventEmitter<void>();
 
+  public dropdownTriggerButtonText: string;
+
   public tabButtons: TabButtonViewModel[] = [];
 
-  public tabDisplayMode = 'tabs';
+  public tabButtonsDisplayMode: SkyTabsetButtonsDisplayMode = 'tabs';
 
   @ContentChildren(SkyTabComponent)
   private tabComponents: QueryList<SkyTabComponent>;
@@ -149,10 +161,12 @@ export class SkyTabsetComponent
 
   private ngUnsubscribe = new Subject<void>();
 
-  private _tabStyle: SkyTabStyle;
+  private _tabStyle: SkyTabsetMode;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
+    private elementRef: ElementRef,
+    private adapterService: SkyTabsetAdapterService,
     private tabsetService: SkyTabsetService,
     @Optional() public themeSvc?: SkyThemeService
   ) { }
@@ -163,11 +177,16 @@ export class SkyTabsetComponent
 
   public ngAfterViewInit(): void {
     this.tabsetService.activeTabIndex.subscribe(i => this.updateView(i));
+    this.watchTabButtonsOverflow();
   }
 
   public ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  public onWindowResize(): void {
+    this.adapterService.checkTabButtonsOverflow();
   }
 
   public onTabButtonClick(tabButton: TabButtonViewModel): void {
@@ -178,10 +197,23 @@ export class SkyTabsetComponent
     this.tabComponents.changes
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(async () => {
-        const activeTabIndex = await this.tabsetService.activeTabIndex.pipe(take(1)).toPromise();
+        const activeTabIndex = await this.tabsetService.activeTabIndex
+          .pipe(take(1))
+          .toPromise();
+
         this.tabComponentsChanged = true;
         await this.updateView(activeTabIndex);
         this.tabComponentsChanged = false;
+      });
+  }
+
+  private watchTabButtonsOverflow(): void {
+    this.adapterService.registerTabset(this.elementRef);
+    this.adapterService.overflowChange
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(isOverflowing => {
+        this.tabButtonsDisplayMode = (isOverflowing) ? 'dropdown' : 'tabs';
+        this.changeDetector.markForCheck();
       });
   }
 
@@ -222,6 +254,10 @@ export class SkyTabsetComponent
         } else {
           this.updateTabButtons(activeIndex);
         }
+
+        this.dropdownTriggerButtonText = this.tabButtons
+          .find(b => b.tabIndex === activeIndex)
+          .buttonText;
 
         this.changeDetector.markForCheck();
 
