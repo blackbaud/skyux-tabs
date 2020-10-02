@@ -58,6 +58,21 @@ export class SkyTabsetPermalinkService {
     this.setParam(name, null);
   }
 
+  public getParamHref(name: string, value: string): string | null {
+    if (!name) {
+      /*tslint:disable-next-line:no-null-keyword*/
+      return null;
+    }
+
+    const params = this.getParams();
+    params[name] = value;
+
+    const baseUrl = this.location.path().split('?')[0];
+    const paramString = Object.keys(params).map(k => `${k}=${params[k]}`).join('&');
+
+    return this.location.prepareExternalUrl(`${baseUrl}?${paramString}`);
+  }
+
   public urlify(value: string): string {
     if (!value) {
       return '';
