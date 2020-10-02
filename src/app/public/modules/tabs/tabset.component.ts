@@ -32,8 +32,8 @@ import {
 } from './tab-index';
 
 import {
-  SkyTabsetMode
-} from './tabset-mode';
+  SkyTabsetStyle
+} from './tabset-style';
 
 import {
   SkyTabComponent
@@ -110,7 +110,7 @@ export class SkyTabsetComponent
    * @default 'tabs'
    */
   @Input()
-  public set tabStyle(value: SkyTabsetMode) {
+  public set tabStyle(value: SkyTabsetStyle) {
     /*istanbul ignore else*/
     if (value && value.toLowerCase() === 'wizard') {
       console.warn(
@@ -122,7 +122,7 @@ export class SkyTabsetComponent
     this._tabStyle = value;
   }
 
-  public get tabStyle(): SkyTabsetMode {
+  public get tabStyle(): SkyTabsetStyle {
     return this._tabStyle || 'tabs';
   }
 
@@ -161,7 +161,7 @@ export class SkyTabsetComponent
 
   private ngUnsubscribe = new Subject<void>();
 
-  private _tabStyle: SkyTabsetMode;
+  private _tabStyle: SkyTabsetStyle;
 
   constructor(
     private changeDetector: ChangeDetectorRef,

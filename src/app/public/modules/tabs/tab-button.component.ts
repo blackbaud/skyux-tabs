@@ -12,8 +12,8 @@ import {
 } from '@skyux/theme';
 
 import {
-  SkyTabsetMode
-} from './tabset-mode';
+  SkyTabsetStyle
+} from './tabset-style';
 
 /**
  * @internal
@@ -51,7 +51,7 @@ export class SkyTabButtonComponent {
   public disabled: boolean;
 
   @Input()
-  public tabStyle: SkyTabsetMode;
+  public tabStyle: SkyTabsetStyle;
 
   @Output()
   public buttonClick = new EventEmitter<void>();
