@@ -1,47 +1,80 @@
 import {
-  ChangeDetectionStrategy,
   Component
 } from '@angular/core';
-
-import {
-  SkyThemeService,
-  SkyThemeSettings
-} from '@skyux/theme';
+import { SkyTabIndex } from '../../public/public_api';
 
 @Component({
   selector: 'tabs-visual',
-  templateUrl: './tabs-visual.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './tabs-visual.component.html'
 })
 export class TabsVisualComponent {
 
-  public requiredValue1: string;
+  public activeIndex: SkyTabIndex;
 
-  public requiredValue2: boolean;
+  public tabs: {
+    active: boolean;
+    content: string;
+    heading: string;
+  }[] = [
+    {
+      active: false,
+      heading: 'Tab 1',
+      content: 'Content for Tab 1'
+    },
+    {
+      active: false,
+      heading: 'Tab 2',
+      content: 'Content for Tab 2'
+    },
+    {
+      active: true,
+      heading: 'Tab 3',
+      content: 'Content for Tab 3'
+    }
+  ];
 
-  public showWizard = false;
+  constructor() {
+    setTimeout(() => {
+      this.activeIndex = 1;
 
-  constructor(private themeSvc: SkyThemeService) { }
+      setTimeout(() => {
+        this.tabs.push({
+          active: false,
+          heading: 'Tab 4',
+          content: 'Content for Tab 4'
+        });
 
-  public newTabClick() { }
+        setTimeout(() => {
+          this.tabs = [{
+            active: false,
+            heading: 'Tab 1',
+            content: 'Content for Tab 1'
+          },
+          {
+            active: false,
+            heading: 'Tab 2',
+            content: 'Content for Tab 2'
+          },
+          {
+            active: false,
+            heading: 'Tab 3',
+            content: 'Content for Tab 3'
+          }];
 
-  public openTabClick() { }
-
-  public closeTab() { }
-
-  public get step2Disabled(): boolean {
-    return !this.requiredValue1;
+          setTimeout(() => {
+            this.tabs.push({
+              active: true,
+              heading: 'Tab 4',
+              content: 'Content for Tab 4'
+            });
+          }, 500);
+        }, 500);
+      }, 500);
+    }, 500);
   }
 
-  public get step3Disabled(): boolean {
-    return this.step2Disabled || !this.requiredValue2;
+  public onActiveChange(event: SkyTabIndex): void {
+    console.log('Tab index change:', event);
   }
 
-  public validateStep1() {
-    return true;
-  }
-
-  public themeSettingsChange(themeSettings: SkyThemeSettings) {
-    this.themeSvc.setTheme(themeSettings);
-  }
 }

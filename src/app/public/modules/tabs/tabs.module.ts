@@ -25,13 +25,13 @@ import {
   SkyTabsResourcesModule
 } from '../shared/tabs-resources.module';
 
-import {
-  SkyTabButtonComponent
-} from './tab-button.component';
+// import {
+//   SkyTabButtonComponent
+// } from './tab-button.component';
 
-import {
-  SkyTabDropdownComponent
-} from './tab-dropdown.component';
+// import {
+//   SkyTabDropdownComponent
+// } from './tab-dropdown.component';
 
 import {
   SkyTabComponent
@@ -41,17 +41,17 @@ import {
   SkyTabsetComponent
 } from './tabset.component';
 
-import {
-  SkyTabsetNavButtonComponent
-} from './tabset-nav-button.component';
+// import {
+//   SkyTabsetNavButtonComponent
+// } from './tabset-nav-button.component';
 
 @NgModule({
   declarations: [
-    SkyTabButtonComponent,
+    // SkyTabButtonComponent,
     SkyTabComponent,
-    SkyTabDropdownComponent,
-    SkyTabsetComponent,
-    SkyTabsetNavButtonComponent
+    // SkyTabDropdownComponent,
+    SkyTabsetComponent
+    // SkyTabsetNavButtonComponent
   ],
   imports: [
     CommonModule,
@@ -63,8 +63,8 @@ import {
   ],
   exports: [
     SkyTabComponent,
-    SkyTabsetComponent,
-    SkyTabsetNavButtonComponent
+    SkyTabsetComponent
+    // SkyTabsetNavButtonComponent
   ]
 })
 export class SkyTabsModule { }

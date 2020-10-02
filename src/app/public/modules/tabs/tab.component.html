@@ -1,8 +1,10 @@
 <div
   class="sky-tab"
   role="tabpanel"
-  [attr.aria-labelledby]="tabId + '-nav-btn'"
+  [attr.aria-labelledby]="tabButtonId"
   [id]="tabId"
-  [hidden]="!active">
-  <ng-content></ng-content>
+>
+  <ng-container *ngIf="showContent">
+    <ng-content></ng-content>
+  </ng-container>
 </div>

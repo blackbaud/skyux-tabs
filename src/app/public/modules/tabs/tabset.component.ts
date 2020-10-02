@@ -1,78 +1,52 @@
 import {
-  Location
-} from '@angular/common';
-
-import {
   AfterContentInit,
   AfterViewInit,
+  ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ContentChildren,
-  ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
   OnDestroy,
-  Optional,
   Output,
-  QueryList,
-  SimpleChanges
+  QueryList
 } from '@angular/core';
+import { Subject } from 'rxjs';
+import { SkyTabComponent } from './tab.component';
+import { SkyTabIndex } from './tab-index';
+import { SkyTabsetService } from './tabset.service';
+import { take, takeUntil } from 'rxjs/operators';
 
-import {
-  ActivatedRoute,
-  Router
-} from '@angular/router';
-
-import {
-  fromEvent,
-  Subject
-} from 'rxjs';
-
-import {
-  distinctUntilChanged,
-  take,
-  takeUntil
-} from 'rxjs/operators';
-
-import {
-  SkyThemeService
-} from '@skyux/theme';
-
-import {
-  SkyTabComponent
-} from './tab.component';
-
-import {
-  SkyTabsetAdapterService
-} from './tabset-adapter.service';
-
-import {
-  SkyTabsetPermalinkParams
-} from './tabset-permalink-params';
-
-import {
-  SkyTabsetService
-} from './tabset.service';
+interface TabButtonViewModel {
+  active: boolean;
+  disabled: boolean;
+  id: string;
+  tabIndex: SkyTabIndex;
+  text: string;
+}
 
 @Component({
   selector: 'sky-tabset',
   styleUrls: ['./tabset.component.scss'],
   templateUrl: './tabset.component.html',
   providers: [
-    SkyTabsetAdapterService,
     SkyTabsetService
-  ]
+],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkyTabsetComponent
-  implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
+  implements AfterContentInit, AfterViewInit, OnDestroy {
 
   /**
    * Specifies the index of the active tab.
    * @required
    */
   @Input()
-  public active: number | string;
+  public set active(value: SkyTabIndex) {
+    if (value !== undefined) {
+      this.tabsetService.setActiveTabIndex(value);
+    }
+  }
 
   /**
    * Defines a string value to label the tabset for accessibility.
@@ -87,27 +61,6 @@ export class SkyTabsetComponent
    */
   @Input()
   public ariaLabelledBy: string;
-
-  /**
-   * Distinguishes a tabset's unique state in the URL by generating a query parameter
-   * that is written as `?<queryParam>-active-tab=<sanitized-tab-heading>`.
-   * The query parameter's value is parsed automatically from the selected tab's heading text,
-   * but you can supply a custom query parameter value for each tab with its `permalinkValue`.
-   */
-  @Input()
-  public set permalinkId(value: string) {
-    if (!value) {
-      return;
-    }
-
-    // Remove all non-alphanumeric characters.
-    const sanitized = value.toLowerCase().replace(/[\W]/g, '');
-    this._permalinkId = `${sanitized}-active-tab`;
-  }
-
-  public get permalinkId(): string {
-    return this._permalinkId || '';
-  }
 
   /**
    * @deprecated
@@ -138,239 +91,95 @@ export class SkyTabsetComponent
    * Fires when the active tab changes. This event emits the index of the active tab.
    */
   @Output()
-  public activeChange = new EventEmitter<any>();
+  public activeChange = new EventEmitter<SkyTabIndex>();
 
   /**
    * Fires when users click the button to add a new tab.
    * The new tab button is added to the tab area when you specify a listener for this event.
    */
   @Output()
-  public newTab = new EventEmitter<any>();
+  public newTab = new EventEmitter<void>();
 
   /**
    * Fires when users click the button to open a tab.
    * The open tab button is added to the tab area when you specify a listener for this event.
    */
   @Output()
-  public openTab = new EventEmitter<any>();
+  public openTab = new EventEmitter<void>();
+
+  public tabButtons: TabButtonViewModel[] = [];
 
   public tabDisplayMode = 'tabs';
 
   @ContentChildren(SkyTabComponent)
-  public tabs: QueryList<SkyTabComponent>;
+  private tabComponents: QueryList<SkyTabComponent>;
 
-  private activeIndexOnLoad: number | string;
+  private lastActiveIndex: SkyTabIndex;
 
   private ngUnsubscribe = new Subject<void>();
-
-  private _permalinkId: string;
 
   private _tabStyle: string;
 
   constructor(
-    private tabsetService: SkyTabsetService,
-    private adapterService: SkyTabsetAdapterService,
-    private elRef: ElementRef,
-    private changeRef: ChangeDetectorRef,
-    private activatedRoute: ActivatedRoute,
-    private location: Location,
-    @Optional() private router?: Router,
-    @Optional() public themeSvc?: SkyThemeService
+    private changeDetector: ChangeDetectorRef,
+    private tabsetService: SkyTabsetService
   ) { }
 
-  public getTabButtonId(tab: SkyTabComponent): string {
-    if (this.tabDisplayMode === 'tabs') {
-      return `${tab.tabId}-nav-btn`;
-    }
-
-    return `${tab.tabId}-hidden-nav-btn`;
-  }
-
-  public tabCloseClick(tab: SkyTabComponent): void {
-    tab.close.emit(undefined);
-  }
-
-  public newTabClick(): void {
-    this.newTab.emit(undefined);
-  }
-
-  public openTabClick(): void {
-    this.openTab.emit(undefined);
-  }
-
-  public windowResize(): void {
-    this.adapterService.detectOverflow();
-  }
-
-  public selectTab(tab: SkyTabComponent): void {
-    if (this.permalinkId && tab.permalinkValue) {
-      this.setPathParamPermalinkValue(tab.permalinkValue);
-    }
-
-    this.tabsetService.activateTab(tab);
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    const activeChange = changes['active'];
-    if (
-      activeChange &&
-      activeChange.currentValue !== activeChange.previousValue
-    ) {
-      this.tabsetService.activateTabIndex(this.active);
-    }
-  }
-
   public ngAfterContentInit(): void {
-    this.tabs.changes
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((change: QueryList<SkyTabComponent>) => {
-
-        this.tabsetService.tabs
-          .pipe(take(1))
-          .subscribe(tabs => {
-            // Wait for tabs to render before activating.
-            setTimeout(() => {
-              change
-                .filter(tab => tabs.indexOf(tab) === -1)
-                .forEach(tab => tab.initializeTabIndex());
-
-              this.tabsetService.activateTabIndex(this.active);
-              this.adapterService.detectOverflow();
-            });
-          });
-      });
-
-    if (this.active !== undefined) {
-      this.activeIndexOnLoad = this.active;
-    }
-
-    // Render the template before activating a tab.
-    setTimeout(() => {
-      // Initialize each tab's index (in case tabs are instantiated out of order).
-      this.tabs.forEach(tab => tab.initializeTabIndex());
-      this.activateTabByPermalinkValue();
-      this.tabsetService.activeIndex
-        .pipe(
-          distinctUntilChanged(),
-          takeUntil(this.ngUnsubscribe)
-        )
-        .subscribe((newActiveIndex) => {
-          if (newActiveIndex !== this.active) {
-            if (this.activeIndexOnLoad === undefined) {
-              this.activeIndexOnLoad = newActiveIndex;
-            }
-            this.active = newActiveIndex;
-            // Emit change after tab changes have rendered.
-            setTimeout(() => {
-              this.activeChange.emit(newActiveIndex);
-            });
-          }
-        });
-    });
-
-      // Listen for back/forward history button presses to detect path param changes in the URL.
-      // (Angular's router events observable doesn't emit when path params change.)
-      // See: https://stackoverflow.com/a/51471155/6178885
-      fromEvent(window, 'popstate')
-        .pipe(takeUntil(this.ngUnsubscribe))
-        .subscribe(() => this.activateTabByPermalinkValue());
+    this.watchTabComponentChanges();
   }
 
   public ngAfterViewInit(): void {
-    this.adapterService.init(this.elRef);
-
-    this.adapterService.overflowChange
-      .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe((currentOverflow: boolean) => {
-        this.updateDisplayMode(currentOverflow);
-      });
-
-    // Render the template before setting display mode.
-    setTimeout(() => {
-      this.adapterService.detectOverflow();
-      this.updateDisplayMode(this.adapterService.currentOverflow);
-      this.changeRef.markForCheck();
-    });
+    this.tabsetService.activeTabIndex.subscribe(i => this.updateView(i));
   }
 
   public ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
 
-    const params = this.getPathParams();
+  public onTabButtonClick(tabButton: TabButtonViewModel): void {
+    this.active = tabButton.tabIndex;
+  }
 
-    if (Object.keys(params).length > 0) {
-      /*tslint:disable-next-line:no-null-keyword*/
-      this.setPathParamPermalinkValue(null);
+  private watchTabComponentChanges(): void {
+    this.tabComponents.changes
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(async () => {
+        const activeTabIndex = await this.tabsetService.activeTabIndex
+          .pipe(take(1))
+          .toPromise();
+        this.updateView(activeTabIndex);
+      });
+  }
+
+  private getTabButtons(activeIndex: SkyTabIndex): TabButtonViewModel[] {
+    return this.tabButtons = this.tabComponents.map(c => ({
+      active: (c.tabIndex === activeIndex),
+      disabled: c.disabled,
+      id: c.tabButtonId,
+      tabIndex: c.tabIndex,
+      text: c.tabHeading
+    }));
+  }
+
+  private updateView(activeIndex: SkyTabIndex): void {
+    if (this.tabComponents) {
+      // Wait for the tabs to render before activating.
+      setTimeout(() => {
+        this.tabComponents.forEach(c => (c.tabIndex === activeIndex)
+          ? c.activate()
+          : c.deactivate()
+        );
+        this.tabButtons = this.getTabButtons(activeIndex);
+        this.changeDetector.markForCheck();
+
+        if (this.lastActiveIndex !== activeIndex) {
+          this.lastActiveIndex = activeIndex;
+          this.activeChange.emit(activeIndex);
+        }
+      });
     }
   }
 
-  public getPathParams(): SkyTabsetPermalinkParams {
-    const params: SkyTabsetPermalinkParams = {};
-
-    const path = this.location.path();
-    if (path.indexOf('?') === -1) {
-      return params;
-    }
-
-    const existingParamPairs = path.split('?')[1].split('&');
-    existingParamPairs.forEach((pair) => {
-      const fragments = pair.split('=');
-      params[fragments[0]] = fragments[1];
-    });
-
-    return params;
-  }
-
-  private updateDisplayMode(currentOverflow: boolean): void {
-    this.tabDisplayMode = (currentOverflow) ? 'dropdown' : 'tabs';
-    this.changeRef.markForCheck();
-  }
-
-  private activateTabByPermalinkValue(): void {
-    const params = this.getPathParams();
-
-    if (
-      !(this.permalinkId in params) &&
-      this.activeIndexOnLoad !== undefined
-    ) {
-      this.tabsetService.activateTabIndex(this.activeIndexOnLoad);
-      return;
-    }
-
-    const value = params[this.permalinkId];
-
-    let index: number | string;
-
-    this.tabs.forEach((tabComponent, i) => {
-      if (tabComponent.permalinkValue === value) {
-        index = tabComponent.tabIndex;
-      }
-    });
-
-    // Only set the active tab if an index was found.
-    if (index !== undefined) {
-      this.tabsetService.activateTabIndex(index);
-    }
-  }
-
-  private setPathParamPermalinkValue(value: string | null): void {
-    const params = this.getPathParams();
-
-    if (value === null) {
-      delete params[this.permalinkId];
-    } else {
-      params[this.permalinkId] = value;
-    }
-
-    // Update the URL without triggering a navigation state change.
-    // See: https://stackoverflow.com/a/46486677
-    const url = this.router.createUrlTree(['.'], {
-      relativeTo: this.activatedRoute,
-      queryParams: params,
-      queryParamsHandling: 'merge'
-    }).toString();
-
-    this.location.go(url);
-  }
 }
