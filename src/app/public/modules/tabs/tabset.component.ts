@@ -8,21 +8,50 @@ import {
   EventEmitter,
   Input,
   OnDestroy,
+  Optional,
   Output,
   QueryList
 } from '@angular/core';
-import { Subject } from 'rxjs';
-import { SkyTabComponent } from './tab.component';
-import { SkyTabIndex } from './tab-index';
-import { SkyTabsetService } from './tabset.service';
-import { take, takeUntil } from 'rxjs/operators';
+
+import {
+  SkyThemeService
+} from '@skyux/theme';
+
+import {
+  Subject
+} from 'rxjs';
+
+import {
+  take,
+  takeUntil
+} from 'rxjs/operators';
+
+import {
+  SkyTabIndex
+} from './tab-index';
+
+import {
+  SkyTabStyle
+} from './tab-style';
+
+import {
+  SkyTabComponent
+} from './tab.component';
+
+import {
+  SkyTabsetService
+} from './tabset.service';
 
 interface TabButtonViewModel {
   active: boolean;
+  ariaControls: string;
+  buttonHref: string;
+  buttonId: string;
+  buttonText: string;
+  buttonTextCount: string;
+  closeable: boolean;
   disabled: boolean;
-  id: string;
   tabIndex: SkyTabIndex;
-  text: string;
 }
 
 @Component({
@@ -31,14 +60,14 @@ interface TabButtonViewModel {
   templateUrl: './tabset.component.html',
   providers: [
     SkyTabsetService
-],
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SkyTabsetComponent
   implements AfterContentInit, AfterViewInit, OnDestroy {
 
   /**
-   * Specifies the index of the active tab.
+   * Activates a tab by its `tabIndex` property.
    * @required
    */
   @Input()
@@ -68,10 +97,10 @@ export class SkyTabsetComponent
    * The property was designed to create wizards by setting tabStyle="wizard" on tabsets in modals,
    * but this wizard implementation was replaced by the
    * [progress indicator component](https://developer.blackbaud.com/skyux/components/progress-indicator).
-   * @default "tabs"
+   * @default 'tabs'
    */
   @Input()
-  public set tabStyle(value: string) {
+  public set tabStyle(value: SkyTabStyle) {
     /*istanbul ignore else*/
     if (value && value.toLowerCase() === 'wizard') {
       console.warn(
@@ -83,7 +112,7 @@ export class SkyTabsetComponent
     this._tabStyle = value;
   }
 
-  public get tabStyle(): string {
+  public get tabStyle(): SkyTabStyle {
     return this._tabStyle || 'tabs';
   }
 
@@ -114,15 +143,18 @@ export class SkyTabsetComponent
   @ContentChildren(SkyTabComponent)
   private tabComponents: QueryList<SkyTabComponent>;
 
+  private tabComponentsChanged: boolean = false;
+
   private lastActiveIndex: SkyTabIndex;
 
   private ngUnsubscribe = new Subject<void>();
 
-  private _tabStyle: string;
+  private _tabStyle: SkyTabStyle;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
-    private tabsetService: SkyTabsetService
+    private tabsetService: SkyTabsetService,
+    @Optional() public themeSvc?: SkyThemeService
   ) { }
 
   public ngAfterContentInit(): void {
@@ -146,40 +178,61 @@ export class SkyTabsetComponent
     this.tabComponents.changes
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(async () => {
-        const activeTabIndex = await this.tabsetService.activeTabIndex
-          .pipe(take(1))
-          .toPromise();
-        this.updateView(activeTabIndex);
+        const activeTabIndex = await this.tabsetService.activeTabIndex.pipe(take(1)).toPromise();
+        this.tabComponentsChanged = true;
+        await this.updateView(activeTabIndex);
+        this.tabComponentsChanged = false;
       });
   }
 
-  private getTabButtons(activeIndex: SkyTabIndex): TabButtonViewModel[] {
-    return this.tabButtons = this.tabComponents.map(c => ({
+  private createTabButtons(activeIndex: SkyTabIndex): TabButtonViewModel[] {
+    return this.tabComponents.map(c => ({
       active: (c.tabIndex === activeIndex),
+      closeable: c.closeable,
+      ariaControls: c.tabPanelId,
       disabled: c.disabled,
-      id: c.tabButtonId,
-      tabIndex: c.tabIndex,
-      text: c.tabHeading
+      buttonHref: '#',
+      buttonId: c.tabButtonId,
+      buttonTextCount: c.tabHeaderCount,
+      buttonText: c.tabHeading,
+      tabIndex: c.tabIndex
     }));
   }
 
-  private updateView(activeIndex: SkyTabIndex): void {
-    if (this.tabComponents) {
+  private updateTabButtons(activeIndex: SkyTabIndex): void {
+    this.tabButtons.forEach(b => b.active = (b.tabIndex === activeIndex));
+  }
+
+  private updateView(activeIndex: SkyTabIndex): Promise<void> {
+    return new Promise(resolve => {
+      if (!this.tabComponents) {
+        resolve();
+        return;
+      }
+
       // Wait for the tabs to render before activating.
       setTimeout(() => {
         this.tabComponents.forEach(c => (c.tabIndex === activeIndex)
           ? c.activate()
           : c.deactivate()
         );
-        this.tabButtons = this.getTabButtons(activeIndex);
+
+        if (this.tabComponentsChanged || !this.tabButtons?.length) {
+          this.tabButtons = this.createTabButtons(activeIndex);
+        } else {
+          this.updateTabButtons(activeIndex);
+        }
+
         this.changeDetector.markForCheck();
 
         if (this.lastActiveIndex !== activeIndex) {
           this.lastActiveIndex = activeIndex;
           this.activeChange.emit(activeIndex);
         }
+
+        resolve();
       });
-    }
+    });
   }
 
 }

@@ -10,16 +10,19 @@
   <span
     class="sky-tabset-tabs"
   >
-    <button *ngFor="let tabButton of tabButtons"
-      type="button"
+    <sky-tab-button *ngFor="let tabButton of tabButtons"
+      [active]="tabButton.active"
+      [ariaControls]="tabButton.ariaControls"
       [disabled]="tabButton.disabled"
-      [ngClass]="{
-        'sky-tab-button-active': tabButton.active
-      }"
-      (click)="onTabButtonClick(tabButton)"
-    >
-      {{ tabButton.text }} - {{ tabButton.tabIndex }}
-    </button>
+      [buttonHref]="tabButton.buttonHref"
+      [buttonId]="tabButton.buttonId"
+      [buttonText]="tabButton.buttonText"
+      [buttonTextCount]="tabButton.buttonTextCount"
+      [closeable]="tabButton.closeable"
+      [tabStyle]="tabStyle"
+      (buttonClick)="onTabButtonClick(tabButton)"
+      (closeClick)="onTabCloseClick(tabButton)"
+    ></sky-tab-button>
   </span>
   <span
     class="sky-tabset-btns"
@@ -37,8 +40,7 @@
       <sky-icon
         icon="plus-circle"
         size="lg"
-      >
-      </sky-icon>
+      ></sky-icon>
     </button>
     <button *ngIf="openTab.observers.length > 0"
       class="sky-btn sky-btn-icon sky-tabset-btn-open sky-margin-inline-compact"
@@ -53,15 +55,10 @@
       <sky-icon
         icon="folder-open-o"
         size="lg"
-      >
-      </sky-icon>
+      ></sky-icon>
     </button>
   </span>
-  <div
-    class="sky-tabset-panels"
-  >
-    <ng-content
-      select="sky-tab"
-    ></ng-content>
-  </div>
 </div>
+<ng-content
+  select="sky-tab"
+></ng-content>

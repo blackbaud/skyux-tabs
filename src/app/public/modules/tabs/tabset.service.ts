@@ -1,8 +1,15 @@
 import {
   Injectable
 } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { SkyTabIndex } from './tab-index';
+
+import {
+  BehaviorSubject,
+  Observable
+} from 'rxjs';
+
+import {
+  SkyTabIndex
+} from './tab-index';
 
 @Injectable()
 export class SkyTabsetService {
@@ -39,19 +46,10 @@ export class SkyTabsetService {
     tab.tabIndex = newTabIndex;
   }
 
-  public removeTab(tabIndex: SkyTabIndex): void {
+  public unregisterTab(tabIndex: SkyTabIndex): void {
     this.tabCounter--;
     const index = this.tabs.findIndex(t => t.tabIndex === tabIndex);
     this.tabs.splice(index, 1);
   }
-
-  // public isValidIndex(tabIndex: SkyTabIndex): boolean {
-  //   console.log('isValidIndex?', this.tabs);
-  //   return this.tabs.some(t => t.tabIndex === tabIndex);
-  // }
-
-  // public getFirstTabIndex(): SkyTabIndex {
-  //   return this.tabs[0].tabIndex;
-  // }
 
 }

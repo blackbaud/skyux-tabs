@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
-  OnDestroy
+  OnDestroy,
+  Output
 } from '@angular/core';
 
 import {
@@ -24,7 +26,8 @@ let nextId = 0;
 export class SkyTabComponent implements OnDestroy {
 
   /**
-   * Indicates whether the tab is active when the tabset loads.
+   * Indicates whether the tab is active when the tabset loads. After initialization, the `active`
+   * property on the tabset component should be used to set the active tab.
    * @default false
    */
   @Input()
@@ -40,6 +43,12 @@ export class SkyTabComponent implements OnDestroy {
    */
   @Input()
   public disabled: boolean;
+
+  /**
+   * Displays a counter beside the tab header.
+   */
+  @Input()
+  public tabHeaderCount: string;
 
   /**
    * Specifies the tab header.
@@ -70,11 +79,22 @@ export class SkyTabComponent implements OnDestroy {
     return this._tabIndex;
   }
 
+  /**
+   * Fires when users click the button to close the tab.
+   * The close button is added to the tab when you specify a listener for this event.
+   */
+  @Output()
+  public close = new EventEmitter<void>();
+
+  public get closeable(): boolean {
+    return this.close.observers.length > 0;
+  }
+
   public showContent: boolean = false;
 
   public tabButtonId: string;
 
-  public tabId: string;
+  public tabPanelId: string;
 
   private _tabIndex: SkyTabIndex;
 
@@ -83,13 +103,13 @@ export class SkyTabComponent implements OnDestroy {
     private tabsetService: SkyTabsetService
   ) {
     const id = nextId++;
-    this.tabId = `sky-tab-${id}`;
-    this.tabButtonId = `${this.tabId}-nav-btn`;
+    this.tabPanelId = `sky-tab-${id}`;
+    this.tabButtonId = `${this.tabPanelId}-nav-btn`;
     this.tabIndex = this.tabsetService.registerTab();
   }
 
   public ngOnDestroy(): void {
-    this.tabsetService.removeTab(this.tabIndex);
+    this.tabsetService.unregisterTab(this.tabIndex);
   }
 
   public activate(): void {

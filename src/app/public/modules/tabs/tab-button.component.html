@@ -1,0 +1,44 @@
+<a
+  class="sky-btn-tab sky-margin-inline-compact"
+  role="tab"
+  [attr.aria-controls]="ariaControls"
+  [attr.aria-disabled]="disabled"
+  [attr.aria-selected]="active"
+  [attr.href]="buttonHref"
+  [id]="buttonId"
+  [ngClass]="{
+    'sky-btn-tab-wizard': tabStyle === 'wizard',
+    'sky-btn-tab-selected': active,
+    'sky-btn-tab-disabled': disabled,
+    'sky-tab-btn-closeable': closeable,
+    'sky-margin-inline-sm':
+      (themeSvc?.settingsChange | async)?.currentSettings?.theme?.name === 'modern'
+  }"
+  [tabindex]="disabled ? '-1' : '0'"
+  (click)="onButtonClick($event)"
+>
+  <span
+    class="sky-tab-heading"
+  >
+    {{ buttonText }}
+    <span *ngIf="buttonTextCount !== undefined"
+      class="sky-tab-header-count"
+    >
+      {{ buttonTextCount }}
+    </span>
+  </span>
+  <button *ngIf="closeable"
+    class="sky-btn-tab-close"
+    type="button"
+    [attr.aria-label]="'skyux_tab_close' | skyLibResources"
+    [disabled]="disabled"
+    [ngClass]="{
+      'sky-btn-tab-close-disabled': disabled
+    }"
+    (click)="onCloseClick($event)"
+  >
+    <sky-icon
+      icon="remove"
+    ></sky-icon>
+  </button>
+</a>
