@@ -1,5 +1,4 @@
 import {
-  AfterContentInit,
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -48,6 +47,10 @@ import {
 } from './tabset-buttons-display-mode';
 
 import {
+  SkyTabsetPermalinkService
+} from './tabset-permalink.service';
+
+import {
   SkyTabsetService
 } from './tabset.service';
 
@@ -69,12 +72,12 @@ interface TabButtonViewModel {
   templateUrl: './tabset.component.html',
   providers: [
     SkyTabsetAdapterService,
+    SkyTabsetPermalinkService,
     SkyTabsetService
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SkyTabsetComponent
-  implements AfterContentInit, AfterViewInit, OnDestroy {
+export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
 
   /**
    * Activates a tab by its `tabIndex` property.
@@ -100,6 +103,24 @@ export class SkyTabsetComponent
    */
   @Input()
   public ariaLabelledBy: string;
+
+  /**
+   * Distinguishes a tabset's unique state in the URL by generating a query parameter
+   * that is written as `?<queryParam>-active-tab=<sanitized-tab-heading>`.
+   * The query parameter's value is parsed automatically from the selected tab's heading text,
+   * but you can supply a custom query parameter value for each tab with its `permalinkValue`.
+   */
+  @Input()
+  public set permalinkId(value: string) {
+    if (value) {
+      const sanitized = this.permalinkService.urlify(value);
+      this._permalinkId = `${sanitized}-active-tab`;
+    }
+  }
+
+  public get permalinkId(): string {
+    return this._permalinkId || '';
+  }
 
   /**
    * @deprecated
@@ -161,28 +182,37 @@ export class SkyTabsetComponent
 
   private ngUnsubscribe = new Subject<void>();
 
+  private _permalinkId: string;
+
   private _tabStyle: SkyTabsetStyle;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
     private elementRef: ElementRef,
     private adapterService: SkyTabsetAdapterService,
+    private permalinkService: SkyTabsetPermalinkService,
     private tabsetService: SkyTabsetService,
     @Optional() public themeSvc?: SkyThemeService
   ) { }
 
-  public ngAfterContentInit(): void {
-    this.watchTabComponentChanges();
-  }
-
   public ngAfterViewInit(): void {
-    this.tabsetService.activeTabIndex.subscribe(i => this.updateView(i));
-    this.watchTabButtonsOverflow();
+    this.listenActiveIndexChange();
+    this.listenTabComponentsChange();
+    this.listenTabButtonsOverflowChange();
+
+    // Set the active index based on the permalinkId.
+    if (this.permalinkId) {
+      const paramValue = this.permalinkService.getParam(this.permalinkId);
+      if (paramValue) {
+        this.active = this.tabComponents.find(c => c.permalinkValue === paramValue).tabIndex;
+      }
+    }
   }
 
   public ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+    this.permalinkService.clearParam(this.permalinkId);
   }
 
   public onWindowResize(): void {
@@ -193,7 +223,13 @@ export class SkyTabsetComponent
     this.active = tabButton.tabIndex;
   }
 
-  private watchTabComponentChanges(): void {
+  private listenActiveIndexChange(): void {
+    this.tabsetService.activeTabIndex
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(activeIndex => this.updateComponent(activeIndex));
+  }
+
+  private listenTabComponentsChange(): void {
     this.tabComponents.changes
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(async () => {
@@ -202,12 +238,12 @@ export class SkyTabsetComponent
           .toPromise();
 
         this.tabComponentsChanged = true;
-        await this.updateView(activeTabIndex);
+        await this.updateComponent(activeTabIndex);
         this.tabComponentsChanged = false;
       });
   }
 
-  private watchTabButtonsOverflow(): void {
+  private listenTabButtonsOverflowChange(): void {
     this.adapterService.registerTabset(this.elementRef);
     this.adapterService.overflowChange
       .pipe(takeUntil(this.ngUnsubscribe))
@@ -235,7 +271,7 @@ export class SkyTabsetComponent
     this.tabButtons.forEach(b => b.active = (b.tabIndex === activeIndex));
   }
 
-  private updateView(activeIndex: SkyTabIndex): Promise<void> {
+  private updateComponent(activeIndex: SkyTabIndex): Promise<void> {
     return new Promise(resolve => {
       if (!this.tabComponents) {
         resolve();
@@ -244,23 +280,34 @@ export class SkyTabsetComponent
 
       // Wait for the tabs to render before activating.
       setTimeout(() => {
+
+        // Activate/deactivate tab components.
         this.tabComponents.forEach(c => (c.tabIndex === activeIndex)
           ? c.activate()
           : c.deactivate()
         );
 
+        // Update the tab button models.
         if (this.tabComponentsChanged || !this.tabButtons?.length) {
           this.tabButtons = this.createTabButtons(activeIndex);
         } else {
           this.updateTabButtons(activeIndex);
         }
 
+        // Update the dropdown trigger button text.
         this.dropdownTriggerButtonText = this.tabButtons
           .find(b => b.tabIndex === activeIndex)
           .buttonText;
 
+        // Set the query params based on active tab.
+        if (this.permalinkId) {
+          const activeTabComponent = this.tabComponents.find(c => c.tabIndex === activeIndex);
+          this.permalinkService.setParam(this.permalinkId, activeTabComponent.permalinkValue);
+        }
+
         this.changeDetector.markForCheck();
 
+        // Emit the new active index value to consumers.
         if (this.lastActiveIndex !== activeIndex) {
           this.lastActiveIndex = activeIndex;
           this.activeChange.emit(activeIndex);

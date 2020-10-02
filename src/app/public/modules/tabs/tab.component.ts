@@ -13,6 +13,10 @@ import {
 } from './tab-index';
 
 import {
+  SkyTabsetPermalinkService
+} from './tabset-permalink.service';
+
+import {
   SkyTabsetService
 } from './tabset.service';
 
@@ -43,6 +47,22 @@ export class SkyTabComponent implements OnDestroy {
    */
   @Input()
   public disabled: boolean;
+
+  /**
+   * Specifies a custom query parameter value for the tab.
+   * This works in conjunction with the tabset's `permalinkId` to distinguish
+   * the tab's unique state in the URL by generating a query parameter that is
+   * written as `?<queryParam>-active-tab=<sanitized-tab-heading`.
+   * By default, the query parameter's value is parsed automatically from the tab's heading text.
+   */
+  @Input()
+  public set permalinkValue(value: string) {
+    this._permalinkValue = this.permalinkService.urlify(value);
+  }
+
+  public get permalinkValue(): string {
+    return this._permalinkValue || this.permalinkService.urlify(this.tabHeading);
+  }
 
   /**
    * Displays a counter beside the tab header.
@@ -96,10 +116,13 @@ export class SkyTabComponent implements OnDestroy {
 
   public tabPanelId: string;
 
+  private _permalinkValue: string;
+
   private _tabIndex: SkyTabIndex;
 
   constructor(
     private changeDetector: ChangeDetectorRef,
+    private permalinkService: SkyTabsetPermalinkService,
     private tabsetService: SkyTabsetService
   ) {
     const id = nextId++;
