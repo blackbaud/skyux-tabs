@@ -12,6 +12,11 @@ import {
   Router
 } from '@angular/router';
 
+import {
+  Observable,
+  Subject
+} from 'rxjs';
+
 interface PermalinkParams {
   [_: string]: string;
 }
@@ -19,11 +24,19 @@ interface PermalinkParams {
 @Injectable()
 export class SkyTabsetPermalinkService {
 
+  public get popStateChange(): Observable<void> {
+    return this._popStateChange.asObservable();
+  }
+
+  private _popStateChange = new Subject<void>();
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
     @Optional() private router: Router
-  ) { }
+  ) {
+    this.location.subscribe(() => this._popStateChange.next());
+  }
 
   public getParam(name: string): string {
     return this.getParams()[name];
@@ -49,6 +62,11 @@ export class SkyTabsetPermalinkService {
       queryParams: params,
       queryParamsHandling: 'merge'
     }).toString();
+
+    // Abort redirect if the current URL is equal to the new URL.
+    if (this.location.isCurrentPathEqualTo(url)) {
+      return;
+    }
 
     this.location.go(url);
   }

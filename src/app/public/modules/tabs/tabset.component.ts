@@ -18,7 +18,6 @@ import {
 } from '@skyux/theme';
 
 import {
-  fromEvent,
   race,
   Subject
 } from 'rxjs';
@@ -200,7 +199,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     this.listenActiveIndexChange();
     this.listenTabComponentsChange();
     this.listenTabButtonsOverflowChange();
-    this.listenWindowPopStateChange();
+    this.listenLocationPopStateChange();
 
     // Set the active index based on the permalinkId, if it's set.
     this.setActiveTabIndexByPermalinkId();
@@ -243,29 +242,41 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
   }
 
   private listenTabComponentsChange(): void {
+    let unsubscribe = new Subject<void>();
 
-    // TODO: Resubsribe to this if structure chhanges.
-    // Listen for state changes.
-    race(this.tabs.map(tab => tab.stateChange))
-      .subscribe(async () => {
-        // TODO: put this in a reusable method.
-        const activeTabIndex = await this.tabsetService.activeTabIndex
-          .pipe(take(1))
-          .toPromise();
+    const listenTabComponentsStateChange = () => {
+      unsubscribeStateChange();
 
-        this.updateComponent(activeTabIndex, true);
-      });
+      race(
+        this.tabs.map(tab => tab.stateChange)
+      )
+        .pipe(
+          takeUntil(
+            race(unsubscribe, this.ngUnsubscribe)
+          )
+        )
+        .subscribe(async () => {
+          const activeTabIndex = await this.getActiveTabIndex();
+          this.updateComponent(activeTabIndex, true);
+        });
+    };
+
+    const unsubscribeStateChange = () => {
+      unsubscribe.next();
+      unsubscribe.complete();
+      unsubscribe = new Subject<void>();
+    };
 
     // Listen for structural changes.
     this.tabs.changes
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(async () => {
-        const activeTabIndex = await this.tabsetService.activeTabIndex
-          .pipe(take(1))
-          .toPromise();
-
+        const activeTabIndex = await this.getActiveTabIndex();
         await this.updateComponent(activeTabIndex, true);
+        listenTabComponentsStateChange();
       });
+
+    listenTabComponentsStateChange();
   }
 
   private listenTabButtonsOverflowChange(): void {
@@ -279,12 +290,10 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * Listen for back/forward history button presses to detect path param changes in the URL.
-   * (Angular's router events observable doesn't emit when path params change.)
-   * @see: https://stackoverflow.com/a/51471155/6178885
+   * Listen for back/forward history button presses to detect query param changes in the URL.
    */
-  private listenWindowPopStateChange(): void {
-    fromEvent(window, 'popstate')
+  private listenLocationPopStateChange(): void {
+    this.permalinkService.popStateChange
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => this.setActiveTabIndexByPermalinkId());
   }
@@ -301,6 +310,12 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
         this.active = activeIndex;
       }
     }
+  }
+
+  private getActiveTabIndex(): Promise<SkyTabIndex> {
+    return this.tabsetService.activeTabIndex
+      .pipe(take(1))
+      .toPromise();
   }
 
   private createTabButtons(activeIndex: SkyTabIndex): TabButtonViewModel[] {
