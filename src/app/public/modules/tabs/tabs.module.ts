@@ -35,6 +35,10 @@ import {
 } from './tab.component';
 
 import {
+  SkyTabsetNavButtonComponent
+} from './tabset-nav-button.component';
+
+import {
   SkyTabsetComponent
 } from './tabset.component';
 
@@ -42,7 +46,8 @@ import {
   declarations: [
     SkyTabButtonComponent,
     SkyTabComponent,
-    SkyTabsetComponent
+    SkyTabsetComponent,
+    SkyTabsetNavButtonComponent
   ],
   imports: [
     CommonModule,
@@ -54,7 +59,8 @@ import {
   ],
   exports: [
     SkyTabComponent,
-    SkyTabsetComponent
+    SkyTabsetComponent,
+    SkyTabsetNavButtonComponent
   ]
 })
 export class SkyTabsModule { }

@@ -4,9 +4,16 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
-  Output
+  Output,
+  SimpleChanges
 } from '@angular/core';
+
+import {
+  Observable,
+  Subject
+} from 'rxjs';
 
 import {
   SkyTabIndex
@@ -27,7 +34,7 @@ let nextId = 0;
   templateUrl: './tab.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SkyTabComponent implements OnDestroy {
+export class SkyTabComponent implements OnChanges, OnDestroy {
 
   /**
    * Indicates whether the tab is active when the tabset loads. After initialization, the `active`
@@ -110,6 +117,13 @@ export class SkyTabComponent implements OnDestroy {
     return this.close.observers.length > 0;
   }
 
+  /**
+   * Alerts the tabset component when this component has changes that need to be reflected in the UI.
+   */
+  public get stateChange(): Observable<void> {
+    return this._stateChange.asObservable();
+  }
+
   public showContent: boolean = false;
 
   public tabButtonId: string;
@@ -117,6 +131,8 @@ export class SkyTabComponent implements OnDestroy {
   public tabPanelId: string;
 
   private _permalinkValue: string;
+
+  private _stateChange = new Subject<void>();
 
   private _tabIndex: SkyTabIndex;
 
@@ -131,8 +147,15 @@ export class SkyTabComponent implements OnDestroy {
     this.tabIndex = this.tabsetService.registerTab();
   }
 
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes.disabled && !changes.disabled.firstChange) {
+      this._stateChange.next();
+    }
+  }
+
   public ngOnDestroy(): void {
     this.tabsetService.unregisterTab(this.tabIndex);
+    this._stateChange.complete();
   }
 
   public activate(): void {

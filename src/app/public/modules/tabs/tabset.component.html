@@ -56,7 +56,7 @@
           'sky-margin-inline-sm':
             (themeSvc?.settingsChange | async)?.currentSettings?.theme?.name === 'modern'
         }"
-        (click)="newTabClick()"
+        (click)="onNewTabClick()"
       >
         <sky-icon
           icon="plus-circle"
@@ -71,7 +71,7 @@
           'sky-margin-inline-sm':
             (themeSvc?.settingsChange | async)?.currentSettings?.theme?.name === 'modern'
         }"
-        (click)="openTabClick()"
+        (click)="onOpenTabClick()"
       >
         <sky-icon
           icon="folder-open-o"

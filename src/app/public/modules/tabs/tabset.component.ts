@@ -19,10 +19,12 @@ import {
 
 import {
   fromEvent,
+  race,
   Subject
 } from 'rxjs';
 
 import {
+  distinctUntilChanged,
   take,
   takeUntil
 } from 'rxjs/operators';
@@ -168,16 +170,16 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
   @Output()
   public openTab = new EventEmitter<void>();
 
+  @ContentChildren(SkyTabComponent)
+  public tabs: QueryList<SkyTabComponent>;
+
   public dropdownTriggerButtonText: string;
+
+  public lastActiveTabIndex: SkyTabIndex;
 
   public tabButtons: TabButtonViewModel[] = [];
 
   public tabButtonsDisplayMode: SkyTabsetButtonsDisplayMode = 'tabs';
-
-  @ContentChildren(SkyTabComponent)
-  private tabComponents: QueryList<SkyTabComponent>;
-
-  private lastActiveIndex: SkyTabIndex;
 
   private ngUnsubscribe = new Subject<void>();
 
@@ -214,18 +216,48 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     this.adapterService.checkTabButtonsOverflow();
   }
 
+  public onTabCloseClick(tabButton: TabButtonViewModel): void {
+    const tabComponent = this.tabs.find(tab => tab.tabIndex === tabButton.tabIndex);
+    tabComponent.close.emit();
+  }
+
   public onTabButtonClick(tabButton: TabButtonViewModel): void {
     this.active = tabButton.tabIndex;
   }
 
+  public onNewTabClick(): void {
+    this.newTab.emit();
+  }
+
+  public onOpenTabClick(): void {
+    this.openTab.emit();
+  }
+
   private listenActiveIndexChange(): void {
     this.tabsetService.activeTabIndex
-      .pipe(takeUntil(this.ngUnsubscribe))
+      .pipe(
+        distinctUntilChanged(),
+        takeUntil(this.ngUnsubscribe)
+      )
       .subscribe(activeIndex => this.updateComponent(activeIndex));
   }
 
   private listenTabComponentsChange(): void {
-    this.tabComponents.changes
+
+    // TODO: Resubsribe to this if structure chhanges.
+    // Listen for state changes.
+    race(this.tabs.map(tab => tab.stateChange))
+      .subscribe(async () => {
+        // TODO: put this in a reusable method.
+        const activeTabIndex = await this.tabsetService.activeTabIndex
+          .pipe(take(1))
+          .toPromise();
+
+        this.updateComponent(activeTabIndex, true);
+      });
+
+    // Listen for structural changes.
+    this.tabs.changes
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(async () => {
         const activeTabIndex = await this.tabsetService.activeTabIndex
@@ -264,7 +296,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
 
     const paramValue = this.permalinkService.getParam(this.permalinkId);
     if (paramValue) {
-      const activeIndex = this.tabComponents.find(c => c.permalinkValue === paramValue).tabIndex;
+      const activeIndex = this.tabs.find(tab => tab.permalinkValue === paramValue).tabIndex;
       if (activeIndex !== undefined) {
         this.active = activeIndex;
       }
@@ -272,19 +304,20 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
   }
 
   private createTabButtons(activeIndex: SkyTabIndex): TabButtonViewModel[] {
-    return this.tabComponents.map(c => ({
-      active: (c.tabIndex === activeIndex),
-      closeable: c.closeable,
-      ariaControls: c.tabPanelId,
-      disabled: c.disabled,
-      buttonHref: this.permalinkService.getParamHref(
+    return this.tabs.map(tab => ({
+      active: (tab.tabIndex === activeIndex),
+      closeable: tab.closeable,
+      ariaControls: tab.tabPanelId,
+      disabled: tab.disabled,
+      /*tslint:disable-next-line:no-null-keyword*/
+      buttonHref: (tab.disabled) ? null : this.permalinkService.getParamHref(
         this.permalinkId,
-        c.permalinkValue
+        tab.permalinkValue
       ),
-      buttonId: c.tabButtonId,
-      buttonTextCount: c.tabHeaderCount,
-      buttonText: c.tabHeading,
-      tabIndex: c.tabIndex
+      buttonId: tab.tabButtonId,
+      buttonTextCount: tab.tabHeaderCount,
+      buttonText: tab.tabHeading,
+      tabIndex: tab.tabIndex
     }));
   }
 
@@ -306,7 +339,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     regenerateTabButtons = false
   ): Promise<void> {
     return new Promise(resolve => {
-      if (!this.tabComponents) {
+      if (!this.tabs) {
         resolve();
         return;
       }
@@ -315,9 +348,9 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
       setTimeout(() => {
 
         // Activate/deactivate tab components.
-        this.tabComponents.forEach(c => (c.tabIndex === activeIndex)
-          ? c.activate()
-          : c.deactivate()
+        this.tabs.forEach(tab => (tab.tabIndex === activeIndex)
+          ? tab.activate()
+          : tab.deactivate()
         );
 
         // Update the tab button models.
@@ -334,15 +367,15 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
 
         // Set the query params based on active tab.
         if (this.permalinkId) {
-          const activeTabComponent = this.tabComponents.find(c => c.tabIndex === activeIndex);
+          const activeTabComponent = this.tabs.find(tab => tab.tabIndex === activeIndex);
           this.permalinkService.setParam(this.permalinkId, activeTabComponent.permalinkValue);
         }
 
         this.changeDetector.markForCheck();
 
         // Emit the new active index value to consumers.
-        if (this.lastActiveIndex !== activeIndex) {
-          this.lastActiveIndex = activeIndex;
+        if (this.lastActiveTabIndex !== activeIndex) {
+          this.lastActiveTabIndex = activeIndex;
           this.activeChange.emit(activeIndex);
         }
 
