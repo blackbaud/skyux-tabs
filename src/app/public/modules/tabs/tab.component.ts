@@ -144,7 +144,6 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
     const id = nextId++;
     this.tabPanelId = `sky-tab-${id}`;
     this.tabButtonId = `${this.tabPanelId}-nav-btn`;
-    this.tabIndex = this.tabsetService.registerTab();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -156,6 +155,10 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
   public ngOnDestroy(): void {
     this.tabsetService.unregisterTab(this.tabIndex);
     this._stateChange.complete();
+  }
+
+  public initTabIndex(): void {
+    this._tabIndex = this.tabsetService.registerTab(this._tabIndex);
   }
 
   public activate(): void {

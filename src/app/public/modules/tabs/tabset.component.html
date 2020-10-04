@@ -3,11 +3,13 @@
   role="tablist"
   [attr.aria-label]="ariaLabel"
   [attr.aria-labelledby]="ariaLabelledBy"
-  [ngClass]="'sky-tabset-mode-' + tabButtonsDisplayMode + ' sky-tabset-style-' + tabStyle"
+  [ngClass]="'sky-tabset-mode-' + tabDisplayMode + ' sky-tabset-style-' + tabStyle"
   (window:resize)="onWindowResize()"
 >
-  <div class="sky-tabset-buttons">
-    <span *ngIf="tabButtonsDisplayMode === 'dropdown'"
+  <div
+    class="sky-tabset-buttons-wrapper"
+  >
+    <span *ngIf="tabDisplayMode === 'dropdown'"
       class="sky-tabset-dropdown"
     >
       <sky-dropdown
@@ -34,7 +36,6 @@
         </sky-dropdown-menu>
       </sky-dropdown>
     </span>
-
     <span
       class="sky-tabset-tabs"
     >
@@ -44,9 +45,8 @@
         }"></ng-container>
       </ng-container>
     </span>
-
     <span
-      class="sky-tabset-extra-buttons"
+      class="sky-tabset-btns"
     >
       <button *ngIf="newTab.observers.length > 0"
         class="sky-btn sky-btn-icon sky-tabset-btn-new sky-margin-inline-compact"
@@ -61,7 +61,8 @@
         <sky-icon
           icon="plus-circle"
           size="lg"
-        ></sky-icon>
+        >
+        </sky-icon>
       </button>
       <button *ngIf="openTab.observers.length > 0"
         class="sky-btn sky-btn-icon sky-tabset-btn-open sky-margin-inline-compact"
@@ -76,11 +77,13 @@
         <sky-icon
           icon="folder-open-o"
           size="lg"
-        ></sky-icon>
+        >
+        </sky-icon>
       </button>
     </span>
   </div>
 </div>
+
 <ng-content
   select="sky-tab"
 ></ng-content>

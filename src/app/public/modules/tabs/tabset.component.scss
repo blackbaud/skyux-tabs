@@ -4,7 +4,7 @@
 
 .sky-tabset {
   &.sky-tabset-style-wizard {
-    .sky-tabset-buttons {
+    .sky-tabset-buttons-wrapper {
       border-bottom: none;
       padding-bottom: $sky-padding;
       padding-left: 0;
@@ -12,7 +12,7 @@
   }
 }
 
-.sky-tabset-buttons {
+.sky-tabset-buttons-wrapper {
   align-items: center;
   border-bottom: 2px solid $sky-background-color-primary-dark;
   display: flex;
@@ -23,7 +23,7 @@
   white-space: nowrap;
 }
 
-.sky-tabset-extra-buttons {
+.sky-tabset-btns {
   order: 1;
   padding-left: $sky-padding;
 }

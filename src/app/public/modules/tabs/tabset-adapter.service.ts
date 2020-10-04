@@ -8,6 +8,9 @@ import {
   Observable
 } from 'rxjs';
 
+/**
+ * @internal
+ */
 @Injectable()
 export class SkyTabsetAdapterService {
 
@@ -25,13 +28,13 @@ export class SkyTabsetAdapterService {
     this.tabset = tabset;
   }
 
-  public checkTabButtonsOverflow(): void {
+  public detectOverflow(): void {
     const nativeElement = this.tabset.nativeElement;
 
     const tabsetEl = nativeElement.querySelector('.sky-tabset');
-    const allButtonsEl = nativeElement.querySelector('.sky-tabset-buttons');
+    const allButtonsEl = nativeElement.querySelector('.sky-tabset-buttons-wrapper');
     const tabButtonsEl = nativeElement.querySelector('.sky-tabset-tabs');
-    const tabExtraButtonsEl = nativeElement.querySelector('.sky-tabset-extra-buttons');
+    const tabExtraButtonsEl = nativeElement.querySelector('.sky-tabset-btns');
 
     const tabsetRect = tabsetEl.getBoundingClientRect();
     const allButtonsRect = allButtonsEl.getBoundingClientRect();

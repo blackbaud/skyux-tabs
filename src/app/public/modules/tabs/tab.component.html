@@ -2,6 +2,7 @@
   class="sky-tab"
   role="tabpanel"
   [attr.aria-labelledby]="tabButtonId"
+  [hidden]="!showContent"
   [id]="tabPanelId"
 >
   <ng-container *ngIf="showContent">
