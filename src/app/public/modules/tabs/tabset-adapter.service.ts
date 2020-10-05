@@ -20,32 +20,54 @@ export class SkyTabsetAdapterService {
 
   private currentOverflow: boolean;
 
-  private tabset: ElementRef;
+  private tabsetRef: ElementRef;
+
+  private tabsOffsetLeft: number;
 
   private _overflowChange = new BehaviorSubject<boolean>(false);
 
-  public registerTabset(tabset: ElementRef): void {
-    this.tabset = tabset;
+  public registerTabset(tabsetRef: ElementRef): void {
+    this.tabsetRef = tabsetRef;
+    this.tabsOffsetLeft = this.getTabsOffsetLeft(tabsetRef.nativeElement);
   }
 
   public detectOverflow(): void {
-    const nativeElement = this.tabset.nativeElement;
+    if (!this.tabsetRef) {
+      return;
+    }
 
-    const tabsetEl = nativeElement.querySelector('.sky-tabset');
-    const allButtonsEl = nativeElement.querySelector('.sky-tabset-buttons-wrapper');
-    const tabButtonsEl = nativeElement.querySelector('.sky-tabset-tabs');
-    const tabExtraButtonsEl = nativeElement.querySelector('.sky-tabset-btns');
+    const nativeElement = this.tabsetRef.nativeElement;
 
-    const tabsetRect = tabsetEl.getBoundingClientRect();
-    const allButtonsRect = allButtonsEl.getBoundingClientRect();
+    const tabsetRect = nativeElement
+      .querySelector('.sky-tabset')
+      .getBoundingClientRect();
 
-    const offsetLeft = allButtonsRect.left - tabsetRect.left;
-    const tabButtonsWidth = tabButtonsEl.offsetWidth + tabExtraButtonsEl.offsetWidth + offsetLeft;
+    const tabButtonsRect = nativeElement
+      .querySelector('.sky-tabset-tabs')
+      .getBoundingClientRect();
+
+    const tabExtraButtonsRect = nativeElement
+      .querySelector('.sky-tabset-btns')
+      .getBoundingClientRect();
+
+    const tabButtonsWidth = tabButtonsRect.width + tabExtraButtonsRect.width + this.tabsOffsetLeft;
 
     const newOverflow = (tabButtonsWidth > tabsetRect.width);
     if (this.currentOverflow !== newOverflow) {
       this.currentOverflow = newOverflow;
       this._overflowChange.next(this.currentOverflow);
     }
+  }
+
+  /**
+   * Returns the number of pixels to the left of the first tab.
+   */
+  private getTabsOffsetLeft(tabsetEl: HTMLElement): number {
+    const tabsetRect = tabsetEl.getBoundingClientRect();
+
+    // The dropdown element is the first "tab" and always exists in the DOM, even when hidden.
+    const firstTabRect = tabsetEl.querySelector('.sky-tabset-dropdown').getBoundingClientRect();
+
+    return firstTabRect.left - tabsetRect.left;
   }
 }

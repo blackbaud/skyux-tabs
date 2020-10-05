@@ -3,16 +3,6 @@
 @import "~@skyux/theme/scss/_compat/mixins";
 
 .sky-tabset {
-  &.sky-tabset-style-wizard {
-    .sky-tabset-buttons-wrapper {
-      border-bottom: none;
-      padding-bottom: $sky-padding;
-      padding-left: 0;
-    }
-  }
-}
-
-.sky-tabset-buttons-wrapper {
   align-items: center;
   border-bottom: 2px solid $sky-background-color-primary-dark;
   display: flex;
@@ -21,6 +11,12 @@
   overflow: hidden;
   padding: 0 0 0 $sky-padding-plus-half;
   white-space: nowrap;
+
+  &.sky-tabset-style-wizard {
+    border-bottom: none;
+    padding-bottom: $sky-padding;
+    padding-left: 0;
+  }
 }
 
 .sky-tabset-btns {
@@ -82,7 +78,7 @@
 }
 
 @include sky-theme-modern {
-  .sky-tabset-buttons {
+  .sky-tabset {
     border-bottom: 1px solid $sky-theme-modern-border-color-neutral-medium;
     overflow: visible; /* for drop shadow visibility on focused tabs */
   }

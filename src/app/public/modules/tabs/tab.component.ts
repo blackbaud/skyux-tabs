@@ -43,8 +43,9 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
    */
   @Input()
   public set active(value: boolean) {
-    if (value === true) {
-      this.tabsetService.setActiveTabIndex(this.tabIndex);
+    if (value !== undefined) {
+      this._active = !!value;
+      this.notifyActiveIndex();
     }
   }
 
@@ -97,6 +98,7 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
     if (value !== undefined) {
       if (this._tabIndex !== undefined) {
         this.tabsetService.replaceTabIndex(this._tabIndex, value);
+        this.notifyActiveIndex();
       }
       this._tabIndex = value;
     }
@@ -130,6 +132,8 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
 
   public tabPanelId: string;
 
+  private _active: boolean = false;
+
   private _permalinkValue: string;
 
   private _stateChange = new Subject<void>();
@@ -153,12 +157,13 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    this.tabsetService.unregisterTab(this.tabIndex);
     this._stateChange.complete();
+    this.tabsetService.unregisterTab(this.tabIndex);
   }
 
   public initTabIndex(): void {
     this._tabIndex = this.tabsetService.registerTab(this._tabIndex);
+    this.notifyActiveIndex();
   }
 
   public activate(): void {
@@ -169,6 +174,12 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
   public deactivate(): void {
     this.showContent = false;
     this.changeDetector.markForCheck();
+  }
+
+  private notifyActiveIndex(): void {
+    if (this._active === true && this.tabIndex !== undefined) {
+      this.tabsetService.setActiveTabIndex(this.tabIndex);
+    }
   }
 
 }

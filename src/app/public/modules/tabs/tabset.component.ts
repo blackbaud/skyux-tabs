@@ -24,7 +24,6 @@ import {
 
 import {
   distinctUntilChanged,
-  take,
   takeUntil
 } from 'rxjs/operators';
 
@@ -88,7 +87,22 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
   @Input()
   public set active(value: SkyTabIndex) {
     if (value !== undefined) {
-      this.tabsetService.setActiveTabIndex(value);
+      if (this.tabsetService.isValidTabIndex(value)) {
+        this.tabsetService.setActiveTabIndex(value);
+        return;
+      }
+
+      // When a new tab is generated after initialization, wait for it to render
+      // before checking if the new active tab index is valid.
+      setTimeout(() => {
+        if (this.tabsetService.isValidTabIndex(value)) {
+          this.tabsetService.setActiveTabIndex(value);
+          return;
+        }
+
+        // Activate the first tab if the new tab index is invalid.
+        this.tabsetService.setActiveTabIndex(this.tabsetService.firstTabIndex);
+      });
     }
   }
 
@@ -223,7 +237,10 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
   }
 
   public onTabCloseClick(tabButton: TabButtonViewModel): void {
-    const tabComponent = this.tabs.find(tab => tab.tabIndex === tabButton.tabIndex);
+    const tabComponent = this.tabs.find(tab => {
+      return this.tabsetService.tabIndexesEqual(tab.tabIndex, tabButton.tabIndex);
+    });
+
     tabComponent.close.emit();
   }
 
@@ -254,8 +271,6 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     let unsubscribe = new Subject<void>();
 
     const listenTabComponentsStateChange = () => {
-      unsubscribeStateChange();
-
       race(
         this.tabs.map(tab => tab.stateChange)
       )
@@ -264,9 +279,8 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
             race(unsubscribe, this.ngUnsubscribe)
           )
         )
-        .subscribe(async () => {
-          const activeTabIndex = await this.getActiveTabIndex();
-          this.updateComponent(activeTabIndex, true);
+        .subscribe(() => {
+          this.updateComponent(this.tabsetService.currentActiveTabIndex, true);
         });
     };
 
@@ -279,9 +293,11 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     // Listen for structural changes.
     this.tabs.changes
       .pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(async () => {
-        const activeTabIndex = await this.getActiveTabIndex();
-        this.updateComponent(activeTabIndex, true);
+      .subscribe(() => {
+        unsubscribeStateChange();
+        this.tabsetService.unregisterAll();
+        this.tabs.forEach(tab => tab.initTabIndex());
+        this.updateComponent(this.tabsetService.currentActiveTabIndex, true);
         listenTabComponentsStateChange();
       });
 
@@ -290,7 +306,6 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
 
   private listenTabButtonsOverflowChange(): void {
     this.adapterService.registerTabset(this.elementRef);
-    this.adapterService.detectOverflow();
     this.adapterService.overflowChange
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(isOverflowing => {
@@ -322,15 +337,9 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  private getActiveTabIndex(): Promise<SkyTabIndex> {
-    return this.tabsetService.activeTabIndex
-      .pipe(take(1))
-      .toPromise();
-  }
-
   private createTabButtons(activeIndex: SkyTabIndex): TabButtonViewModel[] {
     return this.tabs.map(tab => ({
-      active: (tab.tabIndex === activeIndex),
+      active: this.tabsetService.tabIndexesEqual(tab.tabIndex, activeIndex),
       closeable: tab.closeable,
       ariaControls: tab.tabPanelId,
       disabled: tab.disabled,
@@ -347,7 +356,9 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
   }
 
   private updateTabButtons(activeIndex: SkyTabIndex): void {
-    this.tabButtons.forEach(b => b.active = (b.tabIndex === activeIndex));
+    this.tabButtons.forEach(button => {
+      button.active = this.tabsetService.tabIndexesEqual(button.tabIndex, activeIndex);
+    });
   }
 
   /**
@@ -368,10 +379,11 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     }
 
     // Activate/deactivate tab components.
-    this.tabs.forEach(tab => (tab.tabIndex === activeIndex)
-      ? tab.activate()
-      : tab.deactivate()
-    );
+    this.tabs.forEach(tab => {
+      this.tabsetService.tabIndexesEqual(tab.tabIndex, activeIndex)
+        ? tab.activate()
+        : tab.deactivate();
+    });
 
     // Update the tab button models.
     if (regenerateTabButtons || !this.tabButtons?.length) {
@@ -382,12 +394,14 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
 
     // Update the dropdown trigger button text.
     this.dropdownTriggerButtonText = this.tabButtons?.find(b => {
-      return b.tabIndex === activeIndex;
+      return this.tabsetService.tabIndexesEqual(b.tabIndex, activeIndex);
     })?.buttonText;
 
     // Set the query params based on active tab.
     if (this.permalinkId) {
-      const activeTabComponent = this.tabs.find(tab => tab.tabIndex === activeIndex);
+      const activeTabComponent = this.tabs.find(tab => {
+        return this.tabsetService.tabIndexesEqual(tab.tabIndex, activeIndex);
+      });
       this.permalinkService.setParam(this.permalinkId, activeTabComponent.permalinkValue);
     }
 
