@@ -20,6 +20,9 @@ interface PermalinkParams {
   [_: string]: string;
 }
 
+/**
+ * @internal
+ */
 @Injectable()
 export class SkyTabsetPermalinkService {
 
@@ -37,10 +40,16 @@ export class SkyTabsetPermalinkService {
     this.location.subscribe(() => this._popStateChange.next());
   }
 
+  /**
+   * Returns the value of a URL query param.
+   */
   public getParam(name: string): string {
     return this.getParams()[name];
   }
 
+  /**
+   * Sets the value of a URL query param.
+   */
   public setParam(name: string, value: string | null): void {
     const params = this.getParams();
 
@@ -66,11 +75,18 @@ export class SkyTabsetPermalinkService {
     this.location.go(url);
   }
 
+  /**
+   * Removes the provided query param from the URL.
+   */
   public clearParam(name: string): void {
     /*tslint:disable-next-line:no-null-keyword*/
     this.setParam(name, null);
   }
 
+  /**
+   * Returns a relative URL that includes the provided query parameter. The value is inteded to be
+   * used by an HTML anchor element.
+   */
   public getParamHref(name: string, value: string): string | null {
     if (!name) {
       /*tslint:disable-next-line:no-null-keyword*/
@@ -86,6 +102,9 @@ export class SkyTabsetPermalinkService {
     return this.location.prepareExternalUrl(`${baseUrl}?${paramString}`);
   }
 
+  /**
+   * Converts the provided string into a value that can be safely used in a URL.
+   */
   public urlify(value: string): string {
     if (!value) {
       return '';
@@ -105,6 +124,9 @@ export class SkyTabsetPermalinkService {
     return sanitized;
   }
 
+  /**
+   * Returns all query params that exist in the current URL.
+   */
   private getParams(): PermalinkParams {
     const params: PermalinkParams = {};
 

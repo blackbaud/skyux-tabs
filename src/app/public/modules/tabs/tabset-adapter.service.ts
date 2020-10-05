@@ -31,6 +31,9 @@ export class SkyTabsetAdapterService {
     this.tabsOffsetLeft = this.getTabsOffsetLeft(tabsetRef.nativeElement);
   }
 
+  /**
+   * Detects if the tab buttons are wider than the tabset container.
+   */
   public detectOverflow(): void {
     const nativeElement = this.tabsetRef.nativeElement;
 

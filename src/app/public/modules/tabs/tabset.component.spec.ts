@@ -178,50 +178,6 @@ describe('Tabset component', () => {
     }
   }
 
-  // it('should initialize tabs in proper order', fakeAsync(() => {
-  //   let fixture = TestBed.createComponent(TabsetTestComponent);
-  //   fixture.detectChanges();
-  //   tick();
-  //   let tabsetService: SkyTabsetService = (fixture.componentInstance.tabsetComponent as any).tabsetService;
-
-  //   fixture.componentInstance.tabsetComponent.tabs.forEach((item, index) => {
-  //     expect(item).toBe(tabsetService.tabs.getValue()[index]);
-  //   });
-  // }));
-
-  // it('should initialize tabs that are added to the tabset after init', async(() => {
-  //   let fixture = TestBed.createComponent(TabsetTestComponent);
-  //   fixture.componentInstance.tab3Content = 'test content';
-  //   fixture.componentInstance.tab3Available = false;
-  //   fixture.detectChanges();
-  //   fixture.whenStable().then(() => {
-  //     fixture.detectChanges();
-
-  //     let tabsetService: SkyTabsetService = (fixture.componentInstance.tabsetComponent as any).tabsetService;
-  //     expect(tabsetService.tabs.getValue().length).toBe(2);
-  //     fixture.detectChanges();
-  //     fixture.whenStable().then(() => {
-  //       fixture.componentInstance.tab3Available = true;
-  //       fixture.detectChanges();
-  //       fixture.whenStable().then(() => {
-  //         fixture.nativeElement.querySelectorAll('.sky-btn-tab')[2].click();
-
-  //         fixture.detectChanges();
-  //         fixture.whenStable().then(() => {
-  //           fixture.detectChanges();
-
-  //           validateTabSelected(fixture.nativeElement, 2, fixture.componentInstance.tab3Content);
-
-  //           expect(tabsetService.tabs.getValue().length).toBe(3);
-  //           fixture.componentInstance.tabsetComponent.tabs.forEach((item, index) => {
-  //             expect(item).toBe(tabsetService.tabs.value[index]);
-  //           });
-  //         });
-  //       });
-  //     });
-  //   });
-  // }));
-
   it('should not attempt to remove the query param if permalinkId is not set', () => {
     const location = TestBed.inject(Location);
 
@@ -819,7 +775,6 @@ describe('Tabset component', () => {
         const closeSpy = spyOn(fixture.componentInstance, 'closeTab2').and.callThrough();
 
         fixture.componentInstance.tabsetComponent.tabDisplayMode = 'dropdown';
-        mockAdapterService.fakeOverflowChange(true);
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
@@ -973,7 +928,6 @@ describe('Tabset component', () => {
       tick();
       fixture.detectChanges();
       tick();
-
       validateTabSelected(el, 1, 'tab 3 content');
 
       el.querySelectorAll('.sky-btn-tab')[0].click();
@@ -1206,31 +1160,6 @@ describe('Tabset component', () => {
       expect(butEl.getAttribute('tabindex')).toBe('-1');
       expect(butEl.getAttribute('aria-disabled')).toBe('true');
     }));
-
-    // it('should emit a click event on enter press', fakeAsync(() => {
-    //   fixture.detectChanges();
-    //   tick();
-    //   fixture.detectChanges();
-    //   tick();
-    //   let el = debugElement.queryAll(By.css('.sky-btn-tab'))[1];
-
-    //   el.triggerEventHandler('keydown', {
-    //     keyCode: 15,
-    //     preventDefault() {}
-    //   });
-    //   fixture.detectChanges();
-    //   tick();
-    //   validateTabSelected(fixture.nativeElement, 0);
-
-    //   el.triggerEventHandler('keydown', {
-    //     keyCode: 13,
-    //     preventDefault() {}
-    //   });
-    //   fixture.detectChanges();
-    //   tick();
-    //   validateTabSelected(fixture.nativeElement, 1);
-    // }
-    // ));
   });
 
   describe('Permalinks', () => {
@@ -1244,9 +1173,9 @@ describe('Tabset component', () => {
     });
 
     beforeEach(inject(
-      [Router, ActivatedRoute],
-      (_router: Router) => {
-        location = TestBed.inject(Location);
+      [Location, Router, ActivatedRoute],
+      (_location: Location, _router: Router) => {
+        location = _location;
         router = _router;
 
         createUrlTreeSpy = spyOn(router as any, 'createUrlTree').and

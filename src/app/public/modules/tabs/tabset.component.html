@@ -6,9 +6,7 @@
   [ngClass]="'sky-tabset-mode-' + tabDisplayMode + ' sky-tabset-style-' + tabStyle"
   (window:resize)="onWindowResize()"
 >
-  <span
-    class="sky-tabset-dropdown"
-  >
+  <span class="sky-tabset-dropdown">
     <sky-dropdown *ngIf="tabDisplayMode === 'dropdown'"
       buttonType="tab"
     >
@@ -79,10 +77,7 @@
     </button>
   </span>
 </div>
-
-<ng-content
-  select="sky-tab"
-></ng-content>
+<ng-content></ng-content>
 
 <ng-template
   let-tabButton

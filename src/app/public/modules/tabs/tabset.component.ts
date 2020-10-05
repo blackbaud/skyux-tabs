@@ -128,10 +128,12 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
    */
   @Input()
   public set permalinkId(value: string) {
-    if (value) {
-      const sanitized = this.permalinkService.urlify(value);
-      this._permalinkId = `${sanitized}-active-tab`;
+    if (!value) {
+      return;
     }
+
+    const sanitized = this.permalinkService.urlify(value);
+    this._permalinkId = `${sanitized}-active-tab`;
   }
 
   public get permalinkId(): string {
@@ -139,9 +141,8 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
   }
 
   /**
-   * @deprecated
    * Specifies the behavior for a series of tabs.
-   * The property was designed to create wizards by setting tabStyle="wizard" on tabsets in modals,
+   * @deprecated The property was designed to create wizards by setting tabStyle="wizard" on tabsets in modals,
    * but this wizard implementation was replaced by the
    * [progress indicator component](https://developer.blackbaud.com/skyux/components/progress-indicator).
    * @default 'tabs'
@@ -183,9 +184,6 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
   @Output()
   public openTab = new EventEmitter<void>();
 
-  @ContentChildren(SkyTabComponent)
-  public tabs: QueryList<SkyTabComponent>;
-
   public set tabDisplayMode(value: SkyTabsetButtonsDisplayMode) {
     this._tabDisplayMode = value;
     this.changeDetector.markForCheck();
@@ -195,9 +193,15 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     return this._tabDisplayMode || 'tabs';
   }
 
+  @ContentChildren(SkyTabComponent)
+  public tabs: QueryList<SkyTabComponent>;
+
   public dropdownTriggerButtonText: string;
 
-  // TODO: figure out how to remove this in favor of the service's verstion.
+  /**
+   * This property is used by the deprecated tabset-nav-button component.
+   * @internal
+   */
   public lastActiveTabIndex: SkyTabIndex;
 
   public tabButtons: TabButtonViewModel[] = [];
@@ -273,6 +277,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
   private listenTabComponentsChange(): void {
     let unsubscribe = new Subject<void>();
 
+    // Listen for tab input property changes.
     const listenTabComponentsStateChange = () => {
       race(this.tabs.map(tab => tab.stateChange))
         .pipe(takeUntil(race(unsubscribe, this.ngUnsubscribe)))
@@ -287,7 +292,9 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
       unsubscribe = new Subject<void>();
     };
 
-    const initTabs = () => {
+    const resetTabComponentsState = () => {
+      unsubscribeStateChange();
+      this.tabsetService.unregisterAll();
       this.tabs.forEach(tab => tab.initTabIndex());
       listenTabComponentsStateChange();
     };
@@ -296,13 +303,11 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     this.tabs.changes
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
-        unsubscribeStateChange();
-        this.tabsetService.unregisterAll();
-        initTabs();
+        resetTabComponentsState();
         this.updateTabsetComponent(this.tabsetService.currentActiveTabIndex, true);
       });
 
-    initTabs();
+    resetTabComponentsState();
   }
 
   private listenTabButtonsOverflowChange(): void {

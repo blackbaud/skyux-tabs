@@ -87,7 +87,8 @@ export class SkyTabsetNavButtonComponent implements AfterViewInit {
     let selectedTab: SkyTabComponent;
 
     if (this.tabset && this.tabset.tabs) {
-      selectedTab = this.tabset.tabs.find((tab) => tab.tabIndex === this.tabset.lastActiveTabIndex);
+      selectedTab = this.tabset.tabs
+        .find((tab) => tab.tabIndex === this.tabset.lastActiveTabIndex);
     }
 
     return selectedTab;
@@ -119,10 +120,7 @@ export class SkyTabsetNavButtonComponent implements AfterViewInit {
   private previousButtonText: string;
   private nextButtonText: string;
 
-  constructor(
-    private resourceService: SkyLibResourcesService,
-    private changeDetector: ChangeDetectorRef
-  ) { }
+  constructor(private resourceService: SkyLibResourcesService, private changeDetector: ChangeDetectorRef) { }
 
   public ngAfterViewInit() {
     forkJoin([

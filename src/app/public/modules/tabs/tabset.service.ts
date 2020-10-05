@@ -11,6 +11,9 @@ import {
   SkyTabIndex
 } from './tab-index';
 
+/**
+ * @internal
+ */
 @Injectable()
 export class SkyTabsetService {
 
@@ -28,11 +31,17 @@ export class SkyTabsetService {
 
   private tabCounter = 0;
 
+  /**
+   * Sets the active tab by its unique `tabIndex` property.
+   */
   public setActiveTabIndex(value: SkyTabIndex): void {
     this.currentActiveTabIndex = value;
     this._activeTabIndex.next(value);
   }
 
+  /**
+   * Registers a tab component.
+   */
   public registerTab(tabIndex?: SkyTabIndex): SkyTabIndex {
     const nextIndex = this.tabCounter;
 
@@ -47,6 +56,9 @@ export class SkyTabsetService {
     return newTabIndex;
   }
 
+  /**
+   * Unregisters a tab component.
+   */
   public unregisterTab(tabIndex: SkyTabIndex): void {
     this.tabCounter--;
 
@@ -60,11 +72,17 @@ export class SkyTabsetService {
     this.tabs.splice(index, 1);
   }
 
+  /**
+   * Unregisters all tab components at once.
+   */
   public unregisterAll(): void {
     this.tabCounter = 0;
     this.tabs = [];
   }
 
+  /**
+   * Compares two tab indexes and returns `true` if they are equal.
+   */
   public tabIndexesEqual(tabIndex1: SkyTabIndex, tabIndex2: SkyTabIndex): boolean {
     return (
       tabIndex1 === tabIndex2 ||
@@ -72,11 +90,16 @@ export class SkyTabsetService {
     );
   }
 
+  /**
+   * Verifies if a provided tab index is registered.
+   */
   public isValidTabIndex(tabIndex: SkyTabIndex): boolean {
-    const isValid = this.tabs.some(tab => this.tabIndexesEqual(tab.tabIndex, tabIndex));
-    return isValid;
+    return this.tabs.some(tab => this.tabIndexesEqual(tab.tabIndex, tabIndex));
   }
 
+  /**
+   * Activates the first registered tab.
+   */
   public activateFirstTab(): void {
     const firstTabIndex = this.tabs[0] && this.tabs[0].tabIndex;
     if (firstTabIndex !== undefined) {
@@ -84,10 +107,9 @@ export class SkyTabsetService {
     }
   }
 
-  private isTabIndexActive(tabIndex: SkyTabIndex): boolean {
-    return this.tabIndexesEqual(tabIndex, this.currentActiveTabIndex);
-  }
-
+  /**
+   * Activates the next registered tab, or the previous one based on a provided array index.
+   */
   private activateNearestTab(arrayIndex: number): void {
     const newActiveTab = this.tabs[arrayIndex + 1] || this.tabs[arrayIndex - 1];
     if (newActiveTab) {
@@ -98,4 +120,7 @@ export class SkyTabsetService {
     }
   }
 
+  private isTabIndexActive(tabIndex: SkyTabIndex): boolean {
+    return this.tabIndexesEqual(tabIndex, this.currentActiveTabIndex);
+  }
 }
