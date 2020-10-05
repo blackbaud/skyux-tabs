@@ -3,8 +3,7 @@ import {
 } from '@angular/common';
 
 import {
-  Injectable,
-  Optional
+  Injectable
 } from '@angular/core';
 
 import {
@@ -33,7 +32,7 @@ export class SkyTabsetPermalinkService {
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    @Optional() private router: Router
+    private router: Router
   ) {
     this.location.subscribe(() => this._popStateChange.next());
   }
@@ -43,10 +42,6 @@ export class SkyTabsetPermalinkService {
   }
 
   public setParam(name: string, value: string | null): void {
-    if (!this.router) {
-      return;
-    }
-
     const params = this.getParams();
 
     if (value === null) {

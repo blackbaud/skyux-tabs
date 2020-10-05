@@ -32,10 +32,6 @@ export class SkyTabsetAdapterService {
   }
 
   public detectOverflow(): void {
-    if (!this.tabsetRef) {
-      return;
-    }
-
     const nativeElement = this.tabsetRef.nativeElement;
 
     const tabsetRect = nativeElement

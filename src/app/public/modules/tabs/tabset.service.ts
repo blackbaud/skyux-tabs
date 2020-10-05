@@ -18,10 +18,6 @@ export class SkyTabsetService {
     return this._activeTabIndex.asObservable();
   }
 
-  public get firstTabIndex(): SkyTabIndex {
-    return this.tabs[0].tabIndex;
-  }
-
   public currentActiveTabIndex: SkyTabIndex;
 
   private _activeTabIndex = new BehaviorSubject<SkyTabIndex>(0);
@@ -51,18 +47,13 @@ export class SkyTabsetService {
     return newTabIndex;
   }
 
-  public replaceTabIndex(originalTabIndex: SkyTabIndex, newTabIndex: SkyTabIndex): void {
-    const tab = this.tabs.find(t => this.tabIndexesEqual(t.tabIndex, originalTabIndex));
-    tab.tabIndex = newTabIndex;
-  }
-
   public unregisterTab(tabIndex: SkyTabIndex): void {
     this.tabCounter--;
 
     const index = this.tabs.findIndex(tab => this.tabIndexesEqual(tab.tabIndex, tabIndex));
 
     // If the currently active tab is getting unregistered, activate the next one.
-    if (this.tabIndexesEqual(this.currentActiveTabIndex, this.tabs[index].tabIndex)) {
+    if (this.isTabIndexActive(this.tabs[index].tabIndex)) {
       this.activateNearestTab(index);
     }
 
@@ -84,6 +75,17 @@ export class SkyTabsetService {
   public isValidTabIndex(tabIndex: SkyTabIndex): boolean {
     const isValid = this.tabs.some(tab => this.tabIndexesEqual(tab.tabIndex, tabIndex));
     return isValid;
+  }
+
+  public activateFirstTab(): void {
+    const firstTabIndex = this.tabs[0] && this.tabs[0].tabIndex;
+    if (firstTabIndex !== undefined) {
+      this.setActiveTabIndex(firstTabIndex);
+    }
+  }
+
+  private isTabIndexActive(tabIndex: SkyTabIndex): boolean {
+    return this.tabIndexesEqual(tabIndex, this.currentActiveTabIndex);
   }
 
   private activateNearestTab(arrayIndex: number): void {
