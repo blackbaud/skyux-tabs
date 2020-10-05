@@ -1,80 +1,47 @@
 import {
+  ChangeDetectionStrategy,
   Component
 } from '@angular/core';
-import { SkyTabIndex } from '../../public/public_api';
+
+import {
+  SkyThemeService,
+  SkyThemeSettings
+} from '@skyux/theme';
 
 @Component({
   selector: 'tabs-visual',
-  templateUrl: './tabs-visual.component.html'
+  templateUrl: './tabs-visual.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabsVisualComponent {
 
-  public activeIndex: SkyTabIndex;
+  public requiredValue1: string;
 
-  public tabs: {
-    active: boolean;
-    content: string;
-    heading: string;
-  }[] = [
-    {
-      active: false,
-      heading: 'Tab 1',
-      content: 'Content for Tab 1'
-    },
-    {
-      active: false,
-      heading: 'Tab 2',
-      content: 'Content for Tab 2'
-    },
-    {
-      active: true,
-      heading: 'Tab 3',
-      content: 'Content for Tab 3'
-    }
-  ];
+  public requiredValue2: boolean;
 
-  constructor() {
-    setTimeout(() => {
-      this.activeIndex = 1;
+  public showWizard = false;
 
-      setTimeout(() => {
-        this.tabs.push({
-          active: false,
-          heading: 'Tab 4',
-          content: 'Content for Tab 4'
-        });
+  constructor(private themeSvc: SkyThemeService) { }
 
-        setTimeout(() => {
-          this.tabs = [{
-            active: false,
-            heading: 'Tab 1',
-            content: 'Content for Tab 1'
-          },
-          {
-            active: false,
-            heading: 'Tab 2',
-            content: 'Content for Tab 2'
-          },
-          {
-            active: false,
-            heading: 'Tab 3',
-            content: 'Content for Tab 3'
-          }];
+  public newTabClick() { }
 
-          setTimeout(() => {
-            this.tabs.push({
-              active: true,
-              heading: 'Tab 4',
-              content: 'Content for Tab 4'
-            });
-          }, 500);
-        }, 500);
-      }, 500);
-    }, 500);
+  public openTabClick() { }
+
+  public closeTab() { }
+
+  public get step2Disabled(): boolean {
+    return !this.requiredValue1;
   }
 
-  public onActiveChange(event: SkyTabIndex): void {
-    console.log('Tab index change:', event);
+  public get step3Disabled(): boolean {
+    return this.step2Disabled || !this.requiredValue2;
   }
 
+  public validateStep1() {
+    return true;
+  }
+
+  public themeSettingsChange(themeSettings: SkyThemeSettings) {
+    this.themeSvc.setTheme(themeSettings);
+  }
 }
