@@ -17,6 +17,10 @@ import {
 } from 'rxjs';
 
 import {
+  SkyTabActiveChange
+} from './tab-active-change';
+
+import {
   SkyTabIndex
 } from './tab-index';
 
@@ -60,7 +64,7 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
     return this._active || false;
   }
 
-  public get activeChange(): Observable<{ active: boolean; tabIndex?: SkyTabIndex; }> {
+  public get activeChange(): Observable<SkyTabActiveChange> {
     return this._activeChange.asObservable();
   }
 
@@ -135,7 +139,7 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
 
   private _active: boolean;
 
-  private _activeChange = new BehaviorSubject<{ active: boolean; tabIndex?: SkyTabIndex; }>({ active: false });
+  private _activeChange = new BehaviorSubject<SkyTabActiveChange>({ active: false });
 
   private _permalinkValue: string;
 
