@@ -1011,8 +1011,7 @@ describe('Tabset component', () => {
       fixture.detectChanges();
       tick();
       validateTabSelected(fixture.nativeElement, 1);
-      expect(activeSpy).toHaveBeenCalledWith('1');
-      expect(activeSpy).toHaveBeenCalledTimes(1);
+      expect(activeSpy).toHaveBeenCalledTimes(0);
 
       component.activeTab = '0';
       fixture.detectChanges();
@@ -1022,7 +1021,7 @@ describe('Tabset component', () => {
       validateTabSelected(fixture.nativeElement, 0);
 
       expect(activeSpy).toHaveBeenCalledWith('0');
-      expect(activeSpy).toHaveBeenCalledTimes(2);
+      expect(activeSpy).toHaveBeenCalledTimes(1);
     }));
 
     it('should be accessible', async(async () => {
