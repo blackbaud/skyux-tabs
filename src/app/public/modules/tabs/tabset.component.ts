@@ -315,7 +315,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     const resetTabComponentsState = () => {
       unsubscribeStateChange();
       this.tabsetService.unregisterAll();
-      this.tabs.forEach(tab => tab.initTabIndex());
+      this.tabs.forEach(tab => tab.init());
       const activeTab = this.tabs.toArray().reverse().find(tab => tab.active);
       this.tabsetService.setActiveTabIndex(activeTab?.tabIndex);
       listenTabComponentsStateChange();

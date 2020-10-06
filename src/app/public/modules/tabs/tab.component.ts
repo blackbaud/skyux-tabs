@@ -129,8 +129,6 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
     return this._stateChange.asObservable();
   }
 
-  public showContent: boolean = false;
-
   public tabButtonId: string;
 
   public tabPanelId: string;
@@ -167,18 +165,16 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
     this.tabsetService.unregisterTab(this.tabIndex);
   }
 
-  public initTabIndex(): void {
+  public init(): void {
     this.tabIndex = this.tabsetService.registerTab(this.tabIndex);
   }
 
   public activate(): void {
-    this.showContent = true;
     this._active = true;
     this.changeDetector.markForCheck();
   }
 
   public deactivate(): void {
-    this.showContent = false;
     this._active = false;
     this.changeDetector.markForCheck();
   }

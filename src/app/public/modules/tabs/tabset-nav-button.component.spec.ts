@@ -1,4 +1,5 @@
 import {
+  async,
   fakeAsync,
   TestBed,
   tick
@@ -68,11 +69,13 @@ describe('Tabset navigation button', () => {
   });
 
   describe('wizard style', () => {
-    it('should be accessible', async () => {
+    it('should be accessible', async(async () => {
       let fixture = TestBed.createComponent(SkyWizardTestFormComponent);
       fixture.detectChanges();
+      await fixture.whenStable();
+      fixture.detectChanges();
       await expectAsync(fixture.nativeElement).toBeAccessible();
-    });
+    }));
 
     describe('previous button', () => {
       it('should navigate to the previous tab when clicked', fakeAsync(() => {

@@ -596,6 +596,8 @@ describe('Tabset component', () => {
   it('should be accessible', async(async () => {
     const fixture = TestBed.createComponent(TabsetTestComponent);
     fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
     await expectAsync(fixture.nativeElement).toBeAccessible();
   }));
 
@@ -805,6 +807,8 @@ describe('Tabset component', () => {
     ));
 
     it('should be accessible', async(async () => {
+      fixture.detectChanges();
+      await fixture.whenStable();
       fixture.detectChanges();
       await expectAsync(fixture.nativeElement).toBeAccessible();
     }));
@@ -1023,6 +1027,8 @@ describe('Tabset component', () => {
 
     it('should be accessible', async(async () => {
       let fixture = TestBed.createComponent(TabsetActiveTestComponent);
+      fixture.detectChanges();
+      await fixture.whenStable();
       fixture.detectChanges();
       await expectAsync(fixture.nativeElement).toBeAccessible();
     }));
