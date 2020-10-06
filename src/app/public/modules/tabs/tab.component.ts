@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 
 import {
+  BehaviorSubject,
   Observable,
   Subject
 } from 'rxjs';
@@ -43,10 +44,24 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
    */
   @Input()
   public set active(value: boolean) {
-    if (value !== undefined) {
-      this._active = !!value;
-      this.notifyActiveIndex();
+    if (
+      value !== undefined &&
+      value !== this._active
+    ) {
+      this._active = value;
+      this._activeChange.next({
+        active: value,
+        tabIndex: this.tabIndex
+      });
     }
+  }
+
+  public get active(): boolean {
+    return this._active || false;
+  }
+
+  public get activeChange(): Observable<{ active: boolean; tabIndex?: SkyTabIndex; }> {
+    return this._activeChange.asObservable();
   }
 
   /**
@@ -120,7 +135,9 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
 
   public tabPanelId: string;
 
-  private _active: boolean = false;
+  private _active: boolean;
+
+  private _activeChange = new BehaviorSubject<{ active: boolean; tabIndex?: SkyTabIndex; }>({ active: false });
 
   private _permalinkValue: string;
 
@@ -152,23 +169,18 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
 
   public initTabIndex(): void {
     this.tabIndex = this.tabsetService.registerTab(this.tabIndex);
-    this.notifyActiveIndex();
   }
 
   public activate(): void {
     this.showContent = true;
+    this._active = true;
     this.changeDetector.markForCheck();
   }
 
   public deactivate(): void {
     this.showContent = false;
+    this._active = false;
     this.changeDetector.markForCheck();
-  }
-
-  private notifyActiveIndex(): void {
-    if (this._active === true && this.tabIndex !== undefined) {
-      this.tabsetService.setActiveTabIndex(this.tabIndex);
-    }
   }
 
 }

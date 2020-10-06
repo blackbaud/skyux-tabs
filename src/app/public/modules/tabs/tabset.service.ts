@@ -35,8 +35,10 @@ export class SkyTabsetService {
    * Sets the active tab by its unique `tabIndex` property.
    */
   public setActiveTabIndex(value: SkyTabIndex): void {
-    this.currentActiveTabIndex = value;
-    this._activeTabIndex.next(value);
+    if (value !== undefined) {
+      this.currentActiveTabIndex = value;
+      this._activeTabIndex.next(value);
+    }
   }
 
   /**
@@ -100,10 +102,11 @@ export class SkyTabsetService {
   /**
    * Activates the first registered tab.
    */
-  public activateFirstTab(): void {
+  public activateFirstTab(): SkyTabIndex | undefined {
     const firstTabIndex = this.tabs[0] && this.tabs[0].tabIndex;
     if (firstTabIndex !== undefined) {
       this.setActiveTabIndex(firstTabIndex);
+      return firstTabIndex;
     }
   }
 
