@@ -128,7 +128,7 @@ describe('Tabset component', () => {
     });
   });
 
-  function validateTabSelected(el: Element, arrayIndex: number, content?: string) {
+  function validateTabSelected(el: Element, tabIndex: number, content?: string) {
     let selectedCls: string;
     let buttonEls: NodeListOf<Element>;
     let inDropDownMode = el.querySelector('.sky-tabset-mode-dropdown');
@@ -149,7 +149,7 @@ describe('Tabset component', () => {
       let expectedHasClass: boolean;
       let expectedDisplay: string;
 
-      if (i === arrayIndex) {
+      if (i === tabIndex) {
         expectedHasClass = true;
         expectedDisplay = 'block';
       } else {
@@ -159,11 +159,11 @@ describe('Tabset component', () => {
 
       expect(buttonEl.classList.contains(selectedCls)).toBe(
         expectedHasClass,
-        `The tab button at array index ${arrayIndex} was expected to have the CSS class ${selectedCls}.`
+        `The tab button at array index ${tabIndex} was expected to have the CSS class ${selectedCls}.`
       );
       expect(panelDisplay).toBe(
         expectedDisplay,
-        `The tab panel at array index ${arrayIndex} was expected to have the CSS display of ${expectedDisplay}.`
+        `The tab panel at array index ${tabIndex} was expected to have the CSS display of ${expectedDisplay}.`
       );
 
       if (!inDropDownMode) {
@@ -174,7 +174,7 @@ describe('Tabset component', () => {
       }
     }
     if (content) {
-      expect(contentEls[arrayIndex]).toHaveText(content);
+      expect(contentEls[tabIndex]).toHaveText(content);
     }
   }
 
@@ -1114,11 +1114,6 @@ describe('Tabset component', () => {
       fixture.detectChanges();
       tick();
       fixture.detectChanges();
-      tick();
-      fixture.detectChanges();
-      tick();
-      fixture.detectChanges();
-      tick();
 
       /// Switch to mobile display
       fixture.componentInstance.tabsetComponent.tabDisplayMode = 'dropdown';

@@ -87,8 +87,7 @@ export class SkyTabsetNavButtonComponent implements AfterViewInit {
     let selectedTab: SkyTabComponent;
 
     if (this.tabset && this.tabset.tabs) {
-      selectedTab = this.tabset.tabs
-        .find((tab) => tab.tabIndex === this.tabset.lastActiveTabIndex);
+      selectedTab = this.tabset.tabs.find((tab) => tab.tabIndex === this.tabset.lastActiveTabIndex);
     }
 
     return selectedTab;
