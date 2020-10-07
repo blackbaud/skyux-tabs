@@ -1160,6 +1160,36 @@ describe('Tabset component', () => {
       expect(butEl.getAttribute('tabindex')).toBe('-1');
       expect(butEl.getAttribute('aria-disabled')).toBe('true');
     }));
+
+    it('should emit a click event on enter press', fakeAsync(() => {
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+      tick();
+      let el = debugElement.queryAll(By.css('.sky-btn-tab'))[1];
+
+      SkyAppTestUtility.fireDomEvent(el.nativeElement, 'keydown', {
+        keyboardEventInit: {
+          key: 'enter'
+        }
+      });
+      fixture.detectChanges();
+      tick();
+
+      validateTabSelected(fixture.nativeElement, 1);
+
+      el = debugElement.queryAll(By.css('.sky-btn-tab'))[2];
+      SkyAppTestUtility.fireDomEvent(el.nativeElement, 'keydown', {
+        keyboardEventInit: {
+          key: 'enter'
+        }
+      });
+      fixture.detectChanges();
+      tick();
+
+      validateTabSelected(fixture.nativeElement, 2);
+    }
+    ));
   });
 
   describe('Permalinks', () => {

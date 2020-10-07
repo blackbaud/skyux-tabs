@@ -139,7 +139,10 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
 
   private _active: boolean;
 
-  private _activeChange = new BehaviorSubject<SkyTabActiveChange>({ active: false });
+  private _activeChange = new BehaviorSubject<SkyTabActiveChange>({
+    active: false,
+    tabIndex: undefined
+  });
 
   private _permalinkValue: string;
 
@@ -158,6 +161,7 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
   public ngOnChanges(changes: SimpleChanges): void {
     if (
       changes.disabled && !changes.disabled.firstChange ||
+      changes.tabHeaderCount && !changes.tabHeaderCount.firstChange ||
       changes.permalinkValue && !changes.permalinkValue.firstChange
     ) {
       this._stateChange.next();

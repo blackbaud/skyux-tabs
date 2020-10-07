@@ -63,14 +63,18 @@ export class SkyTabButtonComponent {
     @Optional() public themeSvc?: SkyThemeService
   ) { }
 
-  public onButtonClick(event: MouseEvent) {
+  public onButtonClick(event: MouseEvent): void {
     if (!this.disabled) {
       this.buttonClick.emit();
       event.preventDefault();
     }
   }
 
-  public onCloseClick(event: any) {
+  public onButtonEnterKeyDown(event: any): void {
+    this.onButtonClick(event);
+  }
+
+  public onCloseClick(event: any): void {
     this.closeClick.emit();
 
     // Prevent the click event from bubbling up to the anchor tag;

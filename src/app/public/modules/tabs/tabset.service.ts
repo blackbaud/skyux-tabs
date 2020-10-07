@@ -21,7 +21,7 @@ export class SkyTabsetService {
     return this._activeTabIndex.asObservable();
   }
 
-  public currentActiveTabIndex: SkyTabIndex;
+  public currentActiveTabIndex: SkyTabIndex = 0;
 
   private _activeTabIndex = new BehaviorSubject<SkyTabIndex>(0);
 

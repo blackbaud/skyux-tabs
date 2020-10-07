@@ -9,6 +9,6 @@ export interface SkyTabActiveChange {
 
   active: boolean;
 
-  tabIndex?: SkyTabIndex;
+  tabIndex: SkyTabIndex;
 
 }

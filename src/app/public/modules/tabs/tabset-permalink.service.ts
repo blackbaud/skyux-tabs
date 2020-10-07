@@ -16,6 +16,9 @@ import {
   Subject
 } from 'rxjs';
 
+/**
+ * @internal
+ */
 interface PermalinkParams {
   [_: string]: string;
 }
