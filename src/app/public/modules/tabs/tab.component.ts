@@ -133,6 +133,8 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
     return this._stateChange.asObservable();
   }
 
+  public showContent: boolean = false;
+
   public tabButtonId: string;
 
   public tabPanelId: string;
@@ -179,11 +181,13 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
 
   public activate(): void {
     this._active = true;
+    this.showContent = true;
     this.changeDetector.markForCheck();
   }
 
   public deactivate(): void {
     this._active = false;
+    this.showContent = false;
     this.changeDetector.markForCheck();
   }
 
