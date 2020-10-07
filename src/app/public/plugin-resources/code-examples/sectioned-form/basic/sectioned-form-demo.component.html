@@ -1,0 +1,31 @@
+<div
+  style="height: 150px;"
+>
+  <sky-sectioned-form
+    (indexChanged)="onIndexChanged($event)"
+  >
+    <sky-sectioned-form-section
+      heading="Basic information"
+    >
+      <sky-demo-information-form>
+      </sky-demo-information-form>
+    </sky-sectioned-form-section>
+    <sky-sectioned-form-section
+      active="true"
+      heading="Addresses"
+      itemCount="2"
+    >
+      <sky-demo-address-form></sky-demo-address-form>
+    </sky-sectioned-form-section>
+    <sky-sectioned-form-section
+      heading="Phone numbers"
+      itemCount="3"
+    >
+      <sky-demo-phone-form></sky-demo-phone-form>
+    </sky-sectioned-form-section>
+  </sky-sectioned-form>
+</div>
+
+<p>
+  Active index: {{ activeIndexDisplay }}
+</p>

@@ -15,30 +15,57 @@ import {
 })
 export class TabsVisualComponent {
 
-  public requiredValue1: string;
+  public tabArray = [
+    {
+      tabHeading: 'Tab 1',
+      tabContent: 'Content for Tab 1',
+      tabIndex: 1
+    },
+    {
+      tabHeading: 'Tab 2',
+      tabContent: 'Content for Tab 2',
+      tabIndex: 2
+    },
+    {
+      tabHeading: 'Tab 3',
+      tabContent: 'Content for Tab 3',
+      tabIndex: 3,
+      active: true
+    }
+  ];
 
-  public requiredValue2: boolean;
+  public activeTab: number;
 
-  public showWizard = false;
+  private tabCounter: number = 3;
 
   constructor(private themeSvc: SkyThemeService) { }
 
-  public newTabClick() { }
+  public onNewTabClick(): void {
+    this.tabCounter++;
 
-  public openTabClick() { }
-
-  public closeTab() { }
-
-  public get step2Disabled(): boolean {
-    return !this.requiredValue1;
+    this.tabArray.push({
+      tabHeading: 'Tab ' + this.tabCounter,
+      tabContent: 'Content for Tab' + this.tabCounter,
+      tabIndex: 4,
+      active: true
+    });
+    console.log('New tab: ' + this.tabCounter);
   }
 
-  public get step3Disabled(): boolean {
-    return this.step2Disabled || !this.requiredValue2;
+  public onTabOpened(event: any) {
+    console.log(event);
   }
 
-  public validateStep1() {
-    return true;
+  public onTabChanged(activeTab: number) {
+    console.log('Tab changed: ' + activeTab);
+  }
+
+  public onCloseClick(arrayIndex: number): void {
+    this.tabArray.splice(arrayIndex, 1);
+
+    if (!this.tabArray.length) {
+      this.onNewTabClick();
+    }
   }
 
   public themeSettingsChange(themeSettings: SkyThemeSettings) {
