@@ -16,6 +16,10 @@ import {
 } from '@skyux/core';
 
 import {
+  SkyModalModule
+} from '@skyux/modals';
+
+import {
   SkySectionedFormModule
 } from '@skyux/tabs';
 
@@ -35,18 +39,27 @@ import {
   SectionedFormDemoComponent
 } from './sectioned-form-demo.component';
 
+import {
+  SectionedModalFormDemoComponent
+} from './sectioned-modal-form-demo.component';
+
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
     SkyIdModule,
+    SkyModalModule,
     SkySectionedFormModule
   ],
   declarations: [
     DemoAddressFormComponent,
     DemoInformationFormComponent,
     DemoPhoneFormComponent,
-    SectionedFormDemoComponent
+    SectionedFormDemoComponent,
+    SectionedModalFormDemoComponent
+  ],
+  entryComponents: [
+    SectionedModalFormDemoComponent
   ],
   exports: [
     SectionedFormDemoComponent
