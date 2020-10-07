@@ -263,6 +263,7 @@ describe('Tabset component', () => {
       fixture.detectChanges();
       tick();
 
+      validateTabSelected(el, 0);
       cmp.activeTab = 1;
 
       fixture.detectChanges();
