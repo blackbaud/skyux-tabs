@@ -7,7 +7,8 @@ import {
 
 import {
   expect,
-  expectAsync
+  expectAsync,
+  SkyAppTestUtility
 } from '@skyux-sdk/testing';
 
 import { SkyTabsetNavButtonComponent } from './tabset-nav-button.component';
@@ -99,7 +100,7 @@ describe('Tabset navigation button', () => {
 
         let previousBtn = getPreviousBtn();
 
-        previousBtn.click();
+        SkyAppTestUtility.fireDomEvent(previousBtn, 'click');
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
@@ -134,7 +135,7 @@ describe('Tabset navigation button', () => {
 
         let nextBtn = getNextBtn();
 
-        nextBtn.click();
+        SkyAppTestUtility.fireDomEvent(nextBtn, 'click');
         fixture.detectChanges();
         tick();
         fixture.detectChanges();
