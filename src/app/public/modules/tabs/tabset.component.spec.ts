@@ -1310,6 +1310,12 @@ describe('Tabset component', () => {
       expect(fixture.componentInstance.activeIndex).toEqual(0);
 
       const buttonElement = fixture.nativeElement.querySelectorAll('.sky-btn-tab')[1];
+      // Prevent the anchor's href attribute from being visited,
+      // otherwise it will trigger a page reload.
+      // See: https://github.com/dfederm/karma-jasmine-html-reporter/issues/26#issuecomment-608582845
+      buttonElement.onclick = function () {
+        return false;
+      };
       SkyAppTestUtility.fireDomEvent(buttonElement, 'click');
 
       fixture.detectChanges();
@@ -1324,7 +1330,7 @@ describe('Tabset component', () => {
       fixture.detectChanges();
       tick();
 
-      SkyAppTestUtility.fireDomEvent(buttonElement, 'click');
+      buttonElement.click();
 
       fixture.detectChanges();
       tick();
@@ -1379,7 +1385,13 @@ describe('Tabset component', () => {
       validateTabSelected(fixture.nativeElement, 1);
 
       const buttonElement = fixture.nativeElement.querySelectorAll('.sky-btn-tab')[1];
-      buttonElement.click();
+      // Prevent the anchor's href attribute from being visited,
+      // otherwise it will trigger a page reload.
+      // See: https://github.com/dfederm/karma-jasmine-html-reporter/issues/26#issuecomment-608582845
+      buttonElement.onclick = function () {
+        return false;
+      };
+      SkyAppTestUtility.fireDomEvent(buttonElement, 'click');
 
       fixture.detectChanges();
       tick();
