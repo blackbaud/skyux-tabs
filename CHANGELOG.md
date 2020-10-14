@@ -1,5 +1,6 @@
-# 4.3.5 (2020-10-14)
+# 4.4.0 (2020-10-14)
 
+- Added the `tabIndexesChange` event to the tabset component which fires when tab indexes change. [#143](https://github.com/blackbaud/skyux-tabs/pull/143)
 - Fixed the tabset service to generate unique tab indexes for tabs created after initialization. [#143](https://github.com/blackbaud/skyux-tabs/pull/143)
 - Fixed the tabset component to properly close the final tab in a set. [#142](https://github.com/blackbaud/skyux-tabs/pull/142)
 - Fixed the tabset component to recognize changes to a tab's `tabHeading` attribute. [#142](https://github.com/blackbaud/skyux-tabs/pull/142)
