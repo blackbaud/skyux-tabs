@@ -4,6 +4,7 @@
   "mode": "easy",
   "compileMode": "aot",
   "host": {
+    "url": "https://developer.blackbaud.com",
     "frameOptions": {
       "none": true
     }
