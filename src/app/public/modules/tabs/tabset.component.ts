@@ -226,6 +226,8 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
 
   public tabButtons: TabButtonViewModel[] = [];
 
+  private lastActiveArrayIndex: number;
+
   private ngUnsubscribe = new Subject<void>();
 
   private tabComponentsStateChangeUnsubscribe = new Subject<void>();
@@ -256,6 +258,16 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
 
     this.listenTabButtonsOverflowChange();
     this.listenLocationPopStateChange();
+
+    // If the currently active tab is getting unregistered, activate the next one.
+    this.tabsetService.activeTabUnregistered
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(() => {
+        // Wait for the new tabs to render before activating.
+        setTimeout(() => {
+          this.tabsetService.activateNearestTab(this.lastActiveArrayIndex);
+        });
+      });
 
     // Let the tabset render the initial active index before listening for changes.
     setTimeout(() => {
@@ -517,12 +529,22 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
 
     if (this.lastActiveTabIndex === undefined) {
       this.lastActiveTabIndex = activeIndex;
+      this.lastActiveArrayIndex = this.getActiveTabArrayIndex();
     } else {
       // Emit the new active index value to consumers.
       if (this.lastActiveTabIndex !== activeIndex) {
         this.lastActiveTabIndex = activeIndex;
+        this.lastActiveArrayIndex = this.getActiveTabArrayIndex();
         this.activeChange.emit(activeIndex);
       }
     }
+  }
+
+  private getActiveTabArrayIndex(): number {
+    return this.tabs.toArray()
+      .findIndex(tab => this.tabsetService.tabIndexesEqual(
+        tab.tabIndex,
+        this.lastActiveTabIndex
+      ));
   }
 }
