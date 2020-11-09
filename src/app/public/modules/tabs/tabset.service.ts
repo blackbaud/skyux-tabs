@@ -18,7 +18,9 @@ import {
 @Injectable()
 export class SkyTabsetService {
 
-  public get activeTabUnregistered(): Observable<void> {
+  public get activeTabUnregistered(): Observable<{
+    arrayIndex: number
+  }> {
     return this._activeTabUnregistered.asObservable();
   }
 
@@ -30,7 +32,9 @@ export class SkyTabsetService {
 
   private _activeTabIndex = new BehaviorSubject<SkyTabIndex>(0);
 
-  private _activeTabUnregistered = new Subject<void>();
+  private _activeTabUnregistered = new Subject<{
+    arrayIndex: number
+  }>();
 
   private tabs: {
     tabIndex: SkyTabIndex;
@@ -82,7 +86,9 @@ export class SkyTabsetService {
 
     // Notify the tabset component when an active tab is unregistered.
     if (this.isTabIndexActive(this.tabs[index].tabIndex)) {
-      this._activeTabUnregistered.next();
+      this._activeTabUnregistered.next({
+        arrayIndex: index
+      });
     }
 
     this.tabs.splice(index, 1);
