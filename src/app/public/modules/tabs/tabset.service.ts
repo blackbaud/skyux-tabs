@@ -12,15 +12,17 @@ import {
   SkyTabIndex
 } from './tab-index';
 
+import {
+  SkyTabsetActiveTabUnregisteredArgs
+} from './tabset-active-tab-unregistered-args';
+
 /**
  * @internal
  */
 @Injectable()
 export class SkyTabsetService {
 
-  public get activeTabUnregistered(): Observable<{
-    arrayIndex: number
-  }> {
+  public get activeTabUnregistered(): Observable<SkyTabsetActiveTabUnregisteredArgs> {
     return this._activeTabUnregistered.asObservable();
   }
 
@@ -32,9 +34,7 @@ export class SkyTabsetService {
 
   private _activeTabIndex = new BehaviorSubject<SkyTabIndex>(0);
 
-  private _activeTabUnregistered = new Subject<{
-    arrayIndex: number
-  }>();
+  private _activeTabUnregistered = new Subject<SkyTabsetActiveTabUnregisteredArgs>();
 
   private tabs: {
     tabIndex: SkyTabIndex;
