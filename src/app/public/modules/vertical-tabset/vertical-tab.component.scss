@@ -1,3 +1,4 @@
+@import "~@skyux/theme/scss/variables";
 @import "~@skyux/theme/scss/mixins";
 @import "~@skyux/theme/scss/_compat/mixins";
 
@@ -58,4 +59,18 @@
 .sky-vertical-tab-right-arrow {
   padding: 3px $sky-padding 0 0;
   color: $sky-text-color-icon-borderless;
+}
+
+@include sky-theme-modern {
+  .sky-vertical-tab {
+    cursor: pointer;
+    padding: $sky-theme-modern-space-sm 0 $sky-theme-modern-space-sm$sky-theme-modern-space-sm;
+    margin: $sky-theme-modern-margin-inline-sm 0 $sky-theme-modern-margin-inline-lg $sky-theme-modern-margin-inline-sm;
+  }
+
+  .sky-vertical-tab-active {
+    background: none;
+    padding-left: 13px;
+    border-left: 3px solid $sky-theme-modern-color-blue-74;
+  }
 }
