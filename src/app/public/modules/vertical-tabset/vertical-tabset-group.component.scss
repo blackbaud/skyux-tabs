@@ -41,5 +41,15 @@
     border: none;
     padding-left: 25px;
   }
+
+  .sky-vertical-tabset-group-header {
+    position: relative;
+  }
+
+  .sky-vertical-tabset-group-header-chevron {
+    position: absolute;
+    top: 3px;
+    right: 5px
+  }
 }
 
