@@ -1,6 +1,6 @@
 {
   "name": "@skyux/tabs",
-  "version": "4.4.1",
+  "version": "4.5.0",
   "description": "SKY UX Tabs",
   "scripts": {
     "build": "skyux build-public-library",
@@ -42,7 +42,7 @@
     "@angular/platform-browser": "9.1.13",
     "@angular/platform-browser-dynamic": "9.1.13",
     "@angular/router": "9.1.13",
-    "@blackbaud/auth-client": "2.39.0",
+    "@blackbaud/auth-client": "2.40.0",
     "@blackbaud/skyux-lib-clipboard": "4.0.0",
     "@blackbaud/skyux-lib-code-block": "4.0.1",
     "@blackbaud/skyux-lib-media": "4.0.0",
