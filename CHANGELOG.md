@@ -1,6 +1,6 @@
 # 4.5.0 (2021-01-19)
 
-- Added modern theme styles for the vertical tabs component. [#150](https://github.com/blackbaud/skyux-tabs/pull/150)
+- Added modern theme styles for the vertical tabset component. [#150](https://github.com/blackbaud/skyux-tabs/pull/150)
 
 # 4.4.1 (2020-11-30)
 
