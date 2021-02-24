@@ -24,7 +24,7 @@ import {
 
 import {
   SkyVerticalTabMediaQueryService
-} from './vertical-tab-media-query-service';
+} from './vertical-tab-media-query.service';
 
 import {
   SkyVerticalTabsetService
