@@ -218,8 +218,8 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('window:resize', ['$event'])
-  public onWindowResize(event: any): void {
+  @HostListener('window:resize')
+  public onWindowResize(): void {
     this.updateBreakpointAndResponsiveClass(this.adapterService.getWidth(this.tabContent));
   }
 
