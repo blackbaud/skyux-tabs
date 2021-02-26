@@ -1,6 +1,6 @@
-# 4.6.0 (2021-02-25)
+# 4.6.0 (2021-02-26)
 
-- Added responsive container classes to the vertical tab component to allow child components to utilize correct responsive styles. [#154](https://github.com/blackbaud/skyux-tabs/pull/154)
+- Added responsive container classes to the vertical tab component to allow child components to use the correct responsive styles. [#154](https://github.com/blackbaud/skyux-tabs/pull/154)
 
 # 4.5.0 (2021-01-19)
 
