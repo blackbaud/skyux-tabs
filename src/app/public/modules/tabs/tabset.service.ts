@@ -50,6 +50,7 @@ export class SkyTabsetService {
   }): void {
     if (
       value !== undefined &&
+      this.isValidTabIndex(value) &&
       !this.tabIndexesEqual(value, this.currentActiveTabIndex)
     ) {
       this.currentActiveTabIndex = value;
