@@ -39,10 +39,11 @@ export class SkyTabsetPermalinkService {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private router: Router
-  ) { }
-
-  public subscribePopState(): void {
-    this.location.subscribe(() => this._popStateChange.next());
+  ) {
+    // Listen for pop state changes after initial rendering to avoid race conditions.
+    setTimeout(() => {
+      this.location.subscribe(() => this._popStateChange.next());
+    });
   }
 
   /**

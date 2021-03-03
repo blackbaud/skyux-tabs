@@ -1387,7 +1387,7 @@ describe('Tabset component', () => {
       );
     });
 
-    fit('should activate a tab based on a query param', fakeAsync(() => {
+    it('should activate a tab based on a query param', fakeAsync(() => {
       fixture.componentInstance.activeIndex = 0;
       fixture.componentInstance.permalinkId = 'foobar';
       spyOn(location, 'path').and.returnValue('?foobar-active-tab=design-guidelines');

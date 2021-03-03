@@ -100,25 +100,6 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    // if (this.tabsetService.isValidTabIndex(value)) {
-    //   this._active = value;
-    //   this.tabsetService.setActiveTabIndex(value);
-    //   return;
-    // }
-
-    // // When a new tab is generated after initialization, wait for it to render
-    // // before checking if the new active tab index is valid.
-    // setTimeout(() => {
-    //   if (this.tabsetService.isValidTabIndex(value)) {
-    //     this._active = value;
-    //     this.tabsetService.setActiveTabIndex(value);
-    //     return;
-    //   }
-
-    //   // Activate the first tab if the new tab index is invalid.
-    //   this._active = this.tabsetService.activateFirstTab();
-    // });
-
     this._active = value;
 
     if (this.tabs) {
@@ -298,10 +279,6 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
       this.listenTabComponentsStructuralChange();
       this.listenTabComponentsStateChange();
       this.listenActiveIndexChange();
-
-      setTimeout(() => {
-        this.permalinkService.subscribePopState();
-      });
     });
   }
 
