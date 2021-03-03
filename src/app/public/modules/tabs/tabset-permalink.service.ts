@@ -3,7 +3,8 @@ import {
 } from '@angular/common';
 
 import {
-  Injectable
+  Injectable,
+  OnDestroy
 } from '@angular/core';
 
 import {
@@ -13,7 +14,8 @@ import {
 
 import {
   Observable,
-  Subject
+  Subject,
+  SubscriptionLike
 } from 'rxjs';
 
 /**
@@ -27,7 +29,7 @@ interface PermalinkParams {
  * @internal
  */
 @Injectable()
-export class SkyTabsetPermalinkService {
+export class SkyTabsetPermalinkService implements OnDestroy {
 
   public get popStateChange(): Observable<void> {
     return this._popStateChange.asObservable();
@@ -35,14 +37,23 @@ export class SkyTabsetPermalinkService {
 
   private _popStateChange = new Subject<void>();
 
+  private subscription: SubscriptionLike;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private router: Router
-  ) {
-    // Listen for pop state changes after initial rendering to avoid race conditions.
-    setTimeout(() => {
-      this.location.subscribe(() => this._popStateChange.next());
+  ) { }
+
+  public ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
+  public init(): void {
+    this.subscription = this.location.subscribe(() => {
+      this._popStateChange.next();
     });
   }
 

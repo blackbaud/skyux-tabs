@@ -279,6 +279,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
       this.listenTabComponentsStructuralChange();
       this.listenTabComponentsStateChange();
       this.listenActiveIndexChange();
+      this.permalinkService.init();
     });
   }
 

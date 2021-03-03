@@ -1368,12 +1368,6 @@ describe('Tabset component', () => {
     let location: Location;
 
     beforeEach(() => {
-      // TestBed.configureTestingModule({
-      //   imports: [
-      //     SkyTabsFixturesModule
-      //   ]
-      // });
-
       location = TestBed.inject(Location);
       fixture = TestBed.createComponent(SkyTabsetPermalinksFixtureComponent);
     });
@@ -1387,7 +1381,7 @@ describe('Tabset component', () => {
       );
     });
 
-    it('should activate a tab based on a query param', fakeAsync(() => {
+    it('should activate a tab based on a query param on init', fakeAsync(() => {
       fixture.componentInstance.activeIndex = 0;
       fixture.componentInstance.permalinkId = 'foobar';
       spyOn(location, 'path').and.returnValue('?foobar-active-tab=design-guidelines');
@@ -1562,6 +1556,38 @@ describe('Tabset component', () => {
         '?foobar-active-tab=design-guidelines&bar=baz',
         'Existing query params should be unaffected.'
       );
+    }));
+
+    it('should activate tabs when popstate changes', fakeAsync(() => {
+      fixture.componentInstance.activeIndex = 0;
+      fixture.componentInstance.permalinkId = 'foobar';
+
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+      tick();
+
+      validateTabSelected(fixture.nativeElement, 0);
+
+      const tabButtons = fixture.nativeElement.querySelectorAll('.sky-btn-tab');
+      tabButtons[1].click();
+
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+      tick();
+
+      validateTabSelected(fixture.nativeElement, 1);
+
+      // Trigger "back" button in browser.
+      location.back();
+
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+      tick();
+
+      validateTabSelected(fixture.nativeElement, 0);
     }));
   });
 });
