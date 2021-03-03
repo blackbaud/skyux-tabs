@@ -100,24 +100,47 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
       return;
     }
 
-    if (this.tabsetService.isValidTabIndex(value)) {
-      this._active = value;
+    // if (this.tabsetService.isValidTabIndex(value)) {
+    //   this._active = value;
+    //   this.tabsetService.setActiveTabIndex(value);
+    //   return;
+    // }
+
+    // // When a new tab is generated after initialization, wait for it to render
+    // // before checking if the new active tab index is valid.
+    // setTimeout(() => {
+    //   if (this.tabsetService.isValidTabIndex(value)) {
+    //     this._active = value;
+    //     this.tabsetService.setActiveTabIndex(value);
+    //     return;
+    //   }
+
+    //   // Activate the first tab if the new tab index is invalid.
+    //   this._active = this.tabsetService.activateFirstTab();
+    // });
+
+    this._active = value;
+
+    if (this.tabs) {
       this.tabsetService.setActiveTabIndex(value);
-      return;
+    } else {
+      // On init, wait for children tabs to render before broadcasting the active tab index.
+      setTimeout(() => {
+        if (this.tabsetService.isValidTabIndex(value)) {
+          // On init, yield to the permalink ID, if it exists.
+          if (this.getActiveTabIndexByPermalinkId() === undefined) {
+            this.tabsetService.setActiveTabIndex(value);
+          }
+        } else {
+          // Activate the first tab if the new tab index is invalid.
+          this._active = this.tabsetService.activateFirstTab();
+        }
+      });
     }
+  }
 
-    // When a new tab is generated after initialization, wait for it to render
-    // before checking if the new active tab index is valid.
-    setTimeout(() => {
-      if (this.tabsetService.isValidTabIndex(value)) {
-        this._active = value;
-        this.tabsetService.setActiveTabIndex(value);
-        return;
-      }
-
-      // Activate the first tab if the new tab index is invalid.
-      this._active = this.tabsetService.activateFirstTab();
-    });
+  public get active(): SkyTabIndex {
+    return this._active;
   }
 
   /**
@@ -275,6 +298,10 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
       this.listenTabComponentsStructuralChange();
       this.listenTabComponentsStateChange();
       this.listenActiveIndexChange();
+
+      setTimeout(() => {
+        this.permalinkService.subscribePopState();
+      });
     });
   }
 
@@ -434,6 +461,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     this.permalinkService.popStateChange
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
+        console.log('listenLocationPopStateChange()');
         this.setActiveTabIndexByPermalinkId();
       });
   }

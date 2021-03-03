@@ -39,7 +39,9 @@ export class SkyTabsetPermalinkService {
     private activatedRoute: ActivatedRoute,
     private location: Location,
     private router: Router
-  ) {
+  ) { }
+
+  public subscribePopState(): void {
     this.location.subscribe(() => this._popStateChange.next());
   }
 
@@ -141,7 +143,7 @@ export class SkyTabsetPermalinkService {
     const existingParamPairs = path.split('?')[1].split('&');
     existingParamPairs.forEach((pair) => {
       const fragments = pair.split('=');
-      params[fragments[0]] = fragments[1];
+      params[fragments[0]] = decodeURIComponent(fragments[1]);
     });
 
     return params;
