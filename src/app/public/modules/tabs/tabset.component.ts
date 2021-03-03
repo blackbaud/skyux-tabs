@@ -439,7 +439,6 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     this.permalinkService.popStateChange
       .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(() => {
-        console.log('listenLocationPopStateChange()');
         this.setActiveTabIndexByPermalinkId();
       });
   }
