@@ -1,27 +1,47 @@
 import {
-  AfterViewInit,
+  ChangeDetectionStrategy,
   Component
 } from '@angular/core';
 
-import { SkyTabsetTabIndexesChange } from '../../public/public_api';
+import {
+  SkyThemeService,
+  SkyThemeSettings
+} from '@skyux/theme';
 
 @Component({
   selector: 'tabs-visual',
-  templateUrl: './tabs-visual.component.html'
+  templateUrl: './tabs-visual.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TabsVisualComponent implements AfterViewInit {
-  public activeTab = 0;
+export class TabsVisualComponent {
 
-  public ngAfterViewInit(): void {
-    console.log(this.activeTab);
+  public requiredValue1: string;
+
+  public requiredValue2: boolean;
+
+  public showWizard = false;
+
+  constructor(private themeSvc: SkyThemeService) { }
+
+  public newTabClick() { }
+
+  public openTabClick() { }
+
+  public closeTab() { }
+
+  public get step2Disabled(): boolean {
+    return !this.requiredValue1;
   }
 
-  public handleTabChange(index: number): void {
-    this.activeTab = index;
-    console.log('active change', index);
+  public get step3Disabled(): boolean {
+    return this.step2Disabled || !this.requiredValue2;
   }
 
-  public onTabIndexesChange(change: SkyTabsetTabIndexesChange): void {
-    console.log('New index:', change);
+  public validateStep1() {
+    return true;
+  }
+
+  public themeSettingsChange(themeSettings: SkyThemeSettings) {
+    this.themeSvc.setTheme(themeSettings);
   }
 }
