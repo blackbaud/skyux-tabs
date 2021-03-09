@@ -217,6 +217,7 @@ describe('Vertical tabset component', () => {
   it('should pass through aria inputs, id, and set role', () => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
     let fixture = createTestComponent();
+    fixture.componentInstance.tab1Required = true;
     let el = fixture.nativeElement as HTMLElement;
 
     fixture.detectChanges();
