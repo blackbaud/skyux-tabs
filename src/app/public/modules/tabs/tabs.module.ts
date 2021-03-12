@@ -41,6 +41,7 @@ import {
 import {
   SkyTabsetComponent
 } from './tabset.component';
+import {SkyThemeModule} from '@skyux/theme';
 
 @NgModule({
   declarations: [
@@ -49,14 +50,15 @@ import {
     SkyTabsetComponent,
     SkyTabsetNavButtonComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    SkyDropdownModule,
-    SkyI18nModule,
-    SkyIconModule,
-    SkyTabsResourcesModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule,
+        SkyDropdownModule,
+        SkyI18nModule,
+        SkyIconModule,
+        SkyTabsResourcesModule,
+        SkyThemeModule
+    ],
   exports: [
     SkyTabComponent,
     SkyTabsetComponent,
