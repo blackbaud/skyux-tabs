@@ -20,6 +20,10 @@ import {
 } from '@skyux/indicators';
 
 import {
+  SkyThemeModule
+} from '@skyux/theme';
+
+import {
   SkyTabsResourcesModule
 } from '../shared/tabs-resources.module';
 
@@ -38,7 +42,6 @@ import {
 import {
   SkyVerticalTabsetGroupComponent
 } from './vertical-tabset-group.component';
-import {SkyThemeModule} from '@skyux/theme';
 
 @NgModule({
   declarations: [
@@ -46,15 +49,15 @@ import {SkyThemeModule} from '@skyux/theme';
     SkyVerticalTabsetGroupComponent,
     SkyVerticalTabComponent
   ],
-    imports: [
-        CommonModule,
-        BrowserAnimationsModule,
-        SkyChevronModule,
-        SkyIconModule,
-        SkyMediaQueryModule,
-        SkyTabsResourcesModule,
-        SkyThemeModule
-    ],
+  imports: [
+    CommonModule,
+    BrowserAnimationsModule,
+    SkyChevronModule,
+    SkyIconModule,
+    SkyMediaQueryModule,
+    SkyTabsResourcesModule,
+    SkyThemeModule
+  ],
   providers: [
     SkyVerticalTabsetAdapterService
   ],

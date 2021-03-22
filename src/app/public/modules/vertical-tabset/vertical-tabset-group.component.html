@@ -19,7 +19,7 @@
       (keyup.enter)="$event.stopPropagation()"
     >
     </sky-chevron>
-    <ng-container *skyThemeIf="'modern'">
+    <ng-template [skyThemeIf]="'modern'">
       <button *ngIf="!open"
         class="sky-btn sky-btn-icon-borderless sky-vertical-tabset-group-header-chevron"
         type="button"
@@ -40,7 +40,7 @@
         >
         </sky-icon>
       </button>
-    </ng-container>
+    </ng-template>
   </div>
   <div
     class="sky-vertical-tabset-group-content"
