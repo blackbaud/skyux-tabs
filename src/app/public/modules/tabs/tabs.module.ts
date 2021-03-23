@@ -23,6 +23,10 @@ import {
 } from '@skyux/popovers';
 
 import {
+  SkyThemeModule
+} from '@skyux/theme';
+
+import {
   SkyTabsResourcesModule
 } from '../shared/tabs-resources.module';
 
@@ -41,7 +45,6 @@ import {
 import {
   SkyTabsetComponent
 } from './tabset.component';
-import {SkyThemeModule} from '@skyux/theme';
 
 @NgModule({
   declarations: [
@@ -50,15 +53,15 @@ import {SkyThemeModule} from '@skyux/theme';
     SkyTabsetComponent,
     SkyTabsetNavButtonComponent
   ],
-    imports: [
-        CommonModule,
-        RouterModule,
-        SkyDropdownModule,
-        SkyI18nModule,
-        SkyIconModule,
-        SkyTabsResourcesModule,
-        SkyThemeModule
-    ],
+  imports: [
+    CommonModule,
+    RouterModule,
+    SkyDropdownModule,
+    SkyI18nModule,
+    SkyIconModule,
+    SkyTabsResourcesModule,
+    SkyThemeModule
+  ],
   exports: [
     SkyTabComponent,
     SkyTabsetComponent,
