@@ -54,7 +54,13 @@
 @include sky-theme-modern-dark {
   .sky-btn-tab-wrapper {
     .sky-btn-tab-close {
-      color: #eeeeef;
+      color: $sky-background-color-neutral-light;
+    }
+
+    &.sky-btn-tab-wrapper-selected:not(.sky-btn-tab-wrapper-disabled) {
+      .sky-btn-tab-close {
+        color: $sky-background-color-neutral-light;
+      }
     }
   }
 }
