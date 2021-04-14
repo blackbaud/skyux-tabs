@@ -5,6 +5,7 @@
 .sky-btn-tab-wrapper {
   display: inline-block;
   position: relative;
+  margin-right: $sky-margin-inline-compact;
 
   .sky-btn-tab-close {
     position: absolute;
@@ -31,6 +32,8 @@
 
 @include sky-theme-modern {
   .sky-btn-tab-wrapper {
+    margin-right: $sky-theme-modern-margin-inline-sm;
+
     .sky-btn-tab-close {
       top: 12px;
       right: 10px;
