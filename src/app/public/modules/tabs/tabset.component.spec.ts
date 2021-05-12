@@ -544,7 +544,7 @@ describe('Tabset component', () => {
   // This test was added due to a real life error when `skyAuthIf` was causing things to load
   // after initialization of the tabset but before the `ngAfterViewInit`'s `setTimeout`.
   it(
-    'should handle a quick addition of a tab on intialization',
+    'should handle a quick addition of a tab on initialization',
     fakeAsync(() => {
       let fixture = TestBed.createComponent(TabsetTestComponent);
       let cmp: TabsetTestComponent = fixture.componentInstance;
