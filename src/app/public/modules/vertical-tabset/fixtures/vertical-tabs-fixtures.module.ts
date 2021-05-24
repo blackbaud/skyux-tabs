@@ -11,6 +11,10 @@ import {
 } from '@angular/forms';
 
 import {
+  NoopAnimationsModule
+} from '@angular/platform-browser/animations';
+
+import {
   SkyVerticalTabsetModule
 } from '../vertical-tabset.module';
 
@@ -45,6 +49,7 @@ import {
   imports: [
     CommonModule,
     FormsModule,
+    NoopAnimationsModule,
     SkyVerticalTabsetModule
   ],
   exports: [

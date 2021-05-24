@@ -7,10 +7,6 @@ import {
 } from '@angular/common';
 
 import {
-  BrowserAnimationsModule
-} from '@angular/platform-browser/animations';
-
-import {
   SkyMediaQueryModule
 } from '@skyux/core';
 
@@ -51,7 +47,6 @@ import {
   ],
   imports: [
     CommonModule,
-    BrowserAnimationsModule,
     SkyChevronModule,
     SkyIconModule,
     SkyMediaQueryModule,
