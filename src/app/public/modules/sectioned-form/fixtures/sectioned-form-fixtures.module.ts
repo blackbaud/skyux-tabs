@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+import {
+  NoopAnimationsModule
+} from '@angular/platform-browser/animations';
+
 import { SkySectionedFormModule } from '../sectioned-form.module';
 import { SkySectionedFormFixtureComponent } from './sectioned-form.component.fixture';
 
@@ -33,6 +37,7 @@ import { SkyCheckboxModule } from '@skyux/forms';
   ],
   imports: [
     CommonModule,
+    NoopAnimationsModule,
     SkySectionedFormModule,
     SkyCheckboxModule,
     FormsModule
