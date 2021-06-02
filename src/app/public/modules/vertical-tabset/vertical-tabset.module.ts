@@ -32,10 +32,6 @@ import {
 } from './vertical-tab.component';
 
 import {
-  SkyVerticalTabsetAdapterService
-} from './vertical-tabset-adapter.service';
-
-import {
   SkyVerticalTabsetGroupComponent
 } from './vertical-tabset-group.component';
 
@@ -52,9 +48,6 @@ import {
     SkyMediaQueryModule,
     SkyTabsResourcesModule,
     SkyThemeModule
-  ],
-  providers: [
-    SkyVerticalTabsetAdapterService
   ],
   exports: [
     SkyVerticalTabsetComponent,

@@ -40,6 +40,7 @@ import {
   styleUrls: ['./vertical-tab.component.scss'],
   providers: [
     SkyVerticalTabMediaQueryService,
+    SkyVerticalTabsetAdapterService,
     { provide: SkyMediaQueryService, useExisting: SkyVerticalTabMediaQueryService }
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
