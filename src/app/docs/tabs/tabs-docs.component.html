@@ -129,9 +129,17 @@
           Use tabs when users require quick access to different slices of the same data.
         </p>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           caption="Do use tabs to show different slices of the same data."
           captionType="success"
           imageSource="~/assets/img/guidelines/tabs/tabs-usage-1.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          caption="Do use tabs to show different slices of the same data."
+          captionType="success"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-usage-1-modern.png"
         >
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
@@ -141,9 +149,17 @@
           Use tabs when users need to complete different tasks on a page and each task includes a significant amount of data.
         </p>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           caption="Do use tabs to group content for different tasks."
           captionType="success"
           imageSource="~/assets/img/guidelines/tabs/tabs-usage-2.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          caption="Do use tabs to group content for different tasks."
+          captionType="success"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-usage-2-modern.png"
         >
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
@@ -156,27 +172,51 @@
           Don't use tabs within another tab. Change the workflow instead of nesting multiple sets of tabs.
         </p>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           caption="Don't use multiple sets of tabs on a page."
           captionType="danger"
           imageSource="~/assets/img/guidelines/tabs/tabs-usage-3.png"
         >
         </sky-docs-design-guideline-thumbnail>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          caption="Don't use multiple sets of tabs on a page."
+          captionType="danger"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-usage-3-modern.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           caption="Don't combine vertical tabs and horizontal tabs."
           captionType="danger"
           imageSource="~/assets/img/guidelines/tabs/tabs-usage-4.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          caption="Don't combine vertical tabs and horizontal tabs."
+          captionType="danger"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-usage-4-modern.png"
         >
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
 
       <sky-docs-design-guideline>
         <p>
-          Don't use tabs when they are likely to overflow the available horizontal space. The collapsed behavior of tabs will accommodate small screen resolutions or cases where users add many tabs themselves, but it is not intended as the default experience with a tabset. Use <a href="https://developer.blackbaud.com/skyux/components/vertical-tabs">vertical tabs</a> instead.
+          Don't use tabs when they are likely to overflow the available horizontal space. The collapsed behavior of tabs will accommodate small screen resolutions or cases where users add many tabs themselves, but it is not intended as the default experience with a tabset. Use <a *skyThemeIf="'default'" href="https://developer.blackbaud.com/skyux/components/vertical-tabs">vertical tabs</a><a *skyThemeIf="'modern'" href="https://developer.blackbaud.com/skyux/components/vertical-tabs?svcid=skyux-modern&docs-active-tab=design">vertical tabs</a> instead.
         </p>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           caption="Don't use horizontal tabs when they are likely to overflow and collapse into a dropdown."
           captionType="danger"
           imageSource="~/assets/img/guidelines/tabs/tabs-usage-5.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          caption="Don't use horizontal tabs when they are likely to overflow and collapse into a dropdown."
+          captionType="danger"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-usage-5-modern.png"
         >
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
@@ -187,7 +227,19 @@
       heading="Anatomy"
     >
       <sky-docs-anatomy
+        *skyThemeIf="'default'"
         imagePath="~/assets/img/guidelines/tabs/tabs-anatomy.png"
+      >
+        <sky-docs-anatomy-item>Selected tab</sky-docs-anatomy-item>
+        <sky-docs-anatomy-item>Unselected tab</sky-docs-anatomy-item>
+        <sky-docs-anatomy-item>Tab border</sky-docs-anatomy-item>
+        <sky-docs-anatomy-item isOptional="true">Tab count</sky-docs-anatomy-item>
+        <sky-docs-anatomy-item isOptional="true">Close tab button</sky-docs-anatomy-item>
+        <sky-docs-anatomy-item isOptional="true">Add tab button</sky-docs-anatomy-item>
+      </sky-docs-anatomy>
+      <sky-docs-anatomy
+        *skyThemeIf="'modern'"
+        imagePath="~/assets/img/guidelines/tabs/modern/tabs-anatomy-modern.png"
       >
         <sky-docs-anatomy-item>Selected tab</sky-docs-anatomy-item>
         <sky-docs-anatomy-item>Unselected tab</sky-docs-anatomy-item>
@@ -208,7 +260,13 @@
           When a tab displays a list, you can include the record count in the tab if that number will meaningfully impact user behavior.
         </p>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           imageSource="~/assets/img/guidelines/tabs/tabs-options-1.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-options-1-modern.png"
         >
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
@@ -220,10 +278,19 @@
           If users need to work with a subset of tabs in a large tabset, let them add and close tabs to display only the relevant tabs.
         </p>
         <p>
-          If a new tab includes multiple options on what to display, use <a href="https://developer.blackbaud.com/skyux/components/action-button">action buttons</a> in the tab view to let users make selections.
+          If a new tab includes multiple options on what to display, use 
+            <a *skyThemeIf="'default'" href="https://developer.blackbaud.com/skyux/components/action-button">action buttons</a>
+            <a *skyThemeIf="'modern'" href="https://developer.blackbaud.com/skyux/components/action-button?svcid=skyux-modern">action buttons</a>
+             in the tab view to let users make selections.
         </p>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           imageSource="~/assets/img/guidelines/tabs/tabs-options-2.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-options-2-modern.png"
         >
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
@@ -240,7 +307,13 @@
           If the tabset includes too many tabs to fit in the tab bar's available horizontal space, the tabs collapse into a dropdown.
         </p>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           imageSource="~/assets/img/guidelines/tabs/tabs-behavior-1.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-behavior-1-modern.png"
         >
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
@@ -255,7 +328,13 @@
             </td>
             <td class="sky-docs-table-cell">
               <sky-docs-design-guideline-thumbnail
+                *skyThemeIf="'default'"
                 imageSource="~/assets/img/guidelines/tabs/tabs-state-selected.png"
+              >
+              </sky-docs-design-guideline-thumbnail>
+              <sky-docs-design-guideline-thumbnail
+                *skyThemeIf="'modern'"
+                imageSource="~/assets/img/guidelines/tabs/modern/tabs-state-selected-modern.png"
               >
               </sky-docs-design-guideline-thumbnail>
             </td>
@@ -266,7 +345,13 @@
             </td>
             <td class="sky-docs-table-cell">
               <sky-docs-design-guideline-thumbnail
+                *skyThemeIf="'default'"
                 imageSource="~/assets/img/guidelines/tabs/tabs-state-unselected.png"
+              >
+              </sky-docs-design-guideline-thumbnail>
+              <sky-docs-design-guideline-thumbnail
+                *skyThemeIf="'modern'"
+                imageSource="~/assets/img/guidelines/tabs/modern/tabs-state-unselected-modern.png"
               >
               </sky-docs-design-guideline-thumbnail>
             </td>
@@ -277,7 +362,24 @@
             </td>
             <td class="sky-docs-table-cell">
               <sky-docs-design-guideline-thumbnail
+                *skyThemeIf="'default'"
                 imageSource="~/assets/img/guidelines/tabs/tabs-state-hover.png"
+              >
+              </sky-docs-design-guideline-thumbnail>
+              <sky-docs-design-guideline-thumbnail
+                *skyThemeIf="'modern'"
+                imageSource="~/assets/img/guidelines/tabs/modern/tabs-state-hover-modern.png"
+              >
+              </sky-docs-design-guideline-thumbnail>
+            </td>
+          </tr>
+          <tr *skyThemeIf="'modern'">
+            <td class="sky-docs-table-cell">
+              Focus
+            </td>
+            <td class="sky-docs-table-cell">
+              <sky-docs-design-guideline-thumbnail
+                imageSource="~/assets/img/guidelines/tabs/modern/tabs-state-focus-modern.png"
               >
               </sky-docs-design-guideline-thumbnail>
             </td>
@@ -288,7 +390,13 @@
             </td>
             <td class="sky-docs-table-cell">
               <sky-docs-design-guideline-thumbnail
+                *skyThemeIf="'default'"
                 imageSource="~/assets/img/guidelines/tabs/tabs-state-collapsed-closed.png"
+              >
+              </sky-docs-design-guideline-thumbnail>
+              <sky-docs-design-guideline-thumbnail
+                *skyThemeIf="'modern'"
+                imageSource="~/assets/img/guidelines/tabs/modern/tabs-state-collapsed-closed-modern.png"
               >
               </sky-docs-design-guideline-thumbnail>
             </td>
@@ -299,7 +407,13 @@
             </td>
             <td class="sky-docs-table-cell">
               <sky-docs-design-guideline-thumbnail
+                *skyThemeIf="'default'"
                 imageSource="~/assets/img/guidelines/tabs/tabs-state-collapsed-open.png"
+              >
+              </sky-docs-design-guideline-thumbnail>
+              <sky-docs-design-guideline-thumbnail
+                *skyThemeIf="'modern'"
+                imageSource="~/assets/img/guidelines/tabs/modern/tabs-state-collapsed-open-modern.png"
               >
               </sky-docs-design-guideline-thumbnail>
             </td>
@@ -334,9 +448,17 @@
           Tabs are always the last (bottommost) content in their container. Don’t put additional content under tabs.
         </p>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           caption="Don't put additional content under tabs."
           captionType="danger"
           imageSource="~/assets/img/guidelines/tabs/tabs-layout-1.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          caption="Don't put additional content under tabs."
+          captionType="danger"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-layout-1-modern.png"
         >
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
@@ -346,15 +468,31 @@
           The tab border extends the full width of the container. Don’t use left or right margins on the tab border, and ignore any padding that the container defines.
         </p>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           caption="Do extend the tab border to the full width of the container."
           captionType="success"
           imageSource="~/assets/img/guidelines/tabs/tabs-layout-2.png"
         >
         </sky-docs-design-guideline-thumbnail>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          caption="Do extend the tab border to the full width of the container."
+          captionType="success"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-layout-2-modern.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           caption="Don't apply the container's padding to the tab border."
           captionType="danger"
           imageSource="~/assets/img/guidelines/tabs/tabs-layout-3.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          caption="Don't apply the container's padding to the tab border."
+          captionType="danger"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-layout-3-modern.png"
         >
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
@@ -364,9 +502,17 @@
           Tab content does not have additional left or right padding. The left and right gutters align with the gutters for content outside the tabs.
         </p>
         <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'default'"
           caption="Don't apply additional left or right padding to tab content."
           captionType="danger"
           imageSource="~/assets/img/guidelines/tabs/tabs-layout-4.png"
+        >
+        </sky-docs-design-guideline-thumbnail>
+        <sky-docs-design-guideline-thumbnail
+          *skyThemeIf="'modern'"
+          caption="Don't apply additional left or right padding to tab content."
+          captionType="danger"
+          imageSource="~/assets/img/guidelines/tabs/modern/tabs-layout-4-modern.png"
         >
         </sky-docs-design-guideline-thumbnail>
       </sky-docs-design-guideline>
@@ -380,12 +526,25 @@
         heading="Components"
       >
         <ul>
-          <li><a href="https://developer.blackbaud.com/skyux/components/action-button">Action buttons</a></li>
-          <li><a href="https://developer.blackbaud.com/skyux/components/vertical-tabs">Vertical tabs</a></li>
+          <li><a 
+              *skyThemeIf="'default'" href="https://developer.blackbaud.com/skyux/components/action-button"
+              >Action buttons</a>
+            <a 
+              *skyThemeIf="'modern'" href="https://developer.blackbaud.com/skyux/components/action-button?svcid=skyux-modern"
+              >Action buttons</a>
+            </li>
+          <li><a 
+              *skyThemeIf="'default'"
+              href="https://developer.blackbaud.com/skyux/components/vertical-tabs">Vertical tabs</a>
+              <a 
+              *skyThemeIf="'modern'"
+              href="https://developer.blackbaud.com/skyux/components/vertical-tabs?svcid=skyux-modern">Vertical tabs</a>
+            </li>
         </ul>
       </sky-docs-design-guideline>
 
       <sky-docs-design-guideline
+        *skyThemeIf="'default'"
         heading="Guidelines"
       >
         <ul>
