@@ -1,9 +1,15 @@
+# 5.0.0-beta.0 (2021-07-13)
+
+- Initial beta release.
+- Added support for `5.0.0-beta.*` versions of SKY UX component libraries. [#175](https://github.com/blackbaud/skyux-tabs/pull/175)
+
 # 4.6.7 (2021-06-11)
 
 - Fixed the module name in the installation documentation. [#171](https://github.com/blackbaud/skyux-tabs/pull/171)
 
 # 5.0.0-alpha.0 (2021-05-24)
 
+- Added support for `@angular/core@^12`. [#169](https://github.com/blackbaud/skyux-tabs/pull/169)
 - Removed `BrowserAnimationsModule` from the `imports` section of `SkyVerticalTabsetModule` to support lazy-loading. Consumers of `SkyVerticalTabsetModule` must now import `BrowserAnimationsModule` into their application's root module. [#169](https://github.com/blackbaud/skyux-tabs/pull/169)
 
 # 4.6.6 (2021-05-12)
