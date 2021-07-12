@@ -1,3 +1,7 @@
+# 4.6.7 (2021-06-11)
+
+- Fixed the module name in the installation documentation. [#171](https://github.com/blackbaud/skyux-tabs/pull/171)
+
 # 5.0.0-alpha.0 (2021-05-24)
 
 - Removed `BrowserAnimationsModule` from the `imports` section of `SkyVerticalTabsetModule` to support lazy-loading. Consumers of `SkyVerticalTabsetModule` must now import `BrowserAnimationsModule` into their application's root module. [#169](https://github.com/blackbaud/skyux-tabs/pull/169)
