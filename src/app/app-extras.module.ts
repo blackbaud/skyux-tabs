@@ -32,6 +32,10 @@ import {
 } from '@skyux/router';
 
 import {
+  SkyTabsForRootCompatModule
+} from './public/modules/shared/tabs-for-root-compat.module';
+
+import {
   SkyTabsModule,
   SkySectionedFormModule,
   SkyVerticalTabsetModule
@@ -42,6 +46,9 @@ import {
 } from './visual/vertical-tabset/vertical-tabs-modal-visual.component';
 
 @NgModule({
+  imports: [
+    SkyTabsForRootCompatModule
+  ],
   exports: [
     SkyAppLinkModule,
     SkyAuthHttpClientModule,

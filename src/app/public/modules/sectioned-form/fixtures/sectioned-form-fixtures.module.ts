@@ -1,13 +1,34 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {
+  CommonModule
+} from '@angular/common';
+
+import {
+  NgModule
+} from '@angular/core';
+
+import {
+  FormsModule
+} from '@angular/forms';
 
 import {
   NoopAnimationsModule
 } from '@angular/platform-browser/animations';
 
-import { SkySectionedFormModule } from '../sectioned-form.module';
-import { SkySectionedFormFixtureComponent } from './sectioned-form.component.fixture';
+import {
+  SkyCheckboxModule
+} from '@skyux/forms';
+
+import {
+  SkyTabsForRootCompatModule
+} from '../../shared/tabs-for-root-compat.module';
+
+import {
+  SkySectionedFormModule
+} from '../sectioned-form.module';
+
+import {
+  SkySectionedFormFixtureComponent
+} from './sectioned-form.component.fixture';
 
 import {
   SkySectionedFormNoSectionsFixtureComponent
@@ -25,8 +46,6 @@ import {
   SkySectionedFormFixtureInformation2Component
 } from './sectioned-form-fixture-information-2.component';
 
-import { SkyCheckboxModule } from '@skyux/forms';
-
 @NgModule({
   declarations: [
     SkySectionedFormFixtureComponent,
@@ -40,6 +59,7 @@ import { SkyCheckboxModule } from '@skyux/forms';
     NoopAnimationsModule,
     SkySectionedFormModule,
     SkyCheckboxModule,
+    SkyTabsForRootCompatModule
     FormsModule
   ],
   exports: [

@@ -15,6 +15,10 @@ import {
 } from '@angular/platform-browser/animations';
 
 import {
+  SkyTabsForRootCompatModule
+} from '../../shared/tabs-for-root-compat.module';
+
+import {
   SkyVerticalTabsetModule
 } from '../vertical-tabset.module';
 
@@ -50,6 +54,7 @@ import {
     CommonModule,
     FormsModule,
     NoopAnimationsModule,
+    SkyTabsForRootCompatModule,
     SkyVerticalTabsetModule
   ],
   exports: [

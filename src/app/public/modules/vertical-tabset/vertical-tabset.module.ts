@@ -7,10 +7,6 @@ import {
 } from '@angular/common';
 
 import {
-  SkyMediaQueryModule
-} from '@skyux/core';
-
-import {
   SkyChevronModule,
   SkyIconModule
 } from '@skyux/indicators';
@@ -45,7 +41,6 @@ import {
     CommonModule,
     SkyChevronModule,
     SkyIconModule,
-    SkyMediaQueryModule,
     SkyTabsResourcesModule,
     SkyThemeModule
   ],
