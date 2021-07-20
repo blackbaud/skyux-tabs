@@ -15,6 +15,10 @@ import {
 } from '@skyux/core';
 
 import {
+  SkyInputBoxModule
+} from '@skyux/forms';
+
+import {
   SkySectionedFormModule
 } from '@skyux/tabs';
 
@@ -39,7 +43,8 @@ import {
     CommonModule,
     ReactiveFormsModule,
     SkyIdModule,
-    SkySectionedFormModule
+    SkyInputBoxModule,
+    SkySectionedFormModule,
   ],
   declarations: [
     DemoAddressFormComponent,
