@@ -12,7 +12,8 @@ import {
 } from '@skyux/docs-tools';
 
 import {
-  SkyCheckboxModule
+  SkyCheckboxModule,
+  SkyInputBoxModule
 } from '@skyux/forms';
 
 import {
@@ -52,7 +53,8 @@ import {
     SkyPageModule,
     SkySectionedFormModule,
     SkyTabsModule,
-    SkyVerticalTabsetModule
+    SkyVerticalTabsetModule,
+    SkyInputBoxModule
   ],
   providers: [
     {
