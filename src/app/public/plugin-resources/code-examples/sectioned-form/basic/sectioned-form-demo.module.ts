@@ -44,7 +44,7 @@ import {
     ReactiveFormsModule,
     SkyIdModule,
     SkyInputBoxModule,
-    SkySectionedFormModule,
+    SkySectionedFormModule
   ],
   declarations: [
     DemoAddressFormComponent,

@@ -53,7 +53,7 @@ import {
     SkyIdModule,
     SkyInputBoxModule,
     SkyModalModule,
-    SkySectionedFormModule,
+    SkySectionedFormModule
   ],
   declarations: [
     DemoAddressFormComponent,

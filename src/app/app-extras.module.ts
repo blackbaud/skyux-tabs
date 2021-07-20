@@ -49,12 +49,12 @@ import {
     SkyCheckboxModule,
     SkyCodeModule,
     SkyDocsToolsModule,
+    SkyInputBoxModule,
     SkyModalModule,
     SkyPageModule,
     SkySectionedFormModule,
     SkyTabsModule,
-    SkyVerticalTabsetModule,
-    SkyInputBoxModule
+    SkyVerticalTabsetModule
   ],
   providers: [
     {
