@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
 
-  &:focus {
+  &:focus-visible {
     @include sky-focus-outline;
   }
 }
@@ -35,6 +35,7 @@
 @include sky-theme-modern {
   .sky-vertical-tabset-group {
     border: none;
+    margin: $sky-theme-modern-space-sm 0;
   }
 
   .sky-vertical-tabset-group-content {
@@ -50,5 +51,8 @@
     position: absolute;
     top: 6px;
     right: 5px
+  }
+  .sky-vertical-tabset-group-header-sub-open .sky-vertical-tabset-group-header-chevron {
+    color: $sky-text-color-default;
   }
 }
