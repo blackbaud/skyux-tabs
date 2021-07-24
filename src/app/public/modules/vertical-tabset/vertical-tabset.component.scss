@@ -58,6 +58,11 @@
 
 @include sky-theme-modern {
   .sky-vertical-tabset-content {
-    margin: $sky-theme-modern-space-lg $sky-theme-modern-space-xl;
+    margin: $sky-theme-modern-space-sm;
   }
+  @include sky-host-responsive-container-sm-min() {
+    .sky-vertical-tabset-content {
+      margin: $sky-theme-modern-space-lg $sky-theme-modern-space-xl;
+    }
+   }
 }
