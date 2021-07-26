@@ -49,7 +49,12 @@
 
 @include sky-theme-modern {
   .sky-sectioned-form-content {
-    margin: $sky-theme-modern-space-lg $sky-theme-modern-space-xl;
+    margin: $sky-theme-modern-space-md;
+  }
+  @include sky-host-responsive-container-sm-min() {
+    .sky-sectioned-form-content {
+      margin: $sky-theme-modern-space-lg $sky-theme-modern-space-xl;
+    }
   }
 }
 
