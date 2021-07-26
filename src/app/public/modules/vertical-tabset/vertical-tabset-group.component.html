@@ -1,15 +1,14 @@
 <div class="sky-vertical-tabset-group">
-  <div
-    *skyThemeIf="'default'"
+  <div *skyThemeIf="'default'"
     class="sky-vertical-tabset-group-header sky-padding-even-default"
     [ngClass]="{
       'sky-vertical-tabset-group-header-sub-open sky-emphasized': subMenuOpen(),
       'sky-deemphasized': disabled,
       'sky-vertical-tabset-disabled': disabled
     }"
+    [tabIndex]="-1"
     (click)="toggleMenuOpen()"
     (keyup.enter)="toggleMenuOpen()"
-    [tabIndex]="-1"
   >
     {{ groupHeading }}
     <sky-chevron
@@ -21,25 +20,23 @@
     >
     </sky-chevron>
   </div>
-  <div
+  <div *ngIf="open"
     class="sky-vertical-tabset-group-content"
-    *ngIf="open"
     [@tabSlide]
   >
     <ng-content></ng-content>
   </div>
 
-  <div
-    *skyThemeIf="'modern'"
+  <div *skyThemeIf="'modern'"
     class="sky-vertical-tabset-group-header sky-padding-even-default"
     [ngClass]="{
       'sky-vertical-tabset-group-header-sub-open sky-font-emphasized': subMenuOpen(),
       'sky-deemphasized': disabled,
       'sky-vertical-tabset-disabled': disabled
     }"
+    [tabIndex]="-1"
     (click)="toggleMenuOpen()"
     (keyup.enter)="toggleMenuOpen()"
-    [tabIndex]="-1"
   >
     {{ groupHeading }}
     <ng-container>

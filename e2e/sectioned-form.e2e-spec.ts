@@ -1,13 +1,13 @@
 import {
+  element,
+  by
+} from 'protractor';
+
+import {
   expect,
   SkyHostBrowser,
   SkyVisualThemeSelector
 } from '@skyux-sdk/e2e';
-
-import {
-  element,
-  by
-} from 'protractor';
 
 import {
   SkyHostBrowserBreakpoint

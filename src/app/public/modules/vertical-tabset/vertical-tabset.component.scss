@@ -22,11 +22,6 @@
   .sky-vertical-tabset-group-container {
     @include sky-border(dark, right);
   }
-  @include sky-theme-modern {
-    .sky-vertical-tabset-group-container {
-      border-right: 1px solid $sky-theme-modern-border-color-neutral-medium;
-    }
-  }
 }
 
 .sky-vertical-tabset-hidden {
@@ -63,6 +58,9 @@
   @include sky-host-responsive-container-sm-min() {
     .sky-vertical-tabset-content {
       margin: $sky-theme-modern-space-lg $sky-theme-modern-space-xl;
+    }
+    .sky-vertical-tabset-group-container {
+      border-right: 1px solid $sky-theme-modern-border-color-neutral-medium;
     }
    }
 }

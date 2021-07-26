@@ -14,9 +14,10 @@ export class SectionedFormVisualComponent {
   public maintainSectionContent: boolean = false;
 
   constructor(
-    private themeSvc: SkyThemeService) { }
+    private themeSvc: SkyThemeService
+  ) {}
 
-    public themeSettingsChange(themeSettings: SkyThemeSettings): void {
+  public themeSettingsChange(themeSettings: SkyThemeSettings): void {
     this.themeSvc.setTheme(themeSettings);
   }
 
