@@ -290,7 +290,6 @@ describe('Sectioned form component', () => {
     fixture.detectChanges();
 
     // check section is required
-    tabs = el.querySelectorAll('sky-vertical-tab');
     expect(firstTab.querySelector('sky-status-indicator')).not.toBeNull();
     expect(firstTab.querySelector('a').getAttribute('aria-invalid')).toBe('true');
   });

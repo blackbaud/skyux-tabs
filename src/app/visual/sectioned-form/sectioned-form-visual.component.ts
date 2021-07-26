@@ -12,6 +12,8 @@ export class SectionedFormVisualComponent {
   constructor(@Optional() private themeSvc: SkyThemeService) {}
 
   public themeSettingsChange(themeSettings: SkyThemeSettings): void {
-    this.themeSvc.setTheme(themeSettings);
+    if (this.themeSvc) {
+      this.themeSvc.setTheme(themeSettings);
+    }
   }
 }
