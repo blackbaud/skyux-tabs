@@ -96,7 +96,7 @@ describe('Sectioned Form', () => {
       element(by.css('body')).click();
 
       expect('#screenshot-sectioned-form').toMatchBaselineScreenshot(done, {
-        screenshotName: 'sectioned-form-required-and-error'
+        screenshotName: getScreenshotName('sectioned-form-required-and-error')
       });
     });
 
