@@ -6,6 +6,7 @@ import {
 
 import {
   expect,
+  expectAsync,
   SkyAppTestUtility
 } from '@skyux-sdk/testing';
 
@@ -52,6 +53,7 @@ import {
 
 // #region helpers
 let mockQueryService: MockSkyMediaQueryService;
+const isIE = window.navigator.userAgent.indexOf('rv:11.0') >= 0;
 
 function getVisibleTabContent(fixture: ComponentFixture<any>): HTMLElement[] {
   return fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane:not(.sky-vertical-tab-hidden)');
@@ -834,10 +836,13 @@ describe('Vertical tabset component - no groups', () => {
   });
 
   it('should be accessible', async(() => {
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(fixture.nativeElement).toBeAccessible();
-    });
+    // Disabling due to issue with IE
+    if (!isIE) {
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expectAsync(fixture.nativeElement).toBeAccessible();
+      });
+    }
   }));
 });
 
