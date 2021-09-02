@@ -653,6 +653,30 @@ describe('Vertical tabset component', () => {
     expect(mediaQuerySpy).toHaveBeenCalledWith(800);
     expect(tabContentPane.classList.contains('sky-responsive-container-sm')).toBeTruthy();
   });
+
+  it('should scroll back to the top of the content pane when switching tabs', () => {
+    let fixture = createTestComponent();
+    fixture.detectChanges();
+
+    let el = fixture.nativeElement;
+    fixture.componentInstance.showScrollable = true;
+
+    fixture.detectChanges();
+
+    let contentPane = document.querySelector('.sky-vertical-tabset-content');
+
+    contentPane.scrollTop = 200;
+
+    fixture.detectChanges();
+
+    // click second tab in first group
+    let tabs = el.querySelectorAll('.sky-vertical-tab');
+    tabs[1].click();
+
+    fixture.detectChanges();
+
+    expect(contentPane.scrollTop).toBe(0);
+  });
 });
 
 describe('Vertical tabset component - with ngFor', () => {
