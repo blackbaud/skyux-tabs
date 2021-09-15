@@ -8,27 +8,11 @@
   </sky-docs-demo-page-summary>
 
   <sky-docs-demo>
-    <sky-docs-demo-control-panel
-      (selectionChange)="onDemoSelectionChange($event)"
-      (reset)="onDemoReset()"
-    >
-      <sky-docs-demo-control-panel-section>
-        <sky-docs-demo-control-panel-checkbox
-          label="Name required"
-          propertyName="nameRequired"
-          [checked]="false"
-        >
-        </sky-docs-demo-control-panel-checkbox>
-      </sky-docs-demo-control-panel-section>
-    </sky-docs-demo-control-panel>
-
     <sky-sectioned-form>
       <sky-sectioned-form-section
         heading="Basic information"
       >
-        <app-demo-information-form
-          [nameRequired]="nameRequired"
-        ></app-demo-information-form>
+        <app-demo-information-form></app-demo-information-form>
       </sky-sectioned-form-section>
       <sky-sectioned-form-section
         active="true"

@@ -1,5 +1,5 @@
 import {
-  Component, Input
+  Component
 } from '@angular/core';
 
 import {
@@ -14,29 +14,14 @@ export class DemoInformationFormComponent {
   public name: string = '';
   public id: string = '5324901';
 
-  private _nameRequired: boolean = false;
-
-  public get nameRequired(): boolean {
-    return this._nameRequired;
-  }
-
-  @Input()
-  public set nameRequired(value: boolean) {
-    this._nameRequired = value;
-
-    if (this._nameRequired) {
-      this.sectionService.requiredFieldChanged(true);
-    } else {
-      this.sectionService.requiredFieldChanged(false);
-    }
-  }
-
   public constructor(
     private sectionService: SkySectionedFormService
-  ) { }
+  ) {
+    this.sectionService.requiredFieldChanged(true);
+  }
 
   public checkValidity(): void {
-    if (!this.name && this.nameRequired) {
+    if (!this.name) {
       this.sectionService.invalidFieldChanged(true);
     } else {
       this.sectionService.invalidFieldChanged(false);
