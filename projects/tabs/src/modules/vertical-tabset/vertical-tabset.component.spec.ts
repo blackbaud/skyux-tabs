@@ -6,6 +6,7 @@ import {
 
 import {
   expect,
+  expectAsync,
   SkyAppTestUtility
 } from '@skyux-sdk/testing';
 
@@ -515,14 +516,12 @@ describe('Vertical tabset component', () => {
     expect(visibleTabs[0].textContent.trim()).toBe('Group 2 Tab 1 content');
   });
 
-  it('should be accessible', async(() => {
+  it('should be accessible', async () => {
     let fixture = createTestComponent();
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      expect(fixture.nativeElement).toBeAccessible();
-    });
-  }));
+    await fixture.whenStable();
+    await expectAsync(fixture.nativeElement).toBeAccessible();
+  });
 
   it('maintainTabContent - tab content remains in same order', () => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
@@ -808,12 +807,11 @@ describe('Vertical tabset component - no groups', () => {
     expect(visibleTabs[0].textContent.trim()).toBe('Tab 1 content');
   });
 
-  it('should be accessible', async(() => {
+  it('should be accessible', async () => {
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(fixture.nativeElement).toBeAccessible();
-    });
-  }));
+    await fixture.whenStable();
+    await expectAsync(fixture.nativeElement).toBeAccessible();
+  });
 });
 
 describe('Vertical tabset no active tabs', () => {
@@ -834,9 +832,8 @@ describe('Vertical tabset no active tabs', () => {
     fixture.componentInstance.tabset.tabService.updateContent();
   });
 
-  it('should be accessible', async(() => {
-    fixture.whenStable().then(() => {
-      expect(fixture.nativeElement).toBeAccessible();
-    });
-  }));
+  it('should be accessible', async () => {
+    await fixture.whenStable();
+    await expectAsync(fixture.nativeElement).toBeAccessible();
+  });
 });

@@ -42,7 +42,6 @@ import {
     CommonModule,
     SkyChevronModule,
     SkyIconModule,
-    SkyMediaQueryModule,
     SkyStatusIndicatorModule,
     SkyTabsResourcesModule,
     SkyThemeModule

@@ -3,7 +3,7 @@ import {
 } from '@angular/core/testing';
 
 import {
-  expect
+  expect, expectAsync
 } from '@skyux-sdk/testing';
 
 import {
@@ -361,13 +361,12 @@ describe('Sectioned form component', () => {
     expect(content[0].textContent.trim()).toBe('information 2');
   });
 
-  it('should be accessible', async(() => {
+  it('should be accessible', async () => {
     let fixture = createTestComponent();
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(fixture.nativeElement).toBeAccessible();
-    });
-  }));
+    await fixture.whenStable();
+    await expectAsync(fixture.nativeElement).toBeAccessible();
+  });
 
   it('maintainSectionContent - tab content remains in same order', () => {
     let fixture = createTestComponent();
@@ -466,11 +465,10 @@ describe('Sectioned form component - no active sections', () => {
     expect(tabs.length).toBe(2);
   });
 
-  it('should be accessible', async(() => {
+  it('should be accessible', async () => {
     let fixture = createTestComponent();
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      expect(fixture.nativeElement).toBeAccessible();
-    });
-  }));
+    await fixture.whenStable();
+    await expectAsync(fixture.nativeElement).toBeAccessible();
+  });
 });
