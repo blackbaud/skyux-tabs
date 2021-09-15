@@ -1,6 +1,13 @@
 import {
-  Component
+  Component,
+  OnInit
 } from '@angular/core';
+
+import {
+  FormBuilder,
+  FormGroup,
+  Validators
+} from '@angular/forms';
 
 import {
   SkySectionedFormService
@@ -10,27 +17,36 @@ import {
   selector: 'app-demo-information-form',
   templateUrl: './demo-information-form.component.html'
 })
-export class DemoInformationFormComponent {
-  public name: string = '';
+export class DemoInformationFormComponent implements OnInit {
   public id: string = '5324901';
+  public myForm: FormGroup;
+  public name: string = '';
 
-  public constructor(
-    private sectionService: SkySectionedFormService
+  constructor(
+    private formBuilder: FormBuilder,
+    private sectionedFormService: SkySectionedFormService
   ) {
-    this.sectionService.requiredFieldChanged(true);
+    this.sectionedFormService.requiredFieldChanged(true);
+  }
+
+  public ngOnInit(): void {
+    this.myForm = this.formBuilder.group({
+      name: [this.name, Validators.required],
+      id: [this.id, Validators.pattern('^[0-9]+$')]
+    });
+
+    this.sectionedFormService.requiredFieldChanged(true);
+
+    this.myForm.valueChanges.subscribe((cal) => {
+      this.checkValidity();
+    });
   }
 
   public checkValidity(): void {
-    if (!this.name) {
-      this.sectionService.invalidFieldChanged(true);
+    if (!this.myForm.get('name').value) {
+      this.sectionedFormService.invalidFieldChanged(true);
     } else {
-      this.sectionService.invalidFieldChanged(false);
+      this.sectionedFormService.invalidFieldChanged(false);
     }
-  }
-
-  public nameChange(newName: string): void {
-    this.name = newName;
-
-    this.checkValidity();
   }
 }
