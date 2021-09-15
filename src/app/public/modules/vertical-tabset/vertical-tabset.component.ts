@@ -112,11 +112,11 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
   @ViewChild('groupContainerWrapper')
   public tabGroups: ElementRef;
 
-  @ViewChild('contentContainerWrapper')
-  public contentWrapper: ElementRef;
-
   @ViewChild('skySideContent')
   public content: ElementRef;
+
+  @ViewChild('contentContainerWrapper')
+  private contentWrapper: ElementRef;
 
   private isMobile = false;
   private _ngUnsubscribe = new Subject();
@@ -136,7 +136,7 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
       .subscribe((index: any) => {
         this.activeChange.emit(index);
         if (this.contentWrapper) {
-          this.adapterService.scrollToContentTop(this.contentWrapper.nativeElement);
+          this.adapterService.scrollToContentTop(this.contentWrapper);
         }
         this.changeRef.markForCheck();
       });
