@@ -1,12 +1,14 @@
 # 5.0.0-beta.1 (2021-08-27)
 
 - Migrated to Angular CLI. [#180](https://github.com/blackbaud/skyux-tabs/pull/180)
+# 4.6.8 (2021-07-27)
+
+- Fixed the sectioned form component to have proper spacing between a section's heading and invalid icon. [#176](https://github.com/blackbaud/skyux-tabs/pull/176)
 
 # 5.0.0-beta.0 (2021-07-14)
 
 - Initial beta release.
 - Added support for `5.0.0-beta.*` versions of SKY UX component libraries. [#175](https://github.com/blackbaud/skyux-tabs/pull/175)
-
 # 4.6.7 (2021-06-11)
 
 - Fixed the module name in the installation documentation. [#171](https://github.com/blackbaud/skyux-tabs/pull/171)
