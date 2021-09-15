@@ -10,7 +10,7 @@
     <input
       class="sky-form-control"
       [ngModel]="name"
-      [required]="nameRequired"
+      [required]="true"
       (blur)="checkValidity()"
       (ngModelChange)="nameChange($event)"
       id="inputName"
