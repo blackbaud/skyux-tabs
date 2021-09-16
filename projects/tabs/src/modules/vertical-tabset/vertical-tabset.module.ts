@@ -32,6 +32,10 @@ import {
   SkyVerticalTabsetGroupComponent
 } from './vertical-tabset-group.component';
 
+import {
+  SkyVerticalTabsetAdapterService
+} from './vertical-tabset-adapter.service';
+
 @NgModule({
   declarations: [
     SkyVerticalTabsetComponent,
@@ -45,6 +49,9 @@ import {
     SkyStatusIndicatorModule,
     SkyTabsResourcesModule,
     SkyThemeModule
+  ],
+  providers: [
+    SkyVerticalTabsetAdapterService
   ],
   exports: [
     SkyVerticalTabsetComponent,

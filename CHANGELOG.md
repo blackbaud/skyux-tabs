@@ -1,10 +1,23 @@
+# 5.0.0-beta.3 (2021-09-16)
+
+- Merge master and update peer dependencies. [#188](https://github.com/blackbaud/skyux-tabs/pull/188)
+
 # 5.0.0-beta.2 (2021-09-16)
 
 - Added support for "partial" Ivy compilation mode. [#184](https://github.com/blackbaud/skyux-tabs/pull/184)
 
+# 4.7.0 (2021-09-16)
+
+- Added modern theme styles for the sectioned form component. [#178](https://github.com/blackbaud/skyux-tabs/pull/178)
+
+# 4.6.9 (2021-09-16)
+
+- Fixed the vertical tabs component to scroll the top of the content pane when a new tab is activated. [#182](https://github.com/blackbaud/skyux-tabs/pull/182)
+
 # 5.0.0-beta.1 (2021-08-27)
 
 - Migrated to Angular CLI. [#180](https://github.com/blackbaud/skyux-tabs/pull/180)
+
 # 4.6.8 (2021-07-27)
 
 - Fixed the sectioned form component to have proper spacing between a section's heading and invalid icon. [#176](https://github.com/blackbaud/skyux-tabs/pull/176)
