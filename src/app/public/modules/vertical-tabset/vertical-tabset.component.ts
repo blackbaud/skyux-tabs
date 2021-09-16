@@ -1,13 +1,14 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
+  HostListener,
   ViewChild,
   Input,
   OnInit,
   ChangeDetectionStrategy,
   Output,
   EventEmitter,
-  AfterViewChecked,
   ChangeDetectorRef,
   OnDestroy
 } from '@angular/core';
@@ -67,7 +68,7 @@ import {
     )
   ]
 })
-export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnDestroy {
+export class SkyVerticalTabsetComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /**
    * Specifies the text to display on the show tabs button on mobile devices.
@@ -138,6 +139,9 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
         if (this.contentWrapper) {
           this.adapterService.scrollToContentTop(this.contentWrapper);
         }
+
+        this.updateContent();
+
         this.changeRef.markForCheck();
       });
 
@@ -165,13 +169,30 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
     }
   }
 
-  public ngAfterViewChecked() {
-    this.tabService.content = this.content;
-    this.tabService.updateContent();
+  public ngAfterViewInit() {
+    this.updateContent();
   }
 
   public ngOnDestroy() {
     this._ngUnsubscribe.next();
     this._ngUnsubscribe.complete();
+  }
+
+  @HostListener('window:resize')
+  public onWindowResize() {
+    this.updateContent();
+  }
+
+  private updateContent(): void {
+    if (this.tabService.content === this.content) {
+      return;
+    }
+
+    this.tabService.content = this.content;
+    this.tabService.updateContent();
+
+    setTimeout(() => {
+      console.log('updateContent() done.');
+    });
   }
 }
