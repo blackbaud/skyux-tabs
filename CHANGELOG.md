@@ -1,3 +1,7 @@
+# 5.0.0-beta.2 (2021-09-16)
+
+- Added support for "partial" Ivy compilation mode. [#184](https://github.com/blackbaud/skyux-tabs/pull/184)
+
 # 5.0.0-beta.1 (2021-08-27)
 
 - Migrated to Angular CLI. [#180](https://github.com/blackbaud/skyux-tabs/pull/180)
