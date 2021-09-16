@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Optional} from '@angular/core';
 
 @Component({
   selector: 'app-sectioned-form-visual',

@@ -19,10 +19,6 @@ import {
 } from '@skyux/forms';
 
 import {
-  SkyTabsForRootCompatModule
-} from '../../shared/tabs-for-root-compat.module';
-
-import {
   SkySectionedFormModule
 } from '../sectioned-form.module';
 
@@ -59,7 +55,6 @@ import {
     NoopAnimationsModule,
     SkySectionedFormModule,
     SkyCheckboxModule,
-    SkyTabsForRootCompatModule,
     FormsModule
   ],
   exports: [

@@ -3,11 +3,6 @@ import {
   Component
 } from '@angular/core';
 
-import {
-  SkyThemeService,
-  SkyThemeSettings
-} from '@skyux/theme';
-
 @Component({
   selector: 'app-tabs-visual',
   templateUrl: './tabs-visual.component.html',
@@ -20,8 +15,6 @@ export class TabsVisualComponent {
   public requiredValue2: boolean;
 
   public showWizard = false;
-
-  constructor(private themeSvc: SkyThemeService) { }
 
   public newTabClick() { }
 
@@ -39,9 +32,5 @@ export class TabsVisualComponent {
 
   public validateStep1() {
     return true;
-  }
-
-  public themeSettingsChange(themeSettings: SkyThemeSettings) {
-    this.themeSvc.setTheme(themeSettings);
   }
 }

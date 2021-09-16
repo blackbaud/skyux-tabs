@@ -4,7 +4,7 @@ import {
 
 import {
   SkySectionedFormService
-} from 'projects/tabs/src/modules/sectioned-form/sectioned-form.service';
+} from '@skyux/tabs';
 
 @Component({
   selector: 'app-demo-information-form',
@@ -21,23 +21,29 @@ export class SkyDemoInformationFormComponent {
   }
   public set nameRequired(value: boolean) {
     this._nameRequired = value;
-    this.emitRequiredChange();
+
+    if (this._nameRequired) {
+      this.sectionService.requiredFieldChanged(true);
+    } else {
+      this.sectionService.requiredFieldChanged(false);
+    }
   }
 
   public constructor(
     private sectionService: SkySectionedFormService
   ) { }
 
-  public nameChange(newName: string): void {
-    this.name = newName;
-    this.emitRequiredChange();
+  public checkValidity(): void {
+    if (!this.name && this.nameRequired) {
+      this.sectionService.invalidFieldChanged(true);
+    } else {
+      this.sectionService.invalidFieldChanged(false);
+    }
   }
 
-  private emitRequiredChange() {
-    if (this.nameRequired && !this.name) {
-      this.sectionService.requiredFieldChanged(true);
-    } else {
-      this.sectionService.requiredFieldChanged(false);
-    }
+  public nameChange(newName: string): void {
+    this.name = newName;
+
+    this.checkValidity();
   }
 }
