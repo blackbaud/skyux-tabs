@@ -4,7 +4,7 @@ import {
 
 import {
   SkySectionedFormService
-} from 'projects/tabs/src/modules/sectioned-form/sectioned-form.service';
+} from '@skyux/tabs';
 
 @Component({
   selector: 'app-demo-information-form',

@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { SkyDocsToolsModule } from '@skyux/docs-tools';
 import { SkyCheckboxModule } from '@skyux/forms';
 import { SkyPageModule } from '@skyux/layout';
 import { SkyModalModule } from '@skyux/modals';
 
-import { SkySectionedFormModule, SkyTabsModule, SkyVerticalTabsetModule } from 'projects/tabs/src/public-api';
+import { SkySectionedFormModule, SkyTabsModule, SkyVerticalTabsetModule } from '@skyux/tabs';
 
 import { VisualComponent } from './visual.component';
 
@@ -19,7 +18,7 @@ import { SectionedFormVisualComponent } from './sectioned-form/sectioned-form-vi
 import { TabsVisualComponent } from './tabs/tabs-visual.component';
 import { VerticalTabsetModalVisualComponent } from './vertical-tabset/vertical-tabs-modal-visual.component';
 import { VerticalTabsVisualComponent } from './vertical-tabset/vertical-tabs-visual.component';
-
+import { SkyE2eThemeSelectorModule } from '@skyux/e2e-client';
 @NgModule({
   declarations: [
     SkyDemoAddressFormComponent,
@@ -36,7 +35,7 @@ import { VerticalTabsVisualComponent } from './vertical-tabset/vertical-tabs-vis
     FormsModule,
     RouterModule,
     SkyCheckboxModule,
-    SkyDocsToolsModule,
+    SkyE2eThemeSelectorModule,
     SkyModalModule,
     SkyPageModule,
     SkySectionedFormModule,

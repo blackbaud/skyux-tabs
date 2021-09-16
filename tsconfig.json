@@ -13,9 +13,10 @@
     "target": "es2017",
     "module": "es2020",
     "paths": {
-      "tabs": [
-        "dist/tabs/tabs",
-        "dist/tabs"
+      "@skyux/tabs" : [
+        "dist/tabs",
+        "node_modules/@skyux/tabs",
+        "projects/tabs/src/public-api.ts"
       ]
     },
     "lib": [

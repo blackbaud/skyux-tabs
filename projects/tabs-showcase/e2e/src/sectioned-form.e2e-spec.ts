@@ -64,22 +64,22 @@ describe('Sectioned Form', () => {
     });
   });
 
-  it('should match previous sectioned form screenshot when the required and error indicators are present', (done) => {
-    SkyHostBrowser.get('visual/sectioned-form');
-    SkyHostBrowser.setWindowBreakpoint('lg');
+  it('should match previous sectioned form screenshot when the required and error indicators are present', async (done) => {
+    await SkyHostBrowser.get('visual/sectioned-form');
+    await SkyHostBrowser.setWindowBreakpoint('lg');
 
     let tabs = element.all(by.css('sky-vertical-tab'));
 
     // click first tab
-    tabs.get(0).click();
+    await tabs.get(0).click();
 
     // Trigger the checkbox to require the name input
-    element(by.css('#name-checkbox-container .sky-switch-control')).click();
+    await element(by.css('#name-checkbox-container .sky-switch-control')).click();
 
     // Click the name input
-    element(by.css('#inputName')).click();
+    await element(by.css('#inputName')).click();
 
-    element(by.css('body')).click();
+    await element(by.css('body')).click();
 
     expect('#screenshot-sectioned-form').toMatchBaselineScreenshot(done, {
       screenshotName: 'sectioned-form-required-and-error'
