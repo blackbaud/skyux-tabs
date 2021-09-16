@@ -149,11 +149,11 @@ export class SkyVerticalTabsetService {
     return this._isMobile;
   }
 
-  public updateContent() {
+  public updateContent(): ElementRef | undefined {
     if (!this.maintainTabContent) {
       if (!this._contentAdded && this.contentVisible()) {
         // content needs to be moved
-        this.moveContent();
+        return this.moveContent();
 
       } else if (this._contentAdded && !this.contentVisible()) {
         // content hidden
@@ -192,7 +192,7 @@ export class SkyVerticalTabsetService {
     this.content = undefined;
   }
 
-  private moveContent() {
+  private moveContent(): ElementRef | undefined {
     if (this._content && !this._contentAdded) {
       let activeTab = this.activeTab();
       let activeContent = activeTab ? activeTab.tabContent : undefined;
@@ -201,6 +201,7 @@ export class SkyVerticalTabsetService {
         this._content.nativeElement.appendChild(activeContent.nativeElement);
         activeTab.contentRendered = true;
         this._contentAdded = true;
+        return activeContent;
       }
     }
   }

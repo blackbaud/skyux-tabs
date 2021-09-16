@@ -21,7 +21,8 @@ import {
 } from '@skyux/http';
 
 import {
-  SkyPageModule
+  SkyPageModule,
+  SkyBackToTopModule
 } from '@skyux/layout';
 
 import {
@@ -46,6 +47,7 @@ import {
   exports: [
     SkyAppLinkModule,
     SkyAuthHttpClientModule,
+    SkyBackToTopModule,
     SkyCheckboxModule,
     SkyCodeModule,
     SkyDocsToolsModule,

@@ -10,7 +10,8 @@ import {
   Output,
   EventEmitter,
   ChangeDetectorRef,
-  OnDestroy
+  OnDestroy,
+  Host
 } from '@angular/core';
 
 import {
@@ -42,12 +43,18 @@ import {
   HIDDEN_STATE,
   VISIBLE_STATE
 } from './vertical-tabset.service';
+import { SkyScrollableHostProvider } from '@skyux/core';
 
 @Component({
   selector: 'sky-vertical-tabset',
   templateUrl: './vertical-tabset.component.html',
   styleUrls: ['./vertical-tabset.component.scss'],
-  providers: [SkyVerticalTabsetService],
+  providers: [SkyVerticalTabsetService, {
+    provide: SkyScrollableHostProvider,
+    useValue: {
+      scrollableElementRef$: new Subject<ElementRef>()
+    }
+  }],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger(
@@ -127,7 +134,8 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewInit, OnDest
     public adapterService: SkyVerticalTabsetAdapterService,
     public tabService: SkyVerticalTabsetService,
     private resources: SkyLibResourcesService,
-    private changeRef: ChangeDetectorRef) {}
+    private changeRef: ChangeDetectorRef,
+    @Host() private scrollableHost: SkyScrollableHostProvider) {}
 
   public ngOnInit() {
     this.tabService.maintainTabContent = this.maintainTabContent;
@@ -189,10 +197,11 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewInit, OnDest
     }
 
     this.tabService.content = this.content;
-    this.tabService.updateContent();
+    const activeContentEl = this.tabService.updateContent();
 
     setTimeout(() => {
-      console.log('updateContent() done.');
+      console.log('updateContent() done.', activeContentEl);
+      (this.scrollableHost.scrollableElementRef$ as any).next(activeContentEl);
     });
   }
 }
