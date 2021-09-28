@@ -87,7 +87,7 @@ export class SkyTabComponent implements OnChanges, OnDestroy {
    * Displays a counter beside the tab header.
    */
   @Input()
-  public tabHeaderCount: string;
+  public tabHeaderCount: string | undefined;
 
   /**
    * Specifies the tab header.

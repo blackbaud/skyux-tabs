@@ -39,7 +39,7 @@ export class SkyTabButtonComponent {
   public buttonText: string;
 
   @Input()
-  public buttonTextCount: string;
+  public buttonTextCount: string | undefined;
 
   @Input()
   public closeable: boolean;
