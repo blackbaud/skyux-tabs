@@ -1,6 +1,6 @@
 {
   "name": "@skyux/tabs",
-  "version": "5.0.0-beta.3",
+  "version": "5.0.0-beta.4",
   "peerDependencies": {
     "@angular/common": "^12.2.0",
     "@angular/core": "^12.2.0",
@@ -11,7 +11,7 @@
     "@skyux/indicators": "^5.0.0-beta.4",
     "@skyux/modals": "^5.0.0-beta.6",
     "@skyux/popovers": "^5.0.0-beta.2",
-    "@skyux/theme": "^5.0.0-beta.5"
+    "@skyux/theme": "^5.0.0-beta.6"
   },
   "dependencies": {
     "tslib": "^2.3.0"

@@ -1,3 +1,7 @@
+# 5.0.0-beta.4 (2021-09-28)
+
+- Fixed the `tabHeaderCount` input to support both `string` and `undefined` types. [#192](https://github.com/blackbaud/skyux-tabs/pull/192)
+
 # 5.0.0-beta.3 (2021-09-16)
 
 - Merge master and update peer dependencies. [#188](https://github.com/blackbaud/skyux-tabs/pull/188)
