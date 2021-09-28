@@ -28,7 +28,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "codeCoverage": true,
-            "codeCoverageExclude": ["**/fixtures/**"],
+            "codeCoverageExclude": ["**/fixtures/**", "projects/tabs/src/test.ts"],
             "main": "projects/tabs/src/test.ts",
             "styles": [
               "node_modules/@skyux/theme/css/sky.css",
