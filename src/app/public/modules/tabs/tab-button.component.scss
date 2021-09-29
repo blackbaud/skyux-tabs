@@ -49,6 +49,9 @@
   .sky-tab-btn-closeable {
     padding-right: 44px;
   }
+  .sky-dropdown .sky-btn {
+    box-shadow: none;
+  }
 }
 
 @include sky-theme-modern-dark {
