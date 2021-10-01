@@ -1,0 +1,32 @@
+<sky-e2e-theme-selector></sky-e2e-theme-selector>
+
+<sky-page>
+  <div
+    id="screenshot-sectioned-form"
+    style="padding-left: 15px;"
+  >
+    <sky-sectioned-form
+      [maintainSectionContent]="maintainSectionContent"
+    >
+      <sky-sectioned-form-section
+        heading="Basic information"
+      >
+        <app-demo-information-form >
+        </app-demo-information-form>
+      </sky-sectioned-form-section>
+      <sky-sectioned-form-section
+        active="true"
+        heading="Addresses"
+        itemCount="2"
+      >
+        <app-demo-address-form></app-demo-address-form>
+      </sky-sectioned-form-section>
+      <sky-sectioned-form-section
+        heading="Phone numbers"
+        itemCount="3"
+      >
+        <app-demo-phone-form></app-demo-phone-form>
+      </sky-sectioned-form-section>
+    </sky-sectioned-form>
+  </div>
+</sky-page>
