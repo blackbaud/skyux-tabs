@@ -53,6 +53,7 @@ import {
 
 // #region helpers
 let mockQueryService: MockSkyMediaQueryService;
+const isIE = window.navigator.userAgent.indexOf('rv:11.0') >= 0;
 
 function getVisibleTabContent(fixture: ComponentFixture<any>): HTMLElement[] {
   return fixture.nativeElement.querySelectorAll('.sky-vertical-tab-content-pane:not(.sky-vertical-tab-hidden)');

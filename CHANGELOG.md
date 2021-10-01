@@ -30,6 +30,7 @@
 
 - Initial beta release.
 - Added support for `5.0.0-beta.*` versions of SKY UX component libraries. [#175](https://github.com/blackbaud/skyux-tabs/pull/175)
+
 # 4.6.7 (2021-06-11)
 
 - Fixed the module name in the installation documentation. [#171](https://github.com/blackbaud/skyux-tabs/pull/171)
