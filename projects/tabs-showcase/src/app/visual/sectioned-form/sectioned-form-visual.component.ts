@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, Optional} from '@angular/core';
-import { SkyThemeService, SkyThemeSettings } from '@skyux/theme';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-sectioned-form-visual',
@@ -8,12 +7,4 @@ import { SkyThemeService, SkyThemeSettings } from '@skyux/theme';
 })
 export class SectionedFormVisualComponent {
   public maintainSectionContent: boolean = false;
-
-  constructor(@Optional() private themeSvc: SkyThemeService) {}
-
-  public themeSettingsChange(themeSettings: SkyThemeSettings): void {
-    if (this.themeSvc) {
-      this.themeSvc.setTheme(themeSettings);
-    }
-  }
 }

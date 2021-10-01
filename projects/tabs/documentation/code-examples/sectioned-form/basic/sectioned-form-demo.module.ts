@@ -15,7 +15,6 @@ import {
 } from '@skyux/core';
 
 import {
-  SkyCheckboxModule,
   SkyInputBoxModule
 } from '@skyux/forms';
 
@@ -43,7 +42,6 @@ import {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    SkyCheckboxModule,
     SkyIdModule,
     SkyInputBoxModule,
     SkySectionedFormModule
