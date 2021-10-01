@@ -2,10 +2,7 @@
 
 ### New features
 
-- Migrated to Angular CLI. [#180](https://github.com/blackbaud/skyux-tabs/pull/180)
-- Added support for "partial" Ivy compilation mode. [#184](https://github.com/blackbaud/skyux-tabs/pull/184)
-- Added support for `@angular/core@^12`. [#169](https://github.com/blackbaud/skyux-tabs/pull/169)
-- Merge master and update peer dependencies. [#188](https://github.com/blackbaud/skyux-tabs/pull/188)
+- Added support for Angular 12. [#169](https://github.com/blackbaud/skyux-tabs/pull/169)
 
 ### Bug fixes
 
