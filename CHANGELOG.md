@@ -1,14 +1,20 @@
-# 5.0.0-beta.4 (2021-09-28)
+# 5.0.0 (2021-10-01)
+
+### New features
+
+- Migrated to Angular CLI. [#180](https://github.com/blackbaud/skyux-tabs/pull/180)
+- Added support for "partial" Ivy compilation mode. [#184](https://github.com/blackbaud/skyux-tabs/pull/184)
+- Added support for `@angular/core@^12`. [#169](https://github.com/blackbaud/skyux-tabs/pull/169)
+- Merge master and update peer dependencies. [#188](https://github.com/blackbaud/skyux-tabs/pull/188)
+
+### Bug fixes
 
 - Fixed the `tabHeaderCount` input to support both `string` and `undefined` types. [#192](https://github.com/blackbaud/skyux-tabs/pull/192)
 
-# 5.0.0-beta.3 (2021-09-16)
+### Breaking changes
 
-- Merge master and update peer dependencies. [#188](https://github.com/blackbaud/skyux-tabs/pull/188)
+- Removed `BrowserAnimationsModule` from the `imports` section of `SkyVerticalTabsetModule` to support lazy-loading. Consumers of `SkyVerticalTabsetModule` must now import `BrowserAnimationsModule` into their application's root module. [#169](https://github.com/blackbaud/skyux-tabs/pull/169)
 
-# 5.0.0-beta.2 (2021-09-16)
-
-- Added support for "partial" Ivy compilation mode. [#184](https://github.com/blackbaud/skyux-tabs/pull/184)
 
 # 4.7.0 (2021-09-16)
 
@@ -17,10 +23,6 @@
 # 4.6.9 (2021-09-16)
 
 - Fixed the vertical tabs component to scroll the top of the content pane when a new tab is activated. [#182](https://github.com/blackbaud/skyux-tabs/pull/182)
-
-# 5.0.0-beta.1 (2021-08-27)
-
-- Migrated to Angular CLI. [#180](https://github.com/blackbaud/skyux-tabs/pull/180)
 
 # 4.6.8 (2021-07-27)
 
@@ -34,11 +36,6 @@
 # 4.6.7 (2021-06-11)
 
 - Fixed the module name in the installation documentation. [#171](https://github.com/blackbaud/skyux-tabs/pull/171)
-
-# 5.0.0-alpha.0 (2021-05-24)
-
-- Added support for `@angular/core@^12`. [#169](https://github.com/blackbaud/skyux-tabs/pull/169)
-- Removed `BrowserAnimationsModule` from the `imports` section of `SkyVerticalTabsetModule` to support lazy-loading. Consumers of `SkyVerticalTabsetModule` must now import `BrowserAnimationsModule` into their application's root module. [#169](https://github.com/blackbaud/skyux-tabs/pull/169)
 
 # 4.6.6 (2021-05-12)
 
