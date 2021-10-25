@@ -1,3 +1,7 @@
+# 5.0.1 (2021-10-25)
+
+- Fixed the tab content in vertical tabs to allow focus and scrolling with keyboard controls. [#195](https://github.com/blackbaud/skyux-tabs/pull/195)
+
 # 5.0.0 (2021-10-01)
 
 ### New features
