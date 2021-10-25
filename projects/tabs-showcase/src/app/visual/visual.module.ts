@@ -7,7 +7,7 @@ import { SkyCheckboxModule } from '@skyux/forms';
 import { SkyPageModule } from '@skyux/layout';
 import { SkyModalModule } from '@skyux/modals';
 
-import { SkySectionedFormModule, SkyTabsModule, SkyVerticalTabsetModule } from '@skyux/tabs';
+import { SkySectionedFormModule, SkyTabsModule, SkyVerticalTabsetModule } from 'projects/tabs/src/public-api';
 
 import { VisualComponent } from './visual.component';
 

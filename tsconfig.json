@@ -14,7 +14,6 @@
     "module": "es2020",
     "paths": {
       "@skyux/tabs" : [
-        "dist/tabs",
         "node_modules/@skyux/tabs",
         "projects/tabs/src/public-api.ts"
       ]
