@@ -39,14 +39,27 @@ import {
 } from './demo-phone-form.component';
 
 import {
+  ModalSectionedFormDemoComponent
+} from './modal-sectioned-form-demo.component';
+
+import {
   SectionedFormDemoComponent
 } from './sectioned-form-demo.component';
 
-import {
-  SectionedModalFormDemoComponent
-} from './sectioned-modal-form-demo.component';
-
 @NgModule({
+  declarations: [
+    DemoAddressFormComponent,
+    DemoInformationFormComponent,
+    DemoPhoneFormComponent,
+    ModalSectionedFormDemoComponent,
+    SectionedFormDemoComponent,
+  ],
+  entryComponents: [
+    ModalSectionedFormDemoComponent
+  ],
+  exports: [
+    SectionedFormDemoComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -55,19 +68,6 @@ import {
     SkyModalModule,
     SkySectionedFormModule
   ],
-  declarations: [
-    DemoAddressFormComponent,
-    DemoInformationFormComponent,
-    DemoPhoneFormComponent,
-    SectionedFormDemoComponent,
-    SectionedModalFormDemoComponent
-  ],
-  entryComponents: [
-    SectionedModalFormDemoComponent
-  ],
-  exports: [
-    SectionedFormDemoComponent
-  ]
 })
 
 export class SectionedFormDemoModule { }

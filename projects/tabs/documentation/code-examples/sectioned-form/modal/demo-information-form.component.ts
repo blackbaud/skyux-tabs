@@ -1,4 +1,6 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   OnInit
 } from '@angular/core';
@@ -15,7 +17,8 @@ import {
 
 @Component({
   selector: 'app-demo-information-form',
-  templateUrl: './demo-information-form.component.html'
+  templateUrl: './demo-information-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DemoInformationFormComponent implements OnInit {
   public id: string = '5324901';
@@ -25,7 +28,8 @@ export class DemoInformationFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private sectionedFormService: SkySectionedFormService
+    private sectionedFormService: SkySectionedFormService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   public ngOnInit(): void {
@@ -42,6 +46,7 @@ export class DemoInformationFormComponent implements OnInit {
       this.nameRequired = changes.nameRequired;
       this.checkValidity();
     });
+    this.changeDetector.markForCheck();
   }
 
   public checkValidity(): void {

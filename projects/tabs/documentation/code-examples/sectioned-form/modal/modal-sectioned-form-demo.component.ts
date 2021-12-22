@@ -1,4 +1,6 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ViewChild
 } from '@angular/core';
@@ -12,10 +14,11 @@ import {
 } from '@skyux/tabs';
 
 @Component({
-  selector: 'app-sectioned-modal-form-demo',
-  templateUrl: './sectioned-modal-form-demo.component.html'
+  selector: 'app-modal-sectioned-form-demo',
+  templateUrl: './modal-sectioned-form-demo.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SectionedModalFormDemoComponent {
+export class ModalSectionedFormDemoComponent {
 
   public activeIndexDisplay: number = undefined;
 
@@ -25,11 +28,13 @@ export class SectionedModalFormDemoComponent {
   public sectionedFormComponent: SkySectionedFormComponent;
 
   constructor(
-    public modalInstance: SkyModalInstance
-  ) { }
+    public modalInstance: SkyModalInstance,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   public onIndexChanged(newIndex: number): void {
     this.activeIndexDisplay = newIndex;
+    this.changeDetector.markForCheck();
   }
 
   public tabsHidden(): boolean {
@@ -39,5 +44,4 @@ export class SectionedModalFormDemoComponent {
   public showTabs(): void {
     this.sectionedFormComponent.showTabs();
   }
-
 }
