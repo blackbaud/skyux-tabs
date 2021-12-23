@@ -2,23 +2,15 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnInit
+  OnInit,
 } from '@angular/core';
-
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-
-import {
-  SkySectionedFormService
-} from '@skyux/tabs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SkySectionedFormService } from '@skyux/tabs';
 
 @Component({
   selector: 'app-demo-information-form',
   templateUrl: './demo-information-form.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DemoInformationFormComponent implements OnInit {
   public id: string = '5324901';
@@ -30,15 +22,15 @@ export class DemoInformationFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private sectionedFormService: SkySectionedFormService,
     private changeDetector: ChangeDetectorRef
-  ) {}
-
-  public ngOnInit(): void {
+  ) {
     this.myForm = this.formBuilder.group({
       name: [this.name],
       nameRequired: [this.nameRequired],
-      id: [this.id, Validators.pattern('^[0-9]+$')]
+      id: [this.id, Validators.pattern('^[0-9]+$')],
     });
+  }
 
+  public ngOnInit(): void {
     this.myForm.valueChanges.subscribe((changes) => {
       console.log(changes);
       this.id = changes.id;
@@ -51,14 +43,14 @@ export class DemoInformationFormComponent implements OnInit {
 
   public checkValidity(): void {
     if (this.nameRequired) {
-      this.myForm.get('name').setValidators([Validators.required]);
+      this.myForm.get('name')?.setValidators([Validators.required]);
       this.sectionedFormService.requiredFieldChanged(true);
     } else {
-      this.myForm.get('name').setValidators([]);
+      this.myForm.get('name')?.setValidators([]);
       this.sectionedFormService.requiredFieldChanged(false);
     }
 
-    if (!this.myForm.get('name').value && this.nameRequired) {
+    if (!this.myForm.get('name')?.value && this.nameRequired) {
       this.sectionedFormService.invalidFieldChanged(true);
     } else {
       this.sectionedFormService.invalidFieldChanged(false);

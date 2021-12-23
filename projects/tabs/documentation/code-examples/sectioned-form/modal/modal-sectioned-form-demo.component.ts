@@ -2,30 +2,23 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
-
-import {
-  SkyModalInstance
-} from '@skyux/modals';
-
-import {
-  SkySectionedFormComponent
-} from '@skyux/tabs';
+import { SkyModalInstance } from '@skyux/modals';
+import { SkySectionedFormComponent } from '@skyux/tabs';
 
 @Component({
   selector: 'app-modal-sectioned-form-demo',
   templateUrl: './modal-sectioned-form-demo.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalSectionedFormDemoComponent {
-
-  public activeIndexDisplay: number = undefined;
+  public activeIndexDisplay: number | undefined;
 
   public activeTab = true;
 
   @ViewChild(SkySectionedFormComponent)
-  public sectionedFormComponent: SkySectionedFormComponent;
+  public sectionedFormComponent: SkySectionedFormComponent | undefined;
 
   constructor(
     public modalInstance: SkyModalInstance,
@@ -42,6 +35,6 @@ export class ModalSectionedFormDemoComponent {
   }
 
   public showTabs(): void {
-    this.sectionedFormComponent.showTabs();
+    this.sectionedFormComponent!.showTabs();
   }
 }
