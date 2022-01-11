@@ -9,8 +9,8 @@ import {
 } from '@skyux/modals';
 
 import {
-  ModalSectionedFormDemoComponent
-} from './modal-sectioned-form-demo.component';
+  SectionedFormModalDemoComponent
+} from './sectioned-form-modal-demo.component';
 
 @Component({
   selector: 'app-sectioned-form-demo',
@@ -24,7 +24,7 @@ export class SectionedFormDemoComponent {
   ) {}
 
   public openModal(): void {
-    let modalInstance = this.modal.open(ModalSectionedFormDemoComponent);
+    let modalInstance = this.modal.open(SectionedFormModalDemoComponent);
 
     modalInstance.closed.subscribe((result: SkyModalCloseArgs) => {
       if (result.reason === 'cancel') {

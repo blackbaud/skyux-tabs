@@ -8,11 +8,11 @@ import { SkyModalInstance } from '@skyux/modals';
 import { SkySectionedFormComponent } from '@skyux/tabs';
 
 @Component({
-  selector: 'app-modal-sectioned-form-demo',
-  templateUrl: './modal-sectioned-form-demo.component.html',
+  selector: 'app-sectioned-form-modal-demo',
+  templateUrl: './sectioned-form-modal-demo.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalSectionedFormDemoComponent {
+export class SectionedFormModalDemoComponent {
   public activeIndexDisplay: number | undefined;
 
   public activeTab = true;

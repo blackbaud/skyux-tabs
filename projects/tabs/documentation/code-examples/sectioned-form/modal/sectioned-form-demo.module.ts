@@ -27,20 +27,20 @@ import {
 } from '@skyux/tabs';
 
 import {
-  DemoAddressFormComponent
-} from './demo-address-form.component';
+  AddressFormDemoComponent
+} from './address-form-demo.component';
 
 import {
-  DemoInformationFormComponent
-} from './demo-information-form.component';
+  InformationFormDemoComponent
+} from './information-form-demo.component';
 
 import {
-  DemoPhoneFormComponent
-} from './demo-phone-form.component';
+  PhoneFormDemoComponent
+} from './phone-form-demo.component';
 
 import {
-  ModalSectionedFormDemoComponent
-} from './modal-sectioned-form-demo.component';
+  SectionedFormModalDemoComponent
+} from './sectioned-form-modal-demo.component';
 
 import {
   SectionedFormDemoComponent
@@ -48,14 +48,14 @@ import {
 
 @NgModule({
   declarations: [
-    DemoAddressFormComponent,
-    DemoInformationFormComponent,
-    DemoPhoneFormComponent,
-    ModalSectionedFormDemoComponent,
+    AddressFormDemoComponent,
+    InformationFormDemoComponent,
+    PhoneFormDemoComponent,
+    SectionedFormModalDemoComponent,
     SectionedFormDemoComponent,
   ],
   entryComponents: [
-    ModalSectionedFormDemoComponent
+    SectionedFormModalDemoComponent
   ],
   exports: [
     SectionedFormDemoComponent

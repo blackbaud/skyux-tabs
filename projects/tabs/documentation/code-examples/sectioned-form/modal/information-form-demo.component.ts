@@ -8,11 +8,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SkySectionedFormService } from '@skyux/tabs';
 
 @Component({
-  selector: 'app-demo-information-form',
-  templateUrl: './demo-information-form.component.html',
+  selector: 'app-information-form-demo',
+  templateUrl: './information-form-demo.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DemoInformationFormComponent implements OnInit {
+export class InformationFormDemoComponent implements OnInit {
   public id: string = '5324901';
   public myForm: FormGroup;
   public name: string = '';

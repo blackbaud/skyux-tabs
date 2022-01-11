@@ -11,9 +11,9 @@ import { SkySectionedFormModule, SkyTabsModule, SkyVerticalTabsetModule } from '
 
 import { VisualComponent } from './visual.component';
 
-import { SkyDemoAddressFormComponent } from './sectioned-form/demo-address-form.component';
-import { SkyDemoInformationFormComponent } from './sectioned-form/demo-information-form.component';
-import { SkyDemoPhoneFormComponent } from './sectioned-form/demo-phone-form.component';
+import { SkyAddressFormDemoComponent } from './sectioned-form/address-form-demo.component';
+import { SkyInformationFormDemoComponent } from './sectioned-form/information-form-demo.component';
+import { SkyPhoneFormDemoComponent } from './sectioned-form/phone-form-demo.component';
 import { SectionedFormVisualComponent } from './sectioned-form/sectioned-form-visual.component';
 import { TabsVisualComponent } from './tabs/tabs-visual.component';
 import { VerticalTabsetModalVisualComponent } from './vertical-tabset/vertical-tabs-modal-visual.component';
@@ -21,9 +21,9 @@ import { VerticalTabsVisualComponent } from './vertical-tabset/vertical-tabs-vis
 import { SkyE2eThemeSelectorModule } from '@skyux/e2e-client';
 @NgModule({
   declarations: [
-    SkyDemoAddressFormComponent,
-    SkyDemoInformationFormComponent,
-    SkyDemoPhoneFormComponent,
+    SkyAddressFormDemoComponent,
+    SkyInformationFormDemoComponent,
+    SkyPhoneFormDemoComponent,
     SectionedFormVisualComponent,
     TabsVisualComponent,
     VerticalTabsetModalVisualComponent,

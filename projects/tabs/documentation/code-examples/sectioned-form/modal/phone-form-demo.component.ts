@@ -4,8 +4,8 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'app-demo-address-form',
-  templateUrl: './demo-address-form.component.html',
+  selector: 'app-phone-form-demo',
+  templateUrl: './phone-form-demo.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DemoAddressFormComponent { }
+export class PhoneFormDemoComponent { }
