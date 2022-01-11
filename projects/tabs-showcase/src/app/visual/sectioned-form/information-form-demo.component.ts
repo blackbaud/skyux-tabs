@@ -7,10 +7,10 @@ import {
 } from 'projects/tabs/src/public-api';
 
 @Component({
-  selector: 'app-demo-information-form',
-  templateUrl: './demo-information-form.component.html'
+  selector: 'app-information-form-demo',
+  templateUrl: './information-form-demo.component.html'
 })
-export class SkyDemoInformationFormComponent {
+export class SkyInformationFormDemoComponent {
   public name: string = '';
   public id: string = '5324901';
 
