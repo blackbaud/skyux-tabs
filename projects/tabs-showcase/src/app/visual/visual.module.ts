@@ -7,7 +7,11 @@ import { SkyCheckboxModule } from '@skyux/forms';
 import { SkyPageModule } from '@skyux/layout';
 import { SkyModalModule } from '@skyux/modals';
 
-import { SkySectionedFormModule, SkyTabsModule, SkyVerticalTabsetModule } from 'projects/tabs/src/public-api';
+import {
+  SkySectionedFormModule,
+  SkyTabsModule,
+  SkyVerticalTabsetModule,
+} from 'projects/tabs/src/public-api';
 
 import { VisualComponent } from './visual.component';
 
@@ -28,7 +32,7 @@ import { SkyE2eThemeSelectorModule } from '@skyux/e2e-client';
     TabsVisualComponent,
     VerticalTabsetModalVisualComponent,
     VerticalTabsVisualComponent,
-    VisualComponent
+    VisualComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +44,7 @@ import { SkyE2eThemeSelectorModule } from '@skyux/e2e-client';
     SkyPageModule,
     SkySectionedFormModule,
     SkyTabsModule,
-    SkyVerticalTabsetModule
-  ]
+    SkyVerticalTabsetModule,
+  ],
 })
-export class VisualModule { }
+export class VisualModule {}

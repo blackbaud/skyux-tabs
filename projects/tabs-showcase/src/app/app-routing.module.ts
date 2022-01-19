@@ -9,24 +9,24 @@ import { VisualComponent } from './visual/visual.component';
 const routes: Routes = [
   {
     path: '',
-    component: VisualComponent
+    component: VisualComponent,
   },
   {
     path: 'visual/sectioned-form',
-    component: SectionedFormVisualComponent
+    component: SectionedFormVisualComponent,
   },
   {
     path: 'visual/tabs',
-    component: TabsVisualComponent
+    component: TabsVisualComponent,
   },
   {
     path: 'visual/vertical-tabset',
-    component: VerticalTabsVisualComponent
-  }
+    component: VerticalTabsVisualComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

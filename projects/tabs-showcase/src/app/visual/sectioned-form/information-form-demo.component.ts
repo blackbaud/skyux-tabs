@@ -1,14 +1,10 @@
-import {
-  Component
-} from '@angular/core';
+import { Component } from '@angular/core';
 
-import {
-  SkySectionedFormService
-} from 'projects/tabs/src/public-api';
+import { SkySectionedFormService } from 'projects/tabs/src/public-api';
 
 @Component({
   selector: 'app-information-form-demo',
-  templateUrl: './information-form-demo.component.html'
+  templateUrl: './information-form-demo.component.html',
 })
 export class SkyInformationFormDemoComponent {
   public name: string = '';
@@ -29,9 +25,7 @@ export class SkyInformationFormDemoComponent {
     }
   }
 
-  public constructor(
-    private sectionService: SkySectionedFormService
-  ) { }
+  public constructor(private sectionService: SkySectionedFormService) {}
 
   public checkValidity(): void {
     if (!this.name && this.nameRequired) {

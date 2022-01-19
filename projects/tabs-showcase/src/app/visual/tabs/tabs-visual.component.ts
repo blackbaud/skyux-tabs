@@ -1,26 +1,22 @@
-import {
-  ChangeDetectionStrategy,
-  Component
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-tabs-visual',
   templateUrl: './tabs-visual.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsVisualComponent {
-
   public requiredValue1: string;
 
   public requiredValue2: boolean;
 
   public showWizard = false;
 
-  public newTabClick() { }
+  public newTabClick() {}
 
-  public openTabClick() { }
+  public openTabClick() {}
 
-  public closeTab() { }
+  public closeTab() {}
 
   public get step2Disabled(): boolean {
     return !this.requiredValue1;

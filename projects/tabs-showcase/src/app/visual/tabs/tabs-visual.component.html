@@ -10,13 +10,14 @@
     Toggle Wizard
   </button>
 
-  <div id="screenshot-tabset" style="height: 200px;">
-    <sky-tabset *ngIf="!showWizard"
+  <div id="screenshot-tabset" style="height: 200px">
+    <sky-tabset
+      *ngIf="!showWizard"
       permalinkId="sample"
       (newTab)="newTabClick()"
       (openTab)="openTabClick()"
       [active]="1"
-      >
+    >
       <sky-tab [tabHeading]="'Tab 1'" (close)="closeTab()">
         Tab 1 Content
       </sky-tab>
@@ -43,38 +44,21 @@
     </sky-tabset>
 
     <div *ngIf="showWizard">
-      <sky-tabset
-        tabStyle="wizard"
-        [active]="0"
-        #wizardDemo
-      >
-        <sky-tab
-          tabHeading="Step 1"
-        >
+      <sky-tabset tabStyle="wizard" [active]="0" #wizardDemo>
+        <sky-tab tabHeading="Step 1">
           <label>
             Enter text here to continue.
-            <input
-              type="text"
-              [(ngModel)]="requiredValue1"
-            />
+            <input type="text" [(ngModel)]="requiredValue1" />
           </label>
         </sky-tab>
-        <sky-tab
-          tabHeading="Step 2"
-          [disabled]="step2Disabled"
-        >
-          <sky-checkbox
-            [(ngModel)]="requiredValue2"
-          >
+        <sky-tab tabHeading="Step 2" [disabled]="step2Disabled">
+          <sky-checkbox [(ngModel)]="requiredValue2">
             <sky-checkbox-label>
               Check this box to enable step 3.
             </sky-checkbox-label>
           </sky-checkbox>
         </sky-tab>
-        <sky-tab
-          tabHeading="Step 3"
-          [disabled]="step3Disabled"
-        >
+        <sky-tab tabHeading="Step 3" [disabled]="step3Disabled">
           Some other content
         </sky-tab>
       </sky-tabset>
@@ -89,16 +73,16 @@
     </div>
   </div>
 
-  <div id="screenshot-tabset-long" style="margin-top: 300px; height: 200px;">
-    <sky-tabset
-      [active]="0"
+  <div id="screenshot-tabset-long" style="margin-top: 300px; height: 200px">
+    <sky-tabset [active]="0">
+      <sky-tab
+        [tabHeading]="
+          'Tab 1 Content really really really long tab name you know here is even more header content okay okay okay'
+        "
       >
-      <sky-tab [tabHeading]="'Tab 1 Content really really really long tab name you know here is even more header content okay okay okay'">
         Tab 1 Content
       </sky-tab>
-      <sky-tab [tabHeading]="'Tab 2'">
-        Tab 2 Content
-      </sky-tab>
+      <sky-tab [tabHeading]="'Tab 2'"> Tab 2 Content </sky-tab>
     </sky-tabset>
   </div>
 </sky-page>

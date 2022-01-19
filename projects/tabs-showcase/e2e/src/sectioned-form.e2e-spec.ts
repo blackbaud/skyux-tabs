@@ -1,12 +1,6 @@
-import {
-  expect,
-  SkyHostBrowser
-} from '@skyux-sdk/e2e';
+import { expect, SkyHostBrowser } from '@skyux-sdk/e2e';
 
-import {
-  element,
-  by
-} from 'protractor';
+import { element, by } from 'protractor';
 
 describe('Sectioned Form', () => {
   beforeEach(async () => {
@@ -16,14 +10,14 @@ describe('Sectioned Form', () => {
   it('should match previous sectioned form screenshot', async (done) => {
     await SkyHostBrowser.setWindowBreakpoint('lg');
     expect('#screenshot-sectioned-form').toMatchBaselineScreenshot(done, {
-      screenshotName: 'sectioned-form'
+      screenshotName: 'sectioned-form',
     });
   });
 
   it('should match previous sectioned form screenshot (screen: xs)', async (done) => {
     await SkyHostBrowser.setWindowBreakpoint('xs');
     expect('#screenshot-sectioned-form').toMatchBaselineScreenshot(done, {
-      screenshotName: 'sectioned-form-xs'
+      screenshotName: 'sectioned-form-xs',
     });
   });
 
@@ -35,7 +29,7 @@ describe('Sectioned Form', () => {
     // click first tab
     await tabs.get(0).click();
     expect('#screenshot-sectioned-form').toMatchBaselineScreenshot(done, {
-      screenshotName: 'sectioned-form-first'
+      screenshotName: 'sectioned-form-first',
     });
   });
 
@@ -46,9 +40,11 @@ describe('Sectioned Form', () => {
 
     // click first tab
     await tabs.get(0).click();
-    await element(by.css('#name-checkbox-container .sky-switch-control')).click();
+    await element(
+      by.css('#name-checkbox-container .sky-switch-control')
+    ).click();
     expect('#screenshot-sectioned-form').toMatchBaselineScreenshot(done, {
-      screenshotName: 'sectioned-form-first-required'
+      screenshotName: 'sectioned-form-first-required',
     });
   });
 
@@ -60,7 +56,7 @@ describe('Sectioned Form', () => {
     // click first tab
     await tabs.get(1).click();
     expect('#screenshot-sectioned-form').toMatchBaselineScreenshot(done, {
-      screenshotName: 'sectioned-form-second'
+      screenshotName: 'sectioned-form-second',
     });
   });
 
@@ -74,7 +70,9 @@ describe('Sectioned Form', () => {
     await tabs.get(0).click();
 
     // Trigger the checkbox to require the name input
-    await element(by.css('#name-checkbox-container .sky-switch-control')).click();
+    await element(
+      by.css('#name-checkbox-container .sky-switch-control')
+    ).click();
 
     // Click the name input
     await element(by.css('#inputName')).click();
@@ -82,7 +80,7 @@ describe('Sectioned Form', () => {
     await element(by.css('body')).click();
 
     expect('#screenshot-sectioned-form').toMatchBaselineScreenshot(done, {
-      screenshotName: 'sectioned-form-required-and-error'
+      screenshotName: 'sectioned-form-required-and-error',
     });
   });
 });

@@ -13,15 +13,12 @@
     "target": "es2017",
     "module": "es2020",
     "paths": {
-      "@skyux/tabs" : [
+      "@skyux/tabs": [
         "node_modules/@skyux/tabs",
         "projects/tabs/src/public-api.ts"
       ]
     },
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "lib": ["es2018", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false
