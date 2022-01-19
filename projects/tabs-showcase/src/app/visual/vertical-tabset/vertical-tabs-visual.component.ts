@@ -1,25 +1,17 @@
-import {
-  ChangeDetectionStrategy,
-  Component
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import {
-  SkyModalService
-} from '@skyux/modals'
+import { SkyModalService } from '@skyux/modals';
 
-import {
-  VerticalTabsetModalVisualComponent
-} from './vertical-tabs-modal-visual.component';
+import { VerticalTabsetModalVisualComponent } from './vertical-tabs-modal-visual.component';
 
 let nextTabId = 4;
 
 @Component({
   selector: 'app-vertical-tabs-visual',
   templateUrl: './vertical-tabs-visual.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VerticalTabsVisualComponent {
-
   public active: boolean = true;
 
   public group1Disabled: boolean = false;
@@ -42,29 +34,27 @@ export class VerticalTabsVisualComponent {
     {
       id: '1',
       heading: 'tab 1',
-      content: 'Tab 1 content'
+      content: 'Tab 1 content',
     },
     {
       id: '2',
       heading: 'tab 2',
-      content: 'Tab 2 content'
+      content: 'Tab 2 content',
     },
     {
       id: '3',
       heading: 'tab 3',
-      content: 'Tab 3 content'
-    }
+      content: 'Tab 3 content',
+    },
   ];
 
-  constructor(
-    private modalService: SkyModalService
-  ) {}
+  constructor(private modalService: SkyModalService) {}
 
   public onAddTabClick(): void {
     this.tabs.push({
       id: nextTabId.toString(),
       heading: `tab ${nextTabId}`,
-      content: `Tab ${nextTabId} content`
+      content: `Tab ${nextTabId} content`,
     });
     nextTabId++;
   }
@@ -76,5 +66,4 @@ export class VerticalTabsVisualComponent {
   public openVerticalTabsetModal() {
     this.modalService.open(VerticalTabsetModalVisualComponent);
   }
-
 }

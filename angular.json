@@ -28,7 +28,10 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "codeCoverage": true,
-            "codeCoverageExclude": ["**/fixtures/**", "projects/tabs/src/test.ts"],
+            "codeCoverageExclude": [
+              "**/fixtures/**",
+              "projects/tabs/src/test.ts"
+            ],
             "main": "projects/tabs/src/test.ts",
             "styles": [
               "node_modules/@skyux/theme/css/sky.css",
@@ -146,9 +149,7 @@
               "projects/tabs-showcase/src/favicon.ico",
               "projects/tabs-showcase/src/assets"
             ],
-            "styles": [
-              "projects/tabs-showcase/src/styles.scss"
-            ],
+            "styles": ["projects/tabs-showcase/src/styles.scss"],
             "scripts": []
           }
         },

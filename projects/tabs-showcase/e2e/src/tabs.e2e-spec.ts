@@ -1,14 +1,6 @@
-import {
-  expect,
-  SkyHostBrowser,
-  SkyVisualThemeSelector
-} from '@skyux-sdk/e2e';
+import { expect, SkyHostBrowser, SkyVisualThemeSelector } from '@skyux-sdk/e2e';
 
-import {
-  element,
-  by,
-  browser
-} from 'protractor';
+import { element, by, browser } from 'protractor';
 
 describe('Tabs', () => {
   let currentTheme: string;
@@ -36,16 +28,18 @@ describe('Tabs', () => {
   async function validateBasic(done: DoneFn): Promise<void> {
     await SkyHostBrowser.setWindowBreakpoint('lg');
     expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
-      screenshotName: getScreenshotName('tabset')
+      screenshotName: getScreenshotName('tabset'),
     });
   }
 
   async function validateSelectedTabHover(done: DoneFn): Promise<void> {
     await SkyHostBrowser.setWindowBreakpoint('lg');
-    const tabElem = element(by.css('#screenshot-tabset sky-tab-button .sky-btn-tab-selected'));
+    const tabElem = element(
+      by.css('#screenshot-tabset sky-tab-button .sky-btn-tab-selected')
+    );
     await browser.actions().mouseMove(tabElem).perform();
     expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
-      screenshotName: getScreenshotName('tabset-hover')
+      screenshotName: getScreenshotName('tabset-hover'),
     });
     await SkyHostBrowser.moveCursorOffScreen();
   }
@@ -53,25 +47,29 @@ describe('Tabs', () => {
   async function validateBasicXs(done: DoneFn): Promise<void> {
     await SkyHostBrowser.setWindowBreakpoint('xs');
     expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
-      screenshotName: getScreenshotName('tabset-xs')
+      screenshotName: getScreenshotName('tabset-xs'),
     });
   }
 
   async function validateSelectedTabHoverXs(done: DoneFn): Promise<void> {
     await SkyHostBrowser.setWindowBreakpoint('xs');
-    const tabElem = element(by.css('#screenshot-tabset button.sky-dropdown-button-type-tab'));
+    const tabElem = element(
+      by.css('#screenshot-tabset button.sky-dropdown-button-type-tab')
+    );
     await browser.actions().mouseMove(tabElem).perform();
     expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
-      screenshotName: getScreenshotName('tabset-xs-hover')
+      screenshotName: getScreenshotName('tabset-xs-hover'),
     });
     await SkyHostBrowser.moveCursorOffScreen();
   }
 
   async function validateDropdownTabset(done: DoneFn): Promise<void> {
     await SkyHostBrowser.setWindowBreakpoint('xs');
-    await element(by.css('#screenshot-tabset button.sky-dropdown-button-type-tab')).click();
+    await element(
+      by.css('#screenshot-tabset button.sky-dropdown-button-type-tab')
+    ).click();
     expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
-      screenshotName: getScreenshotName('tabset-xs-dropdown')
+      screenshotName: getScreenshotName('tabset-xs-dropdown'),
     });
   }
 
@@ -79,7 +77,7 @@ describe('Tabs', () => {
     await SkyHostBrowser.setWindowBreakpoint('xs');
     await SkyHostBrowser.scrollTo('#screenshot-tabset-long');
     expect('#screenshot-tabset-long').toMatchBaselineScreenshot(done, {
-      screenshotName: getScreenshotName('tabset-xs-dropdown-long')
+      screenshotName: getScreenshotName('tabset-xs-dropdown-long'),
     });
   }
 
@@ -119,12 +117,11 @@ describe('Tabs', () => {
     await SkyHostBrowser.setWindowBreakpoint('lg');
     await element(by.css('.sky-test-show-wizard')).click();
     expect('#screenshot-tabset').toMatchBaselineScreenshot(done, {
-      screenshotName: 'tabset-wizard'
+      screenshotName: 'tabset-wizard',
     });
   });
 
   describe('when modern theme', () => {
-
     beforeEach(async () => {
       await selectTheme('modern', 'light');
     });
@@ -152,6 +149,5 @@ describe('Tabs', () => {
     it('should match previous dropdown tabset screenshot with long tab (screen: xs)', async (done) => {
       await validateDropdownLongTabXs(done);
     });
-
   });
 });
