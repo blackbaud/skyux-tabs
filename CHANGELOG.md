@@ -1,6 +1,6 @@
 # 5.0.4 (2022-01-18)
 
-- Added support for Prettier code formatting. []()
+- Added support for Prettier code formatting. [#202](https://github.com/blackbaud/skyux-tabs/pull/202)
 
 # 5.0.3 (2022-01-11)
 
