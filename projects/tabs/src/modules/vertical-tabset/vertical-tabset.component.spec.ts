@@ -49,6 +49,42 @@ function getTabsContainer(fixture: ComponentFixture<any>): HTMLElement[] {
 function getTabs(fixture: ComponentFixture<any>): HTMLElement[] {
   return fixture.nativeElement.querySelectorAll('.sky-vertical-tab');
 }
+
+function getTabGroups(fixture: ComponentFixture<any>): HTMLElement[] {
+  return fixture.nativeElement.querySelectorAll('.sky-vertical-tabset-group');
+}
+
+function getOpenGroupLength(fixture: ComponentFixture<any>): number {
+  return fixture.nativeElement.querySelectorAll('.sky-expansion-indicator-up')
+    .length;
+}
+
+function openGroup(fixture: ComponentFixture<any>, index: number): void {
+  getTabGroups(fixture)[index].querySelector('button').click();
+}
+
+function assertGroupIsOpen(
+  fixture: ComponentFixture<any>,
+  index: number
+): void {
+  const groupContent = getTabGroups(fixture)[index].querySelector(
+    '.sky-vertical-tabset-group-content'
+  ) as HTMLElement;
+  expect(groupContent.style.visibility).toEqual('visible');
+  expect(groupContent.style.height).not.toEqual('0px');
+  expect(groupContent.style.height).not.toEqual('0');
+}
+
+function assertGroupIsClosed(
+  fixture: ComponentFixture<any>,
+  index: number
+): void {
+  const groupContent = getTabGroups(fixture)[index].querySelector(
+    '.sky-vertical-tabset-group-content'
+  ) as HTMLElement;
+  expect(groupContent.style.visibility).toEqual('hidden');
+  expect(['0', '0px']).toContain(groupContent.style.height);
+}
 // #endregion
 
 describe('Vertical tabset component', () => {
@@ -96,7 +132,7 @@ describe('Vertical tabset component', () => {
     expect(content.textContent.trim()).toBe('Group 1 Tab 1 content');
   });
 
-  it('open second tab in second group', () => {
+  fit('open second tab in second group', () => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
     let fixture = createTestComponent();
     fixture.detectChanges();
@@ -120,8 +156,7 @@ describe('Vertical tabset component', () => {
     );
 
     // open second group
-    const group = el.querySelectorAll('.sky-vertical-tabset-group-header');
-    group[1].click();
+    openGroup(fixture, 1);
 
     fixture.detectChanges();
 
@@ -156,8 +191,7 @@ describe('Vertical tabset component', () => {
     expect(openedGroups.length).toBe(2);
 
     // click second tab in second group
-    const tabs = el.querySelectorAll('.sky-vertical-tab');
-    tabs[3].click();
+    openGroup(fixture, 3);
 
     fixture.detectChanges();
 
@@ -167,11 +201,11 @@ describe('Vertical tabset component', () => {
     expect(visibleTabs[0].textContent.trim()).toBe('Group 2 Tab 2 content');
 
     // check open group
-    const openGroup = el.querySelectorAll(
+    const openGroupEl = el.querySelectorAll(
       '.sky-vertical-tabset-group-header-sub-open'
     );
-    expect(openGroup.length).toBe(1);
-    expect(openGroup[0].textContent.trim()).toBe('Group 2');
+    expect(openGroupEl.length).toBe(1);
+    expect(openGroupEl[0].textContent.trim()).toBe('Group 2');
 
     // check order of vertical tab content
     allTabContentElements = fixture.nativeElement.querySelectorAll(
@@ -218,16 +252,13 @@ describe('Vertical tabset component', () => {
     let el = fixture.nativeElement;
 
     fixture.detectChanges();
+    assertGroupIsOpen(fixture, 0);
 
     // close first group
-    const group = el.querySelectorAll('.sky-vertical-tabset-group-header');
-    group[0].click();
-
+    openGroup(fixture, 0);
     fixture.detectChanges();
 
-    // check group is closed
-    const openedGroups = el.querySelectorAll('.sky-chevron-up');
-    expect(openedGroups.length).toBe(0);
+    assertGroupIsClosed(fixture, 0);
   });
 
   it('disabled group should not open when clicked', () => {
@@ -238,8 +269,7 @@ describe('Vertical tabset component', () => {
     fixture.detectChanges();
 
     // click disabled group
-    const group = el.querySelectorAll('.sky-vertical-tabset-group-header');
-    group[2].click();
+    openGroup(fixture, 2);
 
     fixture.detectChanges();
 
@@ -491,8 +521,7 @@ describe('Vertical tabset component', () => {
     fixture.detectChanges();
 
     // open second group
-    const group = el.querySelectorAll('.sky-vertical-tabset-group-header');
-    group[1].click();
+    openGroup(fixture, 1);
 
     fixture.detectChanges();
 
@@ -518,8 +547,7 @@ describe('Vertical tabset component', () => {
     fixture.detectChanges();
 
     // open second group
-    const groups = el.querySelectorAll('.sky-vertical-tabset-group-header');
-    groups[1].click();
+    openGroup(fixture, 1);
 
     fixture.detectChanges();
 
@@ -587,14 +615,12 @@ describe('Vertical tabset component', () => {
     );
 
     // open second group
-    const group = el.querySelectorAll('.sky-vertical-tabset-group-header');
-    group[1].click();
+    openGroup(fixture, 1);
 
     fixture.detectChanges();
 
     // check second group open
-    const openedGroups = el.querySelectorAll('.sky-chevron-up');
-    expect(openedGroups.length).toBe(2);
+    expect(getOpenGroupLength(fixture)).toBe(2);
 
     // click second tab in second group
     const tabs = el.querySelectorAll('.sky-vertical-tab');
@@ -608,11 +634,11 @@ describe('Vertical tabset component', () => {
     expect(visibleTabs[0].textContent.trim()).toBe('Group 2 Tab 2 content');
 
     // check open group
-    const openGroup = el.querySelectorAll(
+    const openGroupEl = el.querySelectorAll(
       '.sky-vertical-tabset-group-header-sub-open'
     );
-    expect(openGroup.length).toBe(1);
-    expect(openGroup[0].textContent.trim()).toBe('Group 2');
+    expect(openGroupEl.length).toBe(1);
+    expect(openGroupEl[0].textContent.trim()).toBe('Group 2');
 
     fixture.detectChanges();
 
@@ -718,8 +744,7 @@ describe('Vertical tabset component', () => {
     await fixture.whenStable();
 
     // open second group
-    const groups = el.querySelectorAll('.sky-vertical-tabset-group-header');
-    groups[1].click();
+    openGroup(fixture, 1);
 
     fixture.detectChanges();
     await fixture.whenStable();
