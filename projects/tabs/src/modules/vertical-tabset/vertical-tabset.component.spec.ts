@@ -147,7 +147,7 @@ describe('Vertical tabset component', () => {
     let allTabContentElements = fixture.nativeElement.querySelectorAll(
       '.sky-vertical-tab-content-pane'
     );
-    expect(allTabContentElements.length).toBe(2);
+    expect(allTabContentElements.length).toBe(2); // WTF????
     expect(allTabContentElements[0].textContent.trim()).toBe(
       'Group 1 Tab 2 content'
     );
