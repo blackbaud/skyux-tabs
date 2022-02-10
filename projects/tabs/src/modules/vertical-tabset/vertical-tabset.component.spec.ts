@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  fakeAsync,
+  flush,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 
 import { expect, expectAsync, SkyAppTestUtility } from '@skyux-sdk/testing';
 
@@ -65,8 +71,10 @@ function getOpenTabGroups(fixture: ComponentFixture<any>): HTMLElement[] {
   return fixture.nativeElement.querySelectorAll('.sky-expansion-indicator-up');
 }
 
-function openGroup(fixture: ComponentFixture<any>, index: number): void {
+function clickGroupButton(fixture: ComponentFixture<any>, index: number): void {
   getTabGroups(fixture)[index].querySelector('button').click();
+  fixture.detectChanges();
+  tick();
 }
 
 function clickTab(
@@ -141,7 +149,7 @@ describe('Vertical tabset component', () => {
   });
 
   function createTestComponent() {
-    let fixture = TestBed.overrideComponent(SkyVerticalTabsetComponent, {
+    const fixture = TestBed.overrideComponent(SkyVerticalTabsetComponent, {
       add: {
         providers: [
           { provide: SkyMediaQueryService, useValue: mockQueryService },
@@ -153,8 +161,8 @@ describe('Vertical tabset component', () => {
 
   it('first tab in open group should be selected', () => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement as HTMLElement;
+    const fixture = createTestComponent();
+    const el = fixture.nativeElement as HTMLElement;
 
     fixture.detectChanges();
 
@@ -166,25 +174,20 @@ describe('Vertical tabset component', () => {
     expect(content.textContent.trim()).toBe('Group 1 Tab 1 content');
   });
 
-  it('open second tab in second group', () => {
+  it('open second tab in second group', fakeAsync(() => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
+    const fixture = createTestComponent();
     fixture.detectChanges();
-    let el = fixture.nativeElement;
+    const el = fixture.nativeElement;
 
     // check open tab
-    let visibleTabs = getVisibleTabContentPane(fixture);
-    expect(visibleTabs.length).toBe(1);
-    expect(visibleTabs[0].textContent.trim()).toBe('Group 1 Tab 1 content');
+    expectVisibleTabContentPane(fixture, 'Group 1 Tab 1 content');
 
     // open second group
-    openGroup(fixture, 1);
-    fixture.detectChanges();
+    clickGroupButton(fixture, 1);
 
     // check open tab
-    visibleTabs = getVisibleTabContentPane(fixture);
-    expect(visibleTabs.length).toBe(1);
-    expect(visibleTabs[0].textContent.trim()).toBe('Group 1 Tab 1 content');
+    expectVisibleTabContentPane(fixture, 'Group 1 Tab 1 content');
 
     // check second group open
     const openTabGroups = getOpenTabGroups(fixture);
@@ -194,19 +197,19 @@ describe('Vertical tabset component', () => {
     clickTab(fixture, 1, 1);
 
     // check open tab
-    visibleTabs = getVisibleTabContentPane(fixture);
-    expect(visibleTabs.length).toBe(1);
-    expect(visibleTabs[0].textContent.trim()).toBe('Group 2 Tab 2 content');
+    expectVisibleTabContentPane(fixture, 'Group 2 Tab 2 content');
 
     // check if parent group of selected tab has "open" CSS class
     expectOpenGroup(fixture, 'Group 2');
-  });
+
+    flush();
+  }));
 
   it('should pass through aria inputs, id, and set role', () => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
+    const fixture = createTestComponent();
     fixture.componentInstance.tab1Required = true;
-    let el = fixture.nativeElement as HTMLElement;
+    const el = fixture.nativeElement as HTMLElement;
 
     fixture.detectChanges();
 
@@ -219,43 +222,39 @@ describe('Vertical tabset component', () => {
     expect(tab.getAttribute('role')).toBe('tab');
   });
 
-  xit('check closing of group', () => {
+  it('check closing of group', fakeAsync(() => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement;
-
+    const fixture = createTestComponent();
     fixture.detectChanges();
+
     expectGroupTabsAreVisible(fixture, 0);
 
     // close first group
-    openGroup(fixture, 0);
-    fixture.detectChanges();
+    clickGroupButton(fixture, 0);
 
     expectGroupTabsAreNotVisible(fixture, 0);
-  });
+  }));
 
-  it('disabled group should not open when clicked', () => {
+  it('disabled group should not open when clicked', fakeAsync(() => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
+    const fixture = createTestComponent();
     fixture.detectChanges();
 
     expectGroupTabsAreVisible(fixture, 0);
     expectGroupTabsAreNotVisible(fixture, 1);
 
     // click disabled group
-    openGroup(fixture, 2);
-
-    fixture.detectChanges();
+    clickGroupButton(fixture, 2);
 
     // check group is still closed (only first group still open)
     expectGroupTabsAreVisible(fixture, 0);
     expectGroupTabsAreNotVisible(fixture, 1);
-  });
+  }));
 
   it('mobile button should not be visible on wide screen', () => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement;
+    const fixture = createTestComponent();
+    const el = fixture.nativeElement;
 
     fixture.detectChanges();
 
@@ -268,8 +267,8 @@ describe('Vertical tabset component', () => {
 
   it('mobile button should be visible on small screen', () => {
     mockQueryService.fire(SkyMediaBreakpoints.xs);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement;
+    const fixture = createTestComponent();
+    const el = fixture.nativeElement;
 
     fixture.detectChanges();
 
@@ -292,8 +291,8 @@ describe('Vertical tabset component', () => {
 
   it('show tabs button should show tabs on mobile', () => {
     mockQueryService.fire(SkyMediaBreakpoints.xs);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement;
+    const fixture = createTestComponent();
+    const el = fixture.nativeElement;
 
     fixture.detectChanges();
 
@@ -325,8 +324,8 @@ describe('Vertical tabset component', () => {
 
   it('clicking a tab in mobile should show content and hides tabs', () => {
     mockQueryService.fire(SkyMediaBreakpoints.xs);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement;
+    const fixture = createTestComponent();
+    const el = fixture.nativeElement;
 
     fixture.detectChanges();
 
@@ -356,8 +355,8 @@ describe('Vertical tabset component', () => {
 
   it('tabs should not have tab aria associations and roles in mobile view', () => {
     mockQueryService.fire(SkyMediaBreakpoints.xs);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement;
+    const fixture = createTestComponent();
+    const el = fixture.nativeElement;
 
     fixture.detectChanges();
 
@@ -376,8 +375,8 @@ describe('Vertical tabset component', () => {
 
   it('should hide tabs when switching from widescreen to mobile', () => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement;
+    const fixture = createTestComponent();
+    const el = fixture.nativeElement;
 
     fixture.detectChanges();
 
@@ -404,8 +403,8 @@ describe('Vertical tabset component', () => {
 
   it('should show tabs and hide tab list button when switching from mobile to widescreen', () => {
     mockQueryService.fire(SkyMediaBreakpoints.xs);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement;
+    const fixture = createTestComponent();
+    const el = fixture.nativeElement;
 
     fixture.detectChanges();
 
@@ -432,9 +431,9 @@ describe('Vertical tabset component', () => {
 
   it('should deactivate active tab when another tab is clicked', () => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
+    const fixture = createTestComponent();
     fixture.detectChanges();
-    let el = fixture.nativeElement;
+    const el = fixture.nativeElement;
 
     // click first tab in first group
     let tabs = el.querySelectorAll('.sky-vertical-tab');
@@ -467,8 +466,8 @@ describe('Vertical tabset component', () => {
 
   it('should display tab header count when defined', () => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement as HTMLElement;
+    const fixture = createTestComponent();
+    const el = fixture.nativeElement as HTMLElement;
 
     fixture.detectChanges();
 
@@ -479,17 +478,15 @@ describe('Vertical tabset component', () => {
     expect(headerCount.textContent.trim()).toBe('(5)');
   });
 
-  it('should not display tab header count when not defined', () => {
+  it('should not display tab header count when not defined', fakeAsync(() => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement;
+    const fixture = createTestComponent();
+    const el = fixture.nativeElement;
 
     fixture.detectChanges();
 
     // open second group
-    openGroup(fixture, 1);
-
-    fixture.detectChanges();
+    clickGroupButton(fixture, 1);
 
     // click first tab in second group
     const tabs = el.querySelectorAll('.sky-vertical-tab');
@@ -503,19 +500,19 @@ describe('Vertical tabset component', () => {
     const headerCount = activeTab[0].querySelector('.sky-vertical-tab-count');
     // tslint:disable-next-line:no-null-keyword
     expect(headerCount).toBe(null);
-  });
 
-  it('should not activate tab when disabled', () => {
+    flush();
+  }));
+
+  it('should not activate tab when disabled', fakeAsync(() => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
-    let el = fixture.nativeElement;
+    const fixture = createTestComponent();
+    const el = fixture.nativeElement;
 
     fixture.detectChanges();
 
     // open second group
-    openGroup(fixture, 1);
-
-    fixture.detectChanges();
+    clickGroupButton(fixture, 1);
 
     // open first tab in second group
     const tabs = el.querySelectorAll('.sky-vertical-tab');
@@ -537,21 +534,23 @@ describe('Vertical tabset component', () => {
     visibleTabs = getVisibleTabContentPane(fixture);
     expect(visibleTabs.length).toBe(1);
     expect(visibleTabs[0].textContent.trim()).toBe('Group 2 Tab 1 content');
-  });
+
+    flush();
+  }));
 
   it('should be accessible', async () => {
-    let fixture = createTestComponent();
+    const fixture = createTestComponent();
     fixture.detectChanges();
     await fixture.whenStable();
     await expectAsync(fixture.nativeElement).toBeAccessible();
   });
 
-  it('maintainTabContent - tab content remains in same order', () => {
+  it('maintainTabContent - tab content remains in same order', fakeAsync(() => {
     mockQueryService.fire(SkyMediaBreakpoints.lg);
-    let fixture = createTestComponent();
+    const fixture = createTestComponent();
     fixture.componentInstance.maintainTabContent = true;
     fixture.detectChanges();
-    let el = fixture.nativeElement;
+    const el = fixture.nativeElement;
 
     // check order of vertical tab content
     const allTabContentElements = getTabContentPanes(fixture);
@@ -579,9 +578,7 @@ describe('Vertical tabset component', () => {
     );
 
     // open second group
-    openGroup(fixture, 1);
-
-    fixture.detectChanges();
+    clickGroupButton(fixture, 1);
 
     // check second group open
     expect(getOpenTabGroups(fixture).length).toBe(2);
@@ -626,7 +623,7 @@ describe('Vertical tabset component', () => {
     expect(allTabContentElements2[6].textContent.trim()).toBe(
       'Group 3 Tab 2 content'
     );
-  });
+  }));
 
   it('should add the appropriate responsive container upon initialization', async () => {
     spyOnProperty(Element.prototype, 'clientWidth', 'get').and.returnValue(640);
@@ -652,7 +649,7 @@ describe('Vertical tabset component', () => {
   });
 
   it('should add the appropriate responsive container upon window resize', async () => {
-    let fixture = createTestComponent();
+    const fixture = createTestComponent();
     const widthSpy = spyOnProperty(
       Element.prototype,
       'clientWidth',
@@ -687,10 +684,9 @@ describe('Vertical tabset component', () => {
     ).toBeTruthy();
   });
 
-  it('should add the appropriate responsive container upon a tab being activated', async () => {
-    let fixture = createTestComponent();
+  it('should add the appropriate responsive container upon a tab being activated', fakeAsync(() => {
+    const fixture = createTestComponent();
     fixture.detectChanges();
-    let el = fixture.nativeElement;
 
     spyOnProperty(Element.prototype, 'clientWidth', 'get').and.returnValue(800);
     const mediaQuerySpy = spyOn(
@@ -698,39 +694,31 @@ describe('Vertical tabset component', () => {
       'setBreakpointForWidth'
     ).and.callThrough();
 
-    fixture.detectChanges();
-    await fixture.whenStable();
-
     // open second group
-    openGroup(fixture, 1);
-
-    fixture.detectChanges();
-    await fixture.whenStable();
+    clickGroupButton(fixture, 1);
 
     // open first tab in second group
-    const tabs = el.querySelectorAll('.sky-vertical-tab');
-    tabs[2].click();
+    clickTab(fixture, 0, 1);
+    tick();
     fixture.detectChanges();
 
     const activeTab = fixture.componentInstance.verticalTabs.find(
       (tab) => tab.active
     );
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    let tabContentPane: HTMLElement = activeTab.tabContent.nativeElement;
-
+    const tabContentPane: HTMLElement = activeTab.tabContent.nativeElement;
     expect(mediaQuerySpy).toHaveBeenCalledWith(800);
     expect(
       tabContentPane.classList.contains('sky-responsive-container-sm')
     ).toBeTruthy();
-  });
+
+    flush();
+  }));
 
   it('should scroll back to the top of the content pane when switching tabs', () => {
-    let fixture = createTestComponent();
+    const fixture = createTestComponent();
     fixture.detectChanges();
 
-    let el = fixture.nativeElement;
+    const el = fixture.nativeElement;
     fixture.componentInstance.showScrollable = true;
 
     fixture.detectChanges();
@@ -751,10 +739,10 @@ describe('Vertical tabset component', () => {
   });
 
   it('should be accessible when content pane is scrollable', async () => {
-    let fixture = createTestComponent();
+    const fixture = createTestComponent();
     fixture.detectChanges();
 
-    let el = fixture.nativeElement;
+    const el = fixture.nativeElement;
     fixture.componentInstance.showScrollable = true;
 
     fixture.detectChanges();
