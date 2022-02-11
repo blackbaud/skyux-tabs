@@ -1,6 +1,5 @@
 <sky-vertical-tab
   [active]="active"
-  [ariaControls]="sectionContentId"
   [ariaInvalid]="fieldInvalid"
   [ariaRequired]="fieldRequired"
   [errorIndicator]="fieldInvalid"
@@ -12,12 +11,5 @@
   [tabHeading]="heading"
   [tabId]="sectionTabId"
 >
-  <div
-    [attr.aria-labelledby]="ariaLabelledby"
-    [attr.role]="ariaRole"
-    [id]="sectionContentId"
-    #tabContent
-  >
-    <ng-content></ng-content>
-  </div>
+  <ng-content></ng-content>
 </sky-vertical-tab>

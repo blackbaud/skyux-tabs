@@ -51,21 +51,12 @@ export class SkySectionedFormSectionComponent implements OnInit, OnDestroy {
   @Input()
   public active: boolean;
 
-  public get ariaRole(): string {
-    return this.isMobile ? undefined : 'tabpanel';
-  }
-
-  public get ariaLabelledby() {
-    return this.isMobile ? undefined : this.sectionTabId;
-  }
-
   public fieldRequired: boolean;
   public fieldInvalid: boolean;
 
   @ViewChild(SkyVerticalTabComponent)
   public tab: SkyVerticalTabComponent;
 
-  private isMobile = false;
   private _ngUnsubscribe = new Subject();
 
   constructor(
@@ -75,11 +66,9 @@ export class SkySectionedFormSectionComponent implements OnInit, OnDestroy {
   ) {}
 
   public ngOnInit() {
-    this.isMobile = this.tabsetService.isMobile();
     this.changeRef.detectChanges();
 
     this.tabsetService.switchingMobile.subscribe((mobile: boolean) => {
-      this.isMobile = mobile;
       this.changeRef.detectChanges();
     });
 
