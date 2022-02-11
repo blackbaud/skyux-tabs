@@ -54,18 +54,6 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
   public ariaControls: string;
 
   /**
-   * @internal
-   */
-  @Input()
-  public ariaInvalid: boolean;
-
-  /**
-   * @internal
-   */
-  @Input()
-  public ariaRequired: boolean;
-
-  /**
    * Specifies an ARIA role for the vertical tab
    * [to support accessibility](https://developer.blackbaud.com/skyux/learn/accessibility)
    * by indicating how the tab functions and what it controls. For information about how
