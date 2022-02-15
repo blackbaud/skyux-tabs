@@ -115,7 +115,7 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
 
   /**
    * Specifies an ID for the tab.
-   * @deprecated Now that the vertical tabs provide aria labels automatically, this input is not longer necessary.
+   * @deprecated Now that the vertical tabs provide aria labels automatically, this input is no longer necessary.
    */
   @Input()
   public tabId: string = `sky-vertical-tab-${++nextId}`;
