@@ -48,7 +48,7 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
    * Specifies the HTML element ID (without the leading `#`) of the element that contains
    * the content that the vertical tab displays, which corresponds to the `tabId`. This property
    * [supports accessibility rules for disclosures](https://www.w3.org/TR/wai-aria-practices-1.1/#disclosure).
-   * @deprecated Now that the vertical tabs provide aria labels automatically, this input is not longer necessary.
+   * @deprecated Now that the vertical tabs provide aria labels automatically, this input is no longer necessary.
    */
   @Input()
   public ariaControls: string;
