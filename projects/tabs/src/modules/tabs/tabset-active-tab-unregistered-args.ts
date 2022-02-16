@@ -1,6 +1,6 @@
 /**
  * The arguments for the tabset service's `activeTabUnregistered` event.
- * @ignore
+ * @internal
  */
 export interface SkyTabsetActiveTabUnregisteredArgs {
   /**

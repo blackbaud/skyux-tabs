@@ -20,7 +20,7 @@ const buttonTypeNext = 'next';
 const buttonTypePrevious = 'previous';
 
 /**
- * @ignore
+ * @internal
  */
 @Component({
   selector: 'sky-tabset-nav-button',

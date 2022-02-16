@@ -7,7 +7,7 @@ import { SkyTabIndex } from './tab-index';
 import { SkyTabsetActiveTabUnregisteredArgs } from './tabset-active-tab-unregistered-args';
 
 /**
- * @ignore
+ * @internal
  */
 @Injectable()
 export class SkyTabsetService {

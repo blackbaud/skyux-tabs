@@ -3,7 +3,7 @@ import { ElementRef, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 /**
- * @ignore
+ * @internal
  */
 @Injectable()
 export class SkyTabsetAdapterService {

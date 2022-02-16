@@ -82,7 +82,7 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
 
   /**
    * Indicates whether to indicate that the tab has an error.
-   * @ignore This is used for sectioned forms and is not currently a supported design for pure vertical tabs.
+   * @internal This is used for sectioned forms and is not currently a supported design for pure vertical tabs.
    */
   @Input()
   public errorIndicator: boolean = false;
@@ -102,7 +102,7 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
 
   /**
    * Indicates whether to display a chevron-right icon in the righthand side of the tab.
-   * @ignore
+   * @internal
    */
   @Input()
   public get showTabRightArrow() {

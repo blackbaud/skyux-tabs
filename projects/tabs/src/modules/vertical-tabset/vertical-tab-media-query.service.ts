@@ -5,7 +5,7 @@ import { SkyMediaBreakpoints, SkyMediaQueryListener } from '@skyux/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 
 /**
- * @ignore
+ * @internal
  */
 @Injectable()
 export class SkyVerticalTabMediaQueryService {
