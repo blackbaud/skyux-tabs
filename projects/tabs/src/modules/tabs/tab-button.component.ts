@@ -10,7 +10,7 @@ import {
 import { SkyTabsetStyle } from './tabset-style';
 
 /**
- * @internal
+ * @ignore
  */
 @Component({
   selector: 'sky-tab-button',

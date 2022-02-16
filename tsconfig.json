@@ -18,7 +18,8 @@
         "projects/tabs/src/public-api.ts"
       ]
     },
-    "lib": ["es2018", "dom"]
+    "lib": ["es2018", "dom"],
+    "stripInternal": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false

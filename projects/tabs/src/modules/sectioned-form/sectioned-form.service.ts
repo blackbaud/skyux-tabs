@@ -5,13 +5,13 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class SkySectionedFormService {
   /**
-   * @internal
+   * @ignore
    */
   public invalidChange: BehaviorSubject<boolean> = new BehaviorSubject(
     undefined
   );
   /**
-   * @internal
+   * @ignore
    */
   public requiredChange: BehaviorSubject<boolean> = new BehaviorSubject(
     undefined

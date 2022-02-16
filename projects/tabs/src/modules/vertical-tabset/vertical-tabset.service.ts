@@ -10,7 +10,7 @@ export const VISIBLE_STATE = 'shown';
 export const HIDDEN_STATE = 'void';
 
 /**
- * @internal
+ * @ignore
  */
 @Injectable()
 export class SkyVerticalTabsetService {

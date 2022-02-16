@@ -34,7 +34,7 @@ import { SkyTabsetService } from './tabset.service';
 import { SkyTabsetTabIndexesChange } from './tabset-tab-indexes-change';
 
 /**
- * @internal
+ * @ignore
  */
 interface TabButtonViewModel {
   active: boolean;
@@ -200,7 +200,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
 
   /**
    * This property is used by the deprecated tabset-nav-button component.
-   * @internal
+   * @ignore
    */
   public lastActiveTabIndex: SkyTabIndex;
 

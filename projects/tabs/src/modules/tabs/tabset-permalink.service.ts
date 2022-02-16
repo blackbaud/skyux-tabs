@@ -7,14 +7,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, SubscriptionLike } from 'rxjs';
 
 /**
- * @internal
+ * @ignore
  */
 interface PermalinkParams {
   [_: string]: string;
 }
 
 /**
- * @internal
+ * @ignore
  */
 @Injectable()
 export class SkyTabsetPermalinkService implements OnDestroy {
