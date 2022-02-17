@@ -60,8 +60,23 @@ export class SkyTabButtonComponent {
     }
   }
 
-  public onButtonEnterKeyDown(event: any): void {
-    this.onButtonClick(event);
+  public onTabButtonKeyDown(event: KeyboardEvent): void {
+    /*istanbul ignore else */
+    if (event.key) {
+      switch (event.key.toLowerCase()) {
+        case ' ':
+        case 'enter':
+          /*istanbul ignore else */
+          if (!this.disabled) {
+            this.buttonClick.emit();
+            event.preventDefault();
+          }
+          break;
+        /* istanbul ignore next */
+        default:
+          break;
+      }
+    }
   }
 
   public onCloseClick(event: any): void {
