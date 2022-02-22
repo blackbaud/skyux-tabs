@@ -63,9 +63,9 @@ export class SkyTabButtonComponent {
   public onTabButtonKeyDown(event: KeyboardEvent): void {
     /*istanbul ignore else */
     if (event.key) {
-      switch (event.key.toLowerCase()) {
+      switch (event.key.toUpperCase()) {
         case ' ':
-        case 'enter':
+        case 'ENTER':
           /*istanbul ignore else */
           if (!this.disabled) {
             this.buttonClick.emit();

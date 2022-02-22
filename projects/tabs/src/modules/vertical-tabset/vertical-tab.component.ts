@@ -213,9 +213,9 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
   public onTabButtonKeyUp(event: KeyboardEvent): void {
     /*istanbul ignore else */
     if (event.key) {
-      switch (event.key.toLowerCase()) {
+      switch (event.key.toUpperCase()) {
         case ' ':
-        case 'enter':
+        case 'ENTER':
           this.activateTab();
           event.stopPropagation();
           break;
