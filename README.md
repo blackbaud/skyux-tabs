@@ -1,3 +1,7 @@
-# @skyux/tabs Workspace
+# @skyux/tabs (moved)
 
-For information about `@skyux/tabs` please visit the library's README file, located at `projects/tabs/README.md`.
+### *The source code for `@skyux/tabs` has moved to [blackbaud/skyux](https://github.com/blackbaud/skyux).*
+
+To work with the latest version of `@skyux/tabs`, go to [blackbaud/skyux](https://github.com/blackbaud/skyux).
+
+The source code for SKY UX 4 remains in the [`4.x.x`](https://github.com/blackbaud/skyux-tabs/tree/4.x.x) branch of this repo.
