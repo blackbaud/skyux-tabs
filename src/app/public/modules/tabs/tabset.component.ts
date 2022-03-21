@@ -123,7 +123,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
 
   /**
    * Specifies an ARIA label for the tabset. This sets the tabset's `aria-label` attribute
-   * [to support accessibility](https://developer.blackbaud.com/skyux/learn/accessibility).
+   * [to support accessibility](https://developer.blackbaud.com/skyux-v4/learn/accessibility).
    * If the tabset includes a visible label, use `ariaLabelledBy` instead.
    */
   @Input()
@@ -132,7 +132,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
   /**
    * Specifies the HTML element ID (without the leading `#`) of the element that labels
    * the tabset. This sets the tabset's `aria-labelledby` attribute
-   * [to support accessibility](https://developer.blackbaud.com/skyux/learn/accessibility).
+   * [to support accessibility](https://developer.blackbaud.com/skyux-v4/learn/accessibility).
    * If the tabset does not include a visible label, use `ariaLabel` instead.
    */
   @Input()
@@ -162,7 +162,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
    * Specifies the behavior for a series of tabs.
    * @deprecated The property was designed to create wizards by setting tabStyle="wizard" on tabsets in modals,
    * but this wizard implementation was replaced by the
-   * [progress indicator component](https://developer.blackbaud.com/skyux/components/progress-indicator).
+   * [progress indicator component](https://developer.blackbaud.com/skyux-v4/components/progress-indicator).
    * @default 'tabs'
    */
   @Input()
@@ -171,7 +171,7 @@ export class SkyTabsetComponent implements AfterViewInit, OnDestroy {
     if (value && value.toLowerCase() === 'wizard') {
       console.warn(
         'The tabset wizard is deprecated. Please implement the new approach using ' +
-        'progress indicator as documented here: https://developer.blackbaud.com/skyux/components/wizard.'
+        'progress indicator as documented here: https://developer.blackbaud.com/skyux-v4/components/wizard.'
       );
     }
 

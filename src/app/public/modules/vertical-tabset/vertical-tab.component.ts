@@ -78,7 +78,7 @@ export class SkyVerticalTabComponent implements OnInit, OnDestroy {
 
   /**
    * Specifies an ARIA role for the vertical tab
-   * [to support accessibility](https://developer.blackbaud.com/skyux/learn/accessibility)
+   * [to support accessibility](https://developer.blackbaud-v4/learn/accessibility)
    * by indicating how the tab functions and what it controls. For information about how
    * an ARIA role indicates what an item represents on a web page, see the
    * [WAI-ARIA roles model](https://www.w3.org/WAI/PF/aria/roles).
