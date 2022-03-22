@@ -77,7 +77,7 @@ export class SkyVerticalTabsetComponent implements OnInit, AfterViewChecked, OnD
 
   /**
    * Specifies an ARIA role for the vertical tabset
-   * [to support accessibility](https://developer.blackbaud.com/skyux/learn/accessibility)
+   * [to support accessibility](https://developer.blackbaud.com/skyux-v4/learn/accessibility)
    * by indicating how the tabset functions and what it controls. For information about how
    * an ARIA role indicates what an item represents on a web page, see the
    * [WAI-ARIA roles model](https://www.w3.org/WAI/PF/aria/roles).
